@@ -1,0 +1,38 @@
+body {
+    font-family: arial;
+    background-color: #9B50AF;
+}
+#add-container {
+    margin-top: 60px;
+    margin-bottom: 80px;
+    margin-left: 30 px;
+}
+#div-contanier {
+    margin-left: 30px;
+}
+
+.item {
+
+    background-color: #3BEAB4;
+    margin: 10px;;
+    width: 150px;
+    padding: 10px;
+}
+.remove {
+
+    text-align: right;
+    float: right;
+    color:red;
+        
+}
+
+button {
+
+    background-color: #F09306;
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 5px;
+
+
+}

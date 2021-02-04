@@ -13,13 +13,31 @@
             text-align: center;
         }
         #infoBar td{
+            width:265px;
             border: solid 2px orange;
         }
         #toolBar{
             text-align: center;
+            font-weight: bold;
         }
         #startC{
             border: solid 2px orange;
+            color: orange;
+        }
+        .field a{
+            text-align: center;
+            font-weight: bold;
+        }
+        .field{
+            text-align: center;
+        }
+        #stopC{
+            border: solid 2px rgb(255, 25, 25);
+            color: rgb(255, 25, 25);
+        }
+        #resumeC{
+            border: solid 2px rgb(97, 255, 82);
+            color: rgb(97, 255, 82);
         }
         #restartC{
             border: solid 2px orange;
@@ -28,17 +46,65 @@
             width:50px;
             height:50px;
         }
+        .playing{
+            margin-top:210px;
+        }
+        .winner{
+            margin-top:147px;
+            width: 540px;
+            border: solid 2px rgb(97, 255, 82);
+            color: rgb(97, 255, 82);
+        }
+        .loser{
+            margin-top:147px;
+            width: 540px;
+            border: solid 2px rgb(255, 25, 25);
+            color: rgb(255, 25, 25);
+        }
+        .dialog{
+            text-align: center;
+            width: 540px;
+            color: rgb(255, 231, 13);
+        }
+        .dialog h3.top1{
+            color: rgb(255, 122, 13);
+        }
+        .dialog h3.top2{
+            color: rgb(255, 188, 111);
+        }
+        .dialog h3.top3{
+            color: rgb(255, 247, 176);
+        }
+        .dialog h3.top4{
+            color: rgb(220, 255, 137);
+        }
+        .dialog h3.top5{
+            color: rgb(169, 224, 255);
+        }
+        .ui-progressbar-value {
+            background-position: top;
+            background-color: orange;
+            height: 58px;
+        }
+        #progressbar {
+            width: 100%;
+            height: 100%;
+        }
     </style>
 </head>
 
 <body> 
     <center>
-    <div style="margin-top:220px;">
+    <div class="playing"><h3></h3></div>
+    <div>
         <table id="board">
         </table>    
     </div>
-    </center>
+    <div class="dialog">
+
+    </div>
     <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.5.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="main.js"></script>
 </body>
 </html>

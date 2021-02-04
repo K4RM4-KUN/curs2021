@@ -12,6 +12,7 @@ class Builder {
     buildField(){
         for(let i=0;i<100;i++){
             this.field.push(0);
+            $("tr.row td#"+[i]+".field").slideDown(100+(i*10));
         }
         this.fillField();
     }
@@ -44,7 +45,7 @@ class Builder {
     createTable(){ 
         let $board = $("#board");
         let t = 0;
-        $("<tr id='infoBar'><td colspan='5'><h3 id='timer'></h3></td><td  id='flags' colspan='5'><h3 id='flags'>10</h3></td></tr>").appendTo($board);
+        $("<tr id='infoBar'><td colspan='5'><div id='progressbar'></div></td><td  id='flags' colspan='5'><h3 id='flags'>10</h3></td></tr>").appendTo($board);
         for(let i=0;i < this.row;i++){
             $("<tr class='row' id="+(i+1)+"></tr>").appendTo($board);
             for(let v=0;v < this.col;v++){
@@ -53,6 +54,9 @@ class Builder {
             }
         }
         $("<tr id='toolBar'><td id='startC' colspan='5'><h3 id='start'>START</h3></td><td id='restartC' colspan='5'><h3 id='restart'>RESTART</h3></td></tr>").appendTo($board);
+        for(let i=0;i<100;i++){
+            $("tr.row td#"+[i]+".field").slideUp(1);
+        }
         
         let bool = false;
         $(".row").each(function() {
@@ -73,7 +77,6 @@ class Builder {
         console.log(this.field)
     }
 
-
 }
 
 class Game{
@@ -81,26 +84,44 @@ class Game{
     flagCounter = 0;
     flagPosition = [];
     uncoverCells = [];
+    time = 0;
+    timer = 0;
+    timerBy3 = 0;
 
     constructor(){
+        this.setTimer();
+        $('tr#infoBar td h3#timer').text(this.timer);
         this.flagCounter = 0;
         this.flagPosition = [];
         this.uncoverCells = [];
     }
 
+    gameEnd(){
+        $("td.field").animate({
+            opacity: [ 0.3, "linear" ]
+        },200)
+        $("div.playing").attr("class","loser");
+        $("div.loser h3").text("LOSER");
+        $("tr#toolBar td#stopC").off();
+        gameController.top5Dialog();
+        this.active = false;
+    }
+
     uncoverCell(id,minePosition,field){
-        //console.log(field)
-        if(!this.flagPosition.includes(id) && this.active){
+        if(!this.flagPosition.includes(id) && this.active == true){
             if(!this.uncoverCells.includes(id)){
                 if(minePosition.includes(id)){
-                    console.log("BOOOOOM!!!");
+                    for(let i=0;i<minePosition.length;i++){
+                        $("#board tr.row td#"+minePosition[i]).css("background-color","red").fadeIn(500);
+                    }
+                    this.gameEnd();
                 } else if(field[id] != 0){
                     $("<a>"+field[id]+"</a>").appendTo($("#board tr.row td#"+id));
-                    $("#board tr.row td#"+id).css("background-color","black");
+                    $("#board tr.row td#"+id).css("background-color","black").fadeIn(500);
                     this.uncoverCells.push(id);
                 }else if(!this.uncoverCells.includes(id)) {
                     this.uncoverCells.push(id);
-                    $("#board tr.row td#"+id).css("background-color","rgb(43, 43, 43)");
+                    $("#board tr.row td#"+id).css("background-color","rgb(43, 43, 43)").fadeIn(500);
                     var around = [-11,-10,-9,-1,1,9,10,11];
                     var leftWing = [0,10,20,30,40,50,60,70,80,90];
                     var rightWing = [9,19,29,39,49,59,69,79,89,99];
@@ -131,15 +152,47 @@ class Game{
     setFlag(id){
         if(!this.flagPosition.includes(id) && this.flagPosition.length < 10 && !this.uncoverCells.includes(id) && this.active){
             this.flagPosition.push(id)
-            $("<img src='images/flag.png' style='width: 90%;'>").appendTo($("tr.row td#"+id+".field"));
+            $("<img id='"+this.flagPosition.length+"' class='flag' src='images/flag.png' style='width: 90%;'>").appendTo($("tr.row td#"+id+".field")).hide(0).toggle(300);
             $("td#flags h3#flags").text(10-this.flagPosition.length);
-        } else if(this.flagPosition.includes(id)){
+        } else if(this.flagPosition.includes(id) && this.active){
             this.flagPosition.splice(this.flagPosition.indexOf(id),1);
-            $("tr.row td#"+id+" img").remove();
+            $("tr.row td#"+id+" img").toggle(300);
+            setTimeout(function(){$("tr.row td#"+id+" img").remove();},310);
             $("td#flags h3#flags").text(10-this.flagPosition.length);
         }
     }
 
+    setTimer(){
+        let self = this;
+        setInterval(function() {
+            if(self.active == true  && !(self.time > 300)){
+                self.time += 1;
+                self.timerBy3 += 1;
+            }
+            if(self.timerBy3 == 3 && self.active == true ){
+                self.timerBy3 = 0;
+                if(self.active == true && !(self.timer > 100)){
+                    self.timer += 1;
+                    $("#progressbar").progressbar({
+                        value: self.timer
+                    });
+                } else if(self.timer > 100){
+                    self.gameEnd();
+                    self.timer += 1;
+                }
+            }
+            if(!self.uncoverCells.includes(builder.minePosition) && self.uncoverCells.length >= 90 && self.active != false){
+                gameController.top5Dialog(self.time);
+                $("div.playing").attr("class","winner");
+                $("div.winner h3").text("WINNER");
+                $("tr#toolBar td#stopC").off();
+                self.active = false;
+                $("td.field").animate({
+                    opacity: [ 0.3, "linear" ]
+                },100)
+            }
+        }, 1000);
+    }
 }
 
 class Controller{    
@@ -163,44 +216,148 @@ class Controller{
                 game.uncoverCell(parseInt(this.id),builder.minePosition,builder.field)
             });
         });
+                
+        $("tr#toolBar td#startC").click(function(){
+            game.active = true;
+            builder.buildField();
+            $("tr#toolBar td#startC h3").text("STOP");
+            $("tr#toolBar td#startC").attr("id","stopC");
+            buttonSSR();
+        });
 
+        function buttonSSR(){
+            $(this).off()
+            $("tr#toolBar td#startC").click(function(){
+                game.active = true;
+                builder.buildField();
+                $("tr#toolBar td#startC h3").text("STOP");
+                $("tr#toolBar td#startC").attr("id","stopC");
+                buttonSSR();
+            });
+            $("tr#toolBar td#stopC").click(function(){
+                game.active = false;
+                $("tr#toolBar td#stopC h3").text("RESUME");
+                $(this).attr("id","resumeC");
+                buttonSSR();
+            });
+            $("tr#toolBar td#resumeC").click(function(){
+                game.active = true;
+                $("tr#toolBar td#resumeC h3").text("STOP");
+                $(this).attr("id","stopC");
+                buttonSSR();
+            });
+        }
+
+
+        $("tr#toolBar td#restartC").click(function(){
+            let $button = $("tr#toolBar td");
+            if($($button[0]).attr('id') != "startC"){
+                $("div.loser h3").text("");
+                $("div.winner h3").text("");
+                $("div.winner").attr("class","playing");
+                $("div.loser").attr("class","playing");
+                let bool = false;
+                $(".row").each(function() {
+                    $(this).find(".field a").remove();
+                    $(this).find(".field img").remove();
+                    if(bool){
+                        bool = false;
+                    } else{
+                        bool = true;
+                    }
+                    if(!bool){
+                        $(this).find(".field:even").css("background-color","gray").css("border-color","gray");
+                        $(this).find(".field:odd").css("background-color","orange").css("border-color","orange");
+                    } else {
+                        $(this).find(".field:even").css("background-color","orange").css("border-color","orange");
+                        $(this).find(".field:odd").css("background-color","gray").css("border-color","gray");
+                    }
+                });
+
+                builder.minePosition = [];
+                builder.field = [];
+                game.flagCounter = 0;
+                game.flagPosition = [];
+                game.timer = 0;
+                game.time = 0;
+                $('tr#infoBar td h3#timer').text(game.timer);
+                game.uncoverCells = [];
+                $("td#flags h3#flags").text(10-game.flagPosition.length);
+
+                
+                if($($button[0]).attr('id') == "stopC"){
+                    game.active = true;
+                    buttonSSR();
+                } else if($($button[0]).attr('id') == "resumeC"){
+                    game.active = true;
+                    $("tr#toolBar td#resumeC h3").text("STOP");
+                    $($button[0]).attr("id","stopC");
+                    buttonSSR();
+                }
+                builder.buildField();
+                $("td.field").animate({
+                    opacity: [ 1, "linear" ]
+                },200)
+            }
+        });
     }    
 
+    top5Dialog(timer = 1000){
+        if(timer != 1000){
+            let addLS = "";
+            if('top5' in localStorage){
+                let top5 = localStorage.getItem('top5').split(";");
+                let introduced = false;
+                for(let i=0;i<top5.length;i++){
+                    if(timer <= top5[i] && !introduced){
+                        top5.splice(i, 0, timer)
+                        if(top5.length > 5){ top5.pop()};
+                        introduced = true;
+                    } else if(top5.length < 5 && !introduced){
+                        top5.push(timer);
+                        introduced = true;
+                    }
+                    if(i == 0){
+                        addLS = top5[i];
+                    } else {
+                        addLS += (";"+top5[i]);
+                    }
+                }
+                localStorage.setItem('top5',addLS);
+                console.log(localStorage.getItem('top5'));
+            } else if(timer != 333){
+                localStorage.setItem('top5',timer);
+            }
+        } 
+        setTimeout(function(){
+        $('div.dialog').css('border','1px solid rgb(255, 231, 13)').css('background-color','rgb(37, 37, 37)');
+        $('button.ui-button').css("background-color",'rgb(37, 37, 37)').css('color','red').text("X");
+        $('div.ui-dialog').css('background-color','rgb(37, 37, 37)');   
+        },100);
+        $("h3.title").remove();
+        $("<h3 class='title'>TOP 5</h3><h3 class='title' style='margin-top: -25px;'>________________________________</h3>").appendTo($('div.dialog'));
+        if('top5' in localStorage){ 
+            $("h3.NY").remove();
+            $("h3.top1").remove();
+            $("h3.top2").remove();
+            $("h3.top3").remove();
+            $("h3.top4").remove();
+            $("h3.top5").remove();
+            $("h3.top5").remove();
+            let top5 = localStorage.getItem('top5').split(";");
+            for(let i=0;i<top5.length;i++){
+                $("<h3 class='top"+(i+1)+"'>"+(i+1)+".  "+top5[i]+"s</h3>").appendTo($('div.dialog'));
+            }
+        } else {
+            $("<h3 class='NY'>NOT YET</h3>").appendTo($('div.dialog'));
+        }
+        
+        $(function() {
+            $(".dialog").dialog();
+        })
+    }
 }
 
 var builder = new Builder(10,10);
 var game = new Game();
 var gameController = new Controller(builder,game);
-
-$("tr#toolBar td#startC").click(function(){
-    builder.active = true;
-    builder.buildField();
-    $("tr#toolBar td#startC h3").text("STOP");
-    $("tr#toolBar td#startC").addClass("stopC");
-    $("tr#toolBar td#startC").removeClass("startC");
-});
-
-$("tr#toolBar td#stopC").click(function(){
-    builder.active = false;
-    $("tr#toolBar td#stopC h3").text("RESUME");
-    $("tr#toolBar td#stopC").addClass("resumeC");
-    $("tr#toolBar td#stopC").removeClass("stopC");
-});
-
-$("tr#toolBar td#resumeC").click(function(){
-    builder.active = true;
-    $("tr#toolBar td#resumeC h3").text("STOP");
-    $("tr#toolBar td#resumeC").addClass("stopC");
-    $("tr#toolBar td#resumeC").removeClass("resumeC");
-});
-
-
-
-$("tr#toolBar td#restartC").click(function(){
-    builder.minePosition = [];
-    builder.field = [];
-    builder.buildField();  
-    game.uncoverCells = [];
-});
-
-

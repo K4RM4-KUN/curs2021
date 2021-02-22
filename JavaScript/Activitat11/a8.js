@@ -4,4 +4,4 @@ $( document).ready(function(){
         connectWith: ".transferable"
       }).disableSelection();
     } );
-});s
+});

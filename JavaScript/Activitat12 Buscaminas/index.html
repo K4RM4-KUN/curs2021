@@ -13,7 +13,7 @@
             text-align: center;
         }
         #infoBar td{
-            width:265px;
+            width:50%;;
             border: solid 2px orange;
         }
         #toolBar{
@@ -51,34 +51,41 @@
         }
         .winner{
             margin-top:147px;
-            width: 540px;
+            width: 100%;
             border: solid 2px rgb(97, 255, 82);
             color: rgb(97, 255, 82);
         }
         .loser{
             margin-top:147px;
-            width: 540px;
+            width: 100%;;
             border: solid 2px rgb(255, 25, 25);
             color: rgb(255, 25, 25);
         }
         .dialog{
-            text-align: center;
             width: 540px;
             color: rgb(255, 231, 13);
         }
+        .dialog h3.title{
+            margin-left: 42%;
+        }
         .dialog h3.top1{
+            margin-left: 42%;
             color: rgb(255, 122, 13);
         }
         .dialog h3.top2{
+            margin-left: 42%;
             color: rgb(255, 188, 111);
         }
         .dialog h3.top3{
+            margin-left: 42%;
             color: rgb(255, 247, 176);
         }
         .dialog h3.top4{
+            margin-left: 42%;
             color: rgb(220, 255, 137);
         }
         .dialog h3.top5{
+            margin-left: 42%;
             color: rgb(169, 224, 255);
         }
         .ui-progressbar-value {
@@ -90,18 +97,23 @@
             width: 100%;
             height: 100%;
         }
+        #main{
+            width: 530px;
+        }
     </style>
 </head>
 
 <body> 
     <center>
-    <div class="playing"><h3></h3></div>
-    <div>
-        <table id="board">
-        </table>    
-    </div>
-    <div class="dialog">
-
+    <div id="main">
+        <div class="playing"><h3></h3></div>
+        <div>
+            <table id="board">
+            </table>    
+        </div>
+        <div class="dialog">
+    
+        </div>
     </div>
     <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.5.1.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

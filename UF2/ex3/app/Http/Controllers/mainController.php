@@ -29,7 +29,7 @@ class mainController extends Controller
     }
     public function update(Request $request){
         $toValidate = $request->validate([
-            'name' => 'required|unique:cars',
+            'name' => 'required',
             'brand' => 'required',
             'type' => 'required'
         ]);

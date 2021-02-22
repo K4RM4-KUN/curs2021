@@ -12,8 +12,10 @@ class Builder {
     buildField(){
         for(let i=0;i<100;i++){
             this.field.push(0);
-            $("tr.row td#"+[i]+".field").slideDown(100+(i*10));
         }
+        $("tr.row td.field").each(function(index){
+            $(this).delay(25*index).slideDown   ();
+        });
         this.fillField();
     }
 
@@ -308,15 +310,26 @@ class Controller{
             if('top5' in localStorage){
                 let top5 = localStorage.getItem('top5').split(";");
                 let introduced = false;
+                top5.push(timer);
                 for(let i=0;i<top5.length;i++){
-                    if(timer <= top5[i] && !introduced){
+                    top5[i] = parseInt(top5[i]);
+                }
+                top5.sort(function(a, b) {
+                    return a - b;
+                });
+                if(top5.length > 5){ 
+                    console.log("hola")
+                    top5.pop()};
+                for(let i=0;i<top5.length;i++){
+                    /*if(timer <= top5[i] && !introduced){
                         top5.splice(i, 0, timer)
                         if(top5.length > 5){ top5.pop()};
                         introduced = true;
-                    } else if(top5.length < 5 && !introduced){
+                    } else if(top5.length < 5 && !introduced && timer <= top5[i]){
                         top5.push(timer);
                         introduced = true;
-                    }
+                    }*/
+                    console.log(top5);
                     if(i == 0){
                         addLS = top5[i];
                     } else {
@@ -324,18 +337,19 @@ class Controller{
                     }
                 }
                 localStorage.setItem('top5',addLS);
-                console.log(localStorage.getItem('top5'));
             } else if(timer != 333){
                 localStorage.setItem('top5',timer);
             }
         } 
+
         setTimeout(function(){
         $('div.dialog').css('border','1px solid rgb(255, 231, 13)').css('background-color','rgb(37, 37, 37)');
         $('button.ui-button').css("background-color",'rgb(37, 37, 37)').css('color','red').text("X");
         $('div.ui-dialog').css('background-color','rgb(37, 37, 37)');   
         },100);
+        $("h3.titleL").remove();
         $("h3.title").remove();
-        $("<h3 class='title'>TOP 5</h3><h3 class='title' style='margin-top: -25px;'>________________________________</h3>").appendTo($('div.dialog'));
+        $("<h3 class='title'>TOP 5</h3><h3 class='titleL' style='margin-top: -25px;'>________________________________</h3>").appendTo($('div.dialog'));
         if('top5' in localStorage){ 
             $("h3.NY").remove();
             $("h3.top1").remove();
@@ -345,10 +359,17 @@ class Controller{
             $("h3.top5").remove();
             $("h3.top5").remove();
             let top5 = localStorage.getItem('top5').split(";");
+            var introduced = false;
             for(let i=0;i<top5.length;i++){
-                $("<h3 class='top"+(i+1)+"'>"+(i+1)+".  "+top5[i]+"s</h3>").appendTo($('div.dialog'));
+                if(timer == top5[i] && !introduced){
+                    $("<h3 class='top"+(i+1)+"'>"+(i+1)+".  "+top5[i]+"s <-----</h3>").appendTo($('div.dialog'));
+                } else {
+                    $("<h3 class='top"+(i+1)+"'>"+(i+1)+".  "+top5[i]+"s</h3>").appendTo($('div.dialog'));
+                }
             }
+
         } else {
+            $("h3.NY").remove();
             $("<h3 class='NY'>NOT YET</h3>").appendTo($('div.dialog'));
         }
         

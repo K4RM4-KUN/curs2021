@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,5 +21,8 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+Route::get('/facebook', [HomeController::class, "index"])->middleware(['auth'])->name('dashboard');
+Route::get('/facebook/post', [HomeController::class, "send"])->middleware(['auth'])->name('sendPost');
 
 require __DIR__.'/auth.php';

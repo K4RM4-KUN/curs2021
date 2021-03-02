@@ -23,3 +23,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 Route::resource('cars', App\Http\Controllers\CarController::class);
+
+Route::resource('tests', App\Http\Controllers\TestController::class);

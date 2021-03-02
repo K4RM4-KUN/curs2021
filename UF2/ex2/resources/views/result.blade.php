@@ -33,6 +33,7 @@
             <h3 class="row">Nif: {{ $nif }}</h3>
             <a href="file/{{$data}}">Click to see the file</a><br>
             <img style="width: 60%;" src="img/{{ $image }}"><br>
+            
             <a class="row" href="{{ route('dashboard') }}"><input type="submit" value="GO TO DASHBOARD"></a>
         </div>
     </body>

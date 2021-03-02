@@ -18,6 +18,101 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        .showButton{
+            padding: 5px;
+            width:33%;
+            text-decoration:none;
+            border: 1px solid black;
+            background-color: orange;
+            color: black;
+        }
+        .editButton{
+            padding: 5px;
+            width:33%;
+            text-decoration:none;
+            border: 1px solid black;
+            background-color: orange;
+            color: black;
+        }
+        .mt-5{
+            margin:8px;
+        }
+        .addButton{
+            padding: 5px;
+            width:33%;
+            text-decoration:none;
+            border: 1px solid black;
+            background-color: orange;
+            color: black;
+            margin: 5px;
+        }
+        .buttonAddSection{
+            width:190px;
+            background-color: black;
+            text-align: center;
+        }
+        .backButton{
+            padding: 5px;
+            text-decoration:none;
+            border: 1px solid black;
+            background-color: orange;
+            color: black;
+            margin: 5px;
+        }
+        .showContent{
+            color: orange;
+            border: 1px solid orange;
+            margin: 3px;
+        }
+        .showContent label{
+            font-weight: bold;
+        }
+        .content{
+            display: flex;
+            background-color: black;
+        }
+        .saveButton{
+            padding: 5px;
+            text-decoration:none;
+            border: 1px solid black;
+            background-color: orange;
+            color: black;
+            margin: 5px;
+        }
+        .cancelButton{
+            padding: 5px;
+            text-decoration:none;
+            border: 1px solid black;
+            background-color: orange;
+            color: black;
+            margin: 5px;
+        }
+        .addText{
+            width:180px;
+            padding: 5px;
+            background-color: black;
+            color: orange;
+        }
+        .deleteButton{
+            padding: 5px;
+            width:33%;
+            text-decoration:none;
+            background-color: orange;
+        }
+        td{
+            text-align:center;
+            width:25%;
+            color: orange;
+            background-color: black;
+        }
+        th{
+            text-align:center;
+            width:25%;
+            color: orange;
+            background-color: black;
+        }
+    </style>
 </head>
 <body>
     <div id="app">

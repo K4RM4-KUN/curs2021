@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12">
-                    <h1>Edit Car</h1>
+                    <h1>Edit Test</h1>
                 </div>
             </div>
         </div>
@@ -17,17 +17,17 @@
 
         <div class="card">
 
-            {!! Form::model($car, ['route' => ['cars.update', $car->id], 'method' => 'patch']) !!}
+            {!! Form::model($test, ['route' => ['tests.update', $test->id], 'method' => 'patch']) !!}
 
             <div class="card-body">
                 <div class="row">
-                    @include('cars.fields')
+                    @include('tests.fields')
                 </div>
             </div>
 
             <div class="card-footer">
                 {!! Form::submit('Save', ['class' => 'btn btn-primary saveButton']) !!}
-                <a href="{{ route('cars.index') }}" class="btn btn-default cancelButton">Cancel</a>
+                <a href="{{ route('tests.index') }}" class="btn btn-default cancelButton">Cancel</a>
             </div>
 
            {!! Form::close() !!}

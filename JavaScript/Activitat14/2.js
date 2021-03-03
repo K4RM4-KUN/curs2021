@@ -42,7 +42,7 @@ $(document).ready(function(){
                 todosT.map((two,i) => {
                     selectT.append(new Option(two.title,two.id));
                     $("#todos"+one.id).change(function(){
-                        window.open("https://jsonplaceholder.typicode.com/todos/"+two.id);
+                        window.open("https://jsonplaceholder.typicode.com/todos/"+$(this).val());
                     });
                 }) 
             });
@@ -61,9 +61,8 @@ $(document).ready(function(){
                 postsA = posts;
                 postsA.map((three,i) => {
                     selectP.append(new Option(three.title,three.id));
-                    let save = three.id;
                     $("#posts"+one.id).change(function(){
-                        window.open("https://jsonplaceholder.typicode.com/posts/"+save);
+                        window.open("https://jsonplaceholder.typicode.com/posts/"+$(this).val());
                     });
                 }) 
             });

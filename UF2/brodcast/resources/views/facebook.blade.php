@@ -8,7 +8,7 @@
     <title>FakeBook</title>
 
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script id="functions" user-id="{{ $user_id }}" src="{{ asset('js/functions.js') }}" defer></script>
+    <script id="functions" user-id="{{ $user_id }}" user-name="{{$user_name[0]->name}}" src="{{ asset('js/functions.js') }}" defer></script>
     <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.5.1.js"></script>
     <style>
         body{
@@ -35,22 +35,31 @@
         .wallBlock:last-child{
             margin-bottom: 120px;
         }
+        .typing{
+            display: none;
+        }
+        .headFB{
+            height:120px;
+        }
     </style>
 </head>
     <body> 
         <center>
-            <h1>FAKEBOOK</h1>
-            <h4>welcome </h4>
+            <div class="headFB">
+                <h1>FAKEBOOK</h1>
+                <h4>Welcome {{$user_name[0]->name}}!</h4>
+                <h5 class="typing"> Alguien esta escribiendo </h5>
+            </div>
 
             <div id="walls">
-                @foreach ($old as $message)
+                @foreach ($old as $mess)
                     <div class="wallBlock">
-                        @if ($message->from == $user_id)
-                            <p>You: {{$message->message}}</p>
+                        @if ($mess->from == $user_id)
+                            <p>You: {{$mess->message}}</p>
                         @else
                             @foreach($users as $user)
-                                @if($message->from == $user->id)
-                                    <p>{{$user->name}}: {{$message->message}}</p>
+                                @if($mess->from == $user->id)
+                                    <p>{{$user->name}}: {{$mess->message}}</p>
                                 @endif
                             @endforeach
                         @endif
@@ -60,7 +69,6 @@
 
             <div class="input">
                 <form action="{{ Route('sendPost')}}" method="post" id="messageSend">
-                    @csrf
                     <label for="message">Your post: </label><input type="text" name="message" id="message" >
                     <input type="submit" id="send" value="Send">
                     <select name="userTo" id="channel">

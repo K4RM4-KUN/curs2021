@@ -18,7 +18,38 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $olds = Message::select("message","from")->where("from",Auth::user()->id)->orWhere("to",Auth::user()->id)->orderbydesc('created_at')->get();
+        $data["user_id"] = Auth::user()->id;
+
+        $olds = Message::select("message","from","created_at")->
+        where("to","_public_channel_")->
+        orderbydesc('created_at')->
+        get();
+        $data["old"] = $olds;
+
+        $users = User::select("id","name")->where("id","!=",Auth::user()->id)->get();
+        $data["users"] = $users;
+        
+        $nameOfUser = User::select("name")->where("id",Auth::user()->id)->get();
+        $data["user_name"] = $nameOfUser;
+
+        return view('facebook', $data);
+    }
+    public function channelIndex(Request $request)
+    {
+        if($request->input("to") != "_public_channel_"){
+            $olds = Message::select("message","from","created_at")->
+            where("from",Auth::user()->id)->
+            where("to",$request->input("to"))->
+            orWhere("from",$request->input("to"))->
+            where("to",Auth::user()->
+            id)->orderbydesc('created_at')->
+            get();
+        } else {
+            $olds = Message::select("message","from","created_at")->
+            where("to","_public_channel_")->
+            orderbydesc('created_at')->
+            get();
+        }
         $data["user_id"] = Auth::user()->id;
         $users = User::select("id","name")->where("id","!=",Auth::user()->id)->get();
         $data["old"] = $olds;
@@ -97,15 +128,16 @@ class HomeController extends Controller
     {
         // ...
         // message is being sent
-        /*$toValidate = $request->validate([
-            'message' => 'required',
-            'userTo' => 'required'
+        /* $toValidate = $request->validate([
+            'message' => 'required'
         ]);*/
+
         $message = new Message;
         $message->setAttribute('from', $request->input('from'));
         $message->setAttribute('to', $request->input('to'));
         $message->setAttribute('message', $request->input('message'));
         $message->save();
+        
         if($request->input('to') == "_public_channel_"){
             // want to broadcast publicWall event
             event(new publicWall($message));

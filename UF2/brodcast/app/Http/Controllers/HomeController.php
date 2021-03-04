@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Message;
 use App\Events\NewMessageNotification;
 use App\Events\publicWall;
 use Illuminate\Support\Facades\Auth;
+
+use App\Models\Message;
 use App\Models\User;
 
 class HomeController extends Controller
@@ -28,7 +29,7 @@ class HomeController extends Controller
 
         $users = User::select("id","name")->where("id","!=",Auth::user()->id)->get();
         $data["users"] = $users;
-        
+
         $nameOfUser = User::select("name")->where("id",Auth::user()->id)->get();
         $data["user_name"] = $nameOfUser;
 

@@ -2,6 +2,7 @@
 var script_tag = document.getElementById('functions');
 var user_id = script_tag.getAttribute("user-id");
 var user_name = script_tag.getAttribute("user-name");
+
 function public(){
     Echo.private("_public_channel_")
     .listen('publicWall', (e) => {
@@ -21,12 +22,12 @@ function public(){
         }, 5000)
     });
 }
-$(document).ready(()=>{
-    
-    //Text
 
+$(document).ready(()=>{
+    //Public(General PrivateChannel) channel connection
     public();
 
+    //If is typing build
     $('input').on('keydown', function(){
         let channel = Echo.private('_public_channel_')
         setTimeout( () => {
@@ -37,9 +38,15 @@ $(document).ready(()=>{
         }, 1500)
     })
 
+    //Channels listening build
     $('#channel').change(function(){
         if($('#channel').val() != "_public_channel_"){
             Echo.leave("_public_channel_");
+            $.get("http://dawjavi.insjoaquimmir.cat/mboughima/Clase/M07/UF2UF3/boradPuser/public/getMsg/"+$("#channel").val(), (response)=>{
+                console.log($(response));
+                $("#walls").children().remove();
+                $("#walls").html($(response).find(".msg"))
+            })
             Echo.private("user."+user_id)
             .listen('NewMessageNotification', (e) => {
                 let name = "";
@@ -55,11 +62,13 @@ $(document).ready(()=>{
                 console.log(e.name);
             });
         } else {
+            //Public(General PrivateChannel) channel connection
             Echo.leave("user."+user_id);
             public();
         }
     });
   
+    //Send message button build
     $("#send").click(function(event){
         event.preventDefault();
         var _token = $('meta[name=csrf-token]').attr('content');

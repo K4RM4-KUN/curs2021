@@ -71,7 +71,7 @@
                 <form action="{{ Route('sendPost')}}" method="post" id="messageSend">
                     <label for="message">Your post: </label><input type="text" name="message" id="message" >
                     <input type="submit" id="send" value="Send">
-                    <select name="userTo" id="channel">
+                    <select name="userTo" id="channel" hidden>
                                 <option value="_public_channel_">Public channel</option>
                         @foreach ($users as $user)
                                 <option value="{{$user->id}}">{{$user->name}}</option>

@@ -41,6 +41,9 @@
         .headFB{
             height:120px;
         }
+        .button{
+            margin: 5px;
+        }
     </style>
 </head>
     <body> 
@@ -63,6 +66,8 @@
                                 @endif
                             @endforeach
                         @endif
+                        <input class="button" type="button" id="like" value="0 Likes" >
+                        <input class="button" type="button" id="comment" value="Comment" >
                     </div>
                 @endforeach
             </div>
@@ -71,7 +76,7 @@
                 <form action="{{ Route('sendPost')}}" method="post" id="messageSend">
                     <label for="message">Your post: </label><input type="text" name="message" id="message" >
                     <input type="submit" id="send" value="Send">
-                    <select name="userTo" id="channel" hidden>
+                    <select name="userTo" id="channel">
                                 <option value="_public_channel_">Public channel</option>
                         @foreach ($users as $user)
                                 <option value="{{$user->id}}">{{$user->name}}</option>

@@ -86,4 +86,14 @@ $(document).ready(()=>{
         })
         return false;
     })
+
+    //Like button build
+    $("#like").click(function(event){
+
+    })
+
+    //Comment button build
+    $("#comment").click(function(event){
+
+    })
 })

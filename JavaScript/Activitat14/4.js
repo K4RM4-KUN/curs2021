@@ -32,11 +32,8 @@ $(document).ready(function(){
     });
 
     //Province build
-    fetch(provinceUrl)
-    .then(response => response.json())
-    .then(data => {
-        provs = data;
-        provs.map((one,i) => {
+    $.get(provinceUrl,(response)=>{
+        response.forEach((one)=>{
             $(province).append("<option value='"+one.codi+"'>"+one.provincia+"</option>");
         }) 
     });
@@ -45,12 +42,9 @@ $(document).ready(function(){
     province.change(function(){
         if(province.value != "blank"){
             removeAllOptions(poblation,false);
-            fetch(poblationUrl)
-            .then(response => response.json())
-            .then(data => {
-                pobls = data;
-                pobls.map((one,i) => {
-                    if(one.cod_prov == this.value){
+            $.get(poblationUrl, (response)=>{
+                response.forEach((one)=>{
+                    if(one.cod_prov == $(this).val()){
                         $(poblation).append("<option value='"+one.codi+"'>"+one.poblacio+"</option>");
                     }
                 }) 
@@ -66,12 +60,9 @@ $(document).ready(function(){
     poblation.change(function(){
         if(poblation.value != "blank"){
             removeAllOptions(postalCode,false);
-            fetch(postalCodeUrl)
-            .then(response => response.json())
-            .then(data => {
-                post = data;
-                post.map((one,i) => {
-                    if(parseInt(one.codi_poble) == parseInt(this.value)){
+            $.get(postalCodeUrl, (response)=>{
+                response.forEach((one)=>{
+                    if(parseInt(one.codi_poble) == parseInt($(this).val())){
                         if((one.codi_postal).toString().length == 4){
                             $(postalCode).append("<option value='"+"0"+one.codi_postal+"'>"+"0"+one.codi_postal+"</option>");
                         }else {

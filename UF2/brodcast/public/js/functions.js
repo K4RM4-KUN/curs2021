@@ -53,7 +53,7 @@ $(document).ready(()=>{
                 $("#channel option").each(function(){
                     if ($(this).val() == e.message.from){        
                         name = $(this).text();
-                        $("#walls").prepend("<div class='wallBlock'><p>"+name+": "+e.message.message+"</p></div>");
+                        $("#walls").prepend("<div class='wallBlock'><input type='text' class='postId' value='"+e.message.id+"' hidden><p>"+name+": "+e.message.message+"</p></div>");
                     }
                 });
             })
@@ -81,19 +81,65 @@ $(document).ready(()=>{
             data: {_token:_token, message:message, to:to,from:from},
             success: function(data) {
                 $("#walls").prepend("<div class='wallBlock'><p>You: "+message+"</p></div>");
+                $(".wallBlock").eq(0)
+                .append('<input type="text" class="postId" value="'+0+'" hidden><input class="buttonLike" type="button" value="0 Likes"><input class="buttonComment" type="button" value="Show Comments"><div class="comments" hidden><input type="text" class="comm" placeholder="Comment..."><input class="buttonCommentGo" type="button" value="Comment"></div>');
                 $("#message").val("");
+                buttons();
             }
         })
         return false;
     })
 
-    //Like button build
-    $("#like").click(function(event){
-
+    function buttons(){
+        //Like button build
+        $(".buttonLike").click(function(){
+        var save = $(this);
+        var _token = $('meta[name=csrf-token]').attr('content');
+        var id = $(this).parent().children(".postId").val();
+        console.log(id);
+        $.ajax({
+            url: "http://dawjavi.insjoaquimmir.cat/jfuentes/UF2/brodcast/public/like",
+            type:'POST',
+            data: {_token:_token, postId:id, userId:user_id},
+            success: function(data) {
+                if($(save).hasClass("disabled") == false){
+                    $(save).val(parseInt(($(save).val().charAt(0))+1)+" Likes");
+                    $(save).addClass("disabled");
+                } else {
+                    $(save).val(parseInt(($(save).val().charAt(0))-1)+" Likes");
+                    $(save).removeClass("disabled");
+                }
+            }
+        })
+        return false;
     })
 
     //Comment button build
-    $("#comment").click(function(event){
-
+    $(".buttonComment").click(function(){ 
+        if($(this).parent().children(".comments").is(":visible")){
+            $(this).val("Show Comments");
+        } else {
+            $(this).val("Hide Comments");
+        }
+        $(this).parent().children(".comments").toggle();
     })
+
+    $(".buttonCommentGo").click(function(){ 
+        var save = $(this);
+        var _token = $('meta[name=csrf-token]').attr('content');
+        var id = $(this).parent().parent().children(".postId").val();
+        var comment = $(this).parent().children(".comm").val();
+        $.ajax({
+            url: "http://dawjavi.insjoaquimmir.cat/jfuentes/UF2/brodcast/public/comment",
+            type:'POST',
+            data: {_token:_token, postId:id, userId:user_id, comment:comment},
+            success: function(data) {
+                $(save).parent().children(".comm").val("")
+                $(save).parent().append("<div><p>You: "+comment+"</p></div>");
+            }
+        })
+        return false;
+    })
+    }
+   buttons();
 })

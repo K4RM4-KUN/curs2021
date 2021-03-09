@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\Message;
 use App\Models\User;
+use App\Models\Like;
+use App\Models\Comment;
 
 class HomeController extends Controller
 {
@@ -21,10 +23,12 @@ class HomeController extends Controller
     {
         $data["user_id"] = Auth::user()->id;
 
-        $olds = Message::select("message","from","created_at")->
+        $olds = Message::with("comments")->
+        withCount("likes")->
         where("to","_public_channel_")->
         orderbydesc('created_at')->
         get();
+        //print($olds);
         $data["old"] = $olds;
 
         $users = User::select("id","name")->where("id","!=",Auth::user()->id)->get();
@@ -35,29 +39,27 @@ class HomeController extends Controller
 
         return view('facebook', $data);
     }
-    public function channelIndex(Request $request)
-    {
-        if($request->input("to") != "_public_channel_"){
-            $olds = Message::select("message","from","created_at")->
-            where("from",Auth::user()->id)->
-            where("to",$request->input("to"))->
-            orWhere("from",$request->input("to"))->
-            where("to",Auth::user()->
-            id)->orderbydesc('created_at')->
-            get();
-        } else {
-            $olds = Message::select("message","from","created_at")->
-            where("to","_public_channel_")->
-            orderbydesc('created_at')->
-            get();
-        }
-        $data["user_id"] = Auth::user()->id;
-        $users = User::select("id","name")->where("id","!=",Auth::user()->id)->get();
-        $data["old"] = $olds;
-        $data["users"] = $users;
 
-        return view('facebook', $data);
+    public function like(Request $request){
+        $message = new Like;
+        $message->setAttribute('message_id', $request->input('postId'));
+        $message->setAttribute('user_id', $request->input('userId'));
+        if(!Like::where('message_id', $request->input('postId'))->where('user_id', $request->input('userId'))->exists()){
+            $message->save();
+        } else {
+            Like::where('message_id',$request->input('postId'))->where('user_id', $request->input('userId'))->delete();
+        }
     }
+    
+    public function comment(Request $request){
+        $message = new Comment;
+        $message->setAttribute('message_id', $request->input('postId'));
+        $message->setAttribute('user_id', $request->input('userId'));
+        $message->setAttribute('comment', $request->input('comment'));
+        $message->save();
+        return $message->id;
+    }
+ 
 
     /**
      * Show the form for creating a new resource.
@@ -129,9 +131,9 @@ class HomeController extends Controller
     {
         // ...
         // message is being sent
-        /* $toValidate = $request->validate([
+        $toValidate = $request->validate([
             'message' => 'required'
-        ]);*/
+        ]);
 
         $message = new Message;
         $message->setAttribute('from', $request->input('from'));

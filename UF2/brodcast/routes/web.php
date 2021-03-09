@@ -25,6 +25,8 @@ Route::get('/dashboard', function () {
 Route::get('/facebook', [HomeController::class, "index"])->middleware(['auth'])->name('dashboard');
 Route::get('/channelChange/{to}', [HomeController::class, "ChannelIndex"])->middleware(['auth'])->name('changeChannel');
 Route::post('/facebook', [HomeController::class, "send"])->middleware(['auth'])->name('sendPost');
+Route::post('/like', [HomeController::class, "like"])->middleware(['auth'])->name('likePost');
+Route::post('/comment', [HomeController::class, "comment"])->middleware(['auth'])->name('commentPost');
 
 
 

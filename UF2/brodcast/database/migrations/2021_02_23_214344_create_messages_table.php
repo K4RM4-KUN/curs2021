@@ -18,6 +18,7 @@ class CreateMessagesTable extends Migration
             $table->string('from');
             $table->string('to');
             $table->string('message');
+            $table->string('img');
             $table->timestamps();
         });
     }

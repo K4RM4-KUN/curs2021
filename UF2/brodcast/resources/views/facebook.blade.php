@@ -41,7 +41,16 @@
         .headFB{
             height:120px;
         }
-        .button{
+        .buttonComment{
+            margin: 5px;
+        }
+        .buttonCommentGo{
+            margin: 5px;
+        }
+        .buttonLike{
+            margin: 5px;
+        }
+        .X{
             margin: 5px;
         }
     </style>
@@ -66,8 +75,26 @@
                                 @endif
                             @endforeach
                         @endif
-                        <input class="button" type="button" id="like" value="0 Likes" >
-                        <input class="button" type="button" id="comment" value="Comment" >
+                        <input type="text" class="postId" value="{{$mess->id}}" hidden>
+                        <input class="buttonLike" type="button" value="{{$mess->likes_count}} Likes" >
+                        <input class="buttonComment" type="button" value="Show Comments" >
+                        <div class="comments" hidden>
+                            <input type="text" class="comm" placeholder="Comment...">
+                            <input class="buttonCommentGo" type="button" value="Comment">
+                            @foreach($mess->comments as $comment)
+                                <div>
+                                    @if ($comment->user_id == $user_id)
+                                        <p>You: {{$comment->comment}}</p>
+                                    @else
+                                        @foreach($users as $user)
+                                            @if($comment->user_id == $user->id)
+                                                <p>{{$user->name}}: {{$comment->comment}}</p>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 @endforeach
             </div>

@@ -1,43 +1,52 @@
-
 var script_tag = document.getElementById('functions');
 var user_id = script_tag.getAttribute("user-id");
 var user_name = script_tag.getAttribute("user-name");
 
-function public(){
-    Echo.private("_public_channel_")
-    .listen('publicWall', (e) => {
-        let name = "";
-        $("#channel option").each(function(){
-            if ($(this).val() == e.message.from){        
-                name = $(this).text();
-                $("#walls center").prepend("<div class='wallBlock'><p>"+name+": "+e.message.message+"</p></div>");
-            }
-        });
-    })
-    .listenForWhisper('typing', (e) => {
-        $('.typing').text(e.user + " esta escribiendo...")
-        e.typing ? $('.typing').show() : $('.typing').hide()
-        setTimeout( () => {
-            $('.typing').hide()
-        }, 5000)
-    });
-    Echo.join("_public_channel_")
-    .here((users) => {
-        users.forEach(element=>{
-            $("#connecteds center").append("<p id='"+element.id+"-conn'>·"+element.name+"</p>")
-        })
-    })
-    .joining((user) => {
-        $("#connecteds center").append("<p id='"+user.id+"-conn'>·"+user.name+"</p>")
-    })
-    .leaving((user) => {
-        console.log(user.name)
-        $("#connecteds").children("center").children("#"+user.id+"-conn").remove();
-    });
-}
-
 $(document).ready(()=>{
+    $(".buttonLike").each(function(){
+        if($(this).hasClass("disabled") == true){
+            $(this).val($(this).val().charAt(0)+" Dislike");
+        } else {
+            $(this).val($(this).val().charAt(0)+" Like");
+        }
+    })
+
     //Public(General PrivateChannel) channel connection
+    function public(){
+        Echo.private("_public_channel_")
+        .listen('publicWall', (e) => {
+            let name = "";
+            $("#channel option").each(function(){
+                if ($(this).val() == e.message.from){        
+                    name = $(this).text();
+                    $("#walls center").prepend('<div class="wallBlock"><p>'+name+': '+e.message.message+'</p></div><input type="text" class="postId" value="'+0+'" hidden><input class="buttonLike" type="button" value="0 Like"><input class="buttonComment" type="button" value="Show 0 Comments"><div class="comments" hidden><input type="text" class="comm" placeholder="Comment..."><input class="buttonCommentGo" type="button" value="Comment"></div></div>');
+                    $("#message").val("");$("#imageUp").val("");
+                    buttons();
+                }
+            });
+        })
+        .listenForWhisper('typing', (e) => {
+            $('.typing').text(e.user + " esta escribiendo...")
+            e.typing ? $('.typing').show() : $('.typing').hide()
+            setTimeout( () => {
+                $('.typing').hide()
+            }, 5000)
+        });
+        Echo.join("_public_channel_")
+        .here((users) => {
+            users.forEach(element=>{
+                $("#connecteds center").append("<p id='"+element.id+"-conn'>·"+element.name+"</p>")
+            })
+        })
+        .joining((user) => {
+            $("#connecteds center").append("<p id='"+user.id+"-conn'>·"+user.name+"</p>")
+        })
+        .leaving((user) => {
+            console.log(user.name)
+            $("#connecteds").children("center").children("#"+user.id+"-conn").remove();
+        });
+    }
+
     public();
 
     //If is typing build
@@ -67,6 +76,10 @@ $(document).ready(()=>{
                     if ($(this).val() == e.message.from){        
                         name = $(this).text();
                         $("#walls center").prepend("<div class='wallBlock'><input type='text' class='postId' value='"+e.message.id+"' hidden><p>"+name+": "+e.message.message+"</p></div>");
+                        $(".wallBlock").eq(0)
+                        .append('<input type="text" class="postId" value="'+0+'" hidden><input class="buttonLike" type="button" value="0 Likes"><input class="buttonComment" type="button" value="Show Comments"><div class="comments" hidden><input type="text" class="comm" placeholder="Comment..."><input class="buttonCommentGo" type="button" value="Comment"></div>');
+                        $("#message").val("");$("#imageUp").val("");
+                        buttons();
                     }
                 });
             })
@@ -96,7 +109,7 @@ $(document).ready(()=>{
             success: function(data) {
                 $("#walls center").prepend("<div class='wallBlock'><p>You: "+message+"</p></div>");
                 $(".wallBlock").eq(0)
-                .append('<input type="text" class="postId" value="'+0+'" hidden><input class="buttonLike" type="button" value="0 Likes"><input class="buttonComment" type="button" value="Show Comments"><div class="comments" hidden><input type="text" class="comm" placeholder="Comment..."><input class="buttonCommentGo" type="button" value="Comment"></div>');
+                .append('<input type="text" class="postId" value="'+data.message_id+'" hidden><input class="buttonLike" type="button" value="0 Likes"><input class="buttonComment" type="button" value="Show Comments"><div class="comments" hidden><input type="text" class="comm" placeholder="Comment..."><input class="buttonCommentGo" type="button" value="Comment"></div>');
                 $("#message").val("");$("#imageUp").val("");
                 buttons();
             }
@@ -105,8 +118,8 @@ $(document).ready(()=>{
     })
 
     function buttons(){
-        //Like button build
-        $(".buttonLike").click(function(){
+    //Like button build    
+    $(".buttonLike").click(function(){
         var save = $(this);
         var _token = $('meta[name=csrf-token]').attr('content');
         var id = $(this).parent().children(".postId").val();
@@ -131,9 +144,9 @@ $(document).ready(()=>{
     //Comment button build
     $(".buttonComment").click(function(){ 
         if($(this).parent().children(".comments").is(":visible")){
-            $(this).val("Show Comments");
+            $(this).css("background-color","white").css("color","black");
         } else {
-            $(this).val("Hide Comments");
+            $(this).css("background-color","#585858").css("color","white");
         }
         $(this).parent().children(".comments").toggle();
     })
@@ -154,6 +167,10 @@ $(document).ready(()=>{
         })
         return false;
     })
+
     }
-   buttons();
+
+    buttons();
+
+
 })

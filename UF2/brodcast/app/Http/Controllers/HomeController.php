@@ -24,7 +24,9 @@ class HomeController extends Controller
         $data["user_id"] = Auth::user()->id;
 
         $olds = Message::with("comments")->
+        withCount("comments")->
         withCount("likes")->
+        with('likes')->
         where("to","_public_channel_")->
         orderbydesc('created_at')->
         get();
@@ -57,7 +59,6 @@ class HomeController extends Controller
         $message->setAttribute('user_id', $request->input('userId'));
         $message->setAttribute('comment', $request->input('comment'));
         $message->save();
-        return $message->id;
     }
  
 
@@ -153,7 +154,7 @@ class HomeController extends Controller
             event(new NewMessageNotification($message));
         }
         // ...
-        return $this->index();
+        return array("message_id"=>$message->id);
     }
 
 }

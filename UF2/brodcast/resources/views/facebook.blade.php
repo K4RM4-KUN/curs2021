@@ -97,8 +97,17 @@
                                     @endforeach
                                 @endif
                                 <input type="text" class="postId" value="{{$mess->id}}" hidden>
-                                <input class="buttonLike" type="button" value="{{$mess->likes_count}} Like" >
-                                <input class="buttonComment" type="button" value="Show Comments" >
+                                <?php $m = false ?>
+                                @foreach($mess->likes as $like)
+                                    @if($like->user_id == $user_id)
+                                        <?php $m = true ?>
+                                        <input class="buttonLike disabled" type="button" value="{{$mess->likes_count}} Like" >
+                                    @endif
+                                @endforeach
+                                @if(!$m)
+                                    <input class="buttonLike" type="button" value="{{$mess->likes_count}} Like" >
+                                @endif
+                                <input class="buttonComment" type="button" value="Show {{$mess->comments_count}} Comments" >
                                 <div class="comments" hidden>
                                     <input type="text" class="comm" placeholder="Comment...">
                                     <input class="buttonCommentGo" type="button" value="Comment">

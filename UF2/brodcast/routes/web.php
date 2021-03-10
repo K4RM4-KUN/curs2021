@@ -22,7 +22,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/facebook', [HomeController::class, "index"])->middleware(['auth'])->name('dashboard');
+Route::get('/facebook', [HomeController::class, "index"])->middleware(['auth'])->name('face');
 Route::get('/channelChange/{to}', [HomeController::class, "ChannelIndex"])->middleware(['auth'])->name('changeChannel');
 Route::post('/facebook', [HomeController::class, "send"])->middleware(['auth'])->name('sendPost');
 Route::post('/like', [HomeController::class, "like"])->middleware(['auth'])->name('likePost');

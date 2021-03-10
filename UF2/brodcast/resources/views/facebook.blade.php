@@ -39,6 +39,7 @@
             display: none;
         }
         .headFB{
+            margin-right: 15%;
             height:120px;
         }
         .buttonComment{
@@ -53,6 +54,18 @@
         .X{
             margin: 5px;
         }
+        #walls{
+            width:85%;
+        }
+        #connecteds{
+            float: right;
+            position: fixed;
+            width: 15%;
+            height: 1000px;
+            bottom: 0;
+            left: 85%;
+            background-color: #424242;
+        }
     </style>
 </head>
     <body> 
@@ -62,46 +75,57 @@
                 <h4>Welcome {{$user_name[0]->name}}!</h4>
                 <h5 class="typing"> Alguien esta escribiendo </h5>
             </div>
-
-            <div id="walls">
-                @foreach ($old as $mess)
-                    <div class="wallBlock">
-                        @if ($mess->from == $user_id)
-                            <p>You: {{$mess->message}}</p>
-                        @else
-                            @foreach($users as $user)
-                                @if($mess->from == $user->id)
-                                    <p>{{$user->name}}: {{$mess->message}}</p>
-                                @endif
-                            @endforeach
-                        @endif
-                        <input type="text" class="postId" value="{{$mess->id}}" hidden>
-                        <input class="buttonLike" type="button" value="{{$mess->likes_count}} Likes" >
-                        <input class="buttonComment" type="button" value="Show Comments" >
-                        <div class="comments" hidden>
-                            <input type="text" class="comm" placeholder="Comment...">
-                            <input class="buttonCommentGo" type="button" value="Comment">
-                            @foreach($mess->comments as $comment)
-                                <div>
-                                    @if ($comment->user_id == $user_id)
-                                        <p>You: {{$comment->comment}}</p>
-                                    @else
-                                        @foreach($users as $user)
-                                            @if($comment->user_id == $user->id)
-                                                <p>{{$user->name}}: {{$comment->comment}}</p>
-                                            @endif
-                                        @endforeach
-                                    @endif
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                @endforeach
+        </center>
+        <div style="width: 100%;">
+            <div id="connecteds">
+                <center>
+                    <h3>Connected users</h3>
+                    <h4 style="margin-bottom: 25px;margin-top:-25px;">-------------------</h4>
+                </center>
             </div>
-
+            <div id="walls">
+                <center>
+                        @foreach ($old as $mess)
+                            <div class="wallBlock">
+                                @if ($mess->from == $user_id)
+                                    <p>You: {{$mess->message}}</p>
+                                @else
+                                    @foreach($users as $user)
+                                        @if($mess->from == $user->id)
+                                            <p>{{$user->name}}: {{$mess->message}}</p>
+                                        @endif
+                                    @endforeach
+                                @endif
+                                <input type="text" class="postId" value="{{$mess->id}}" hidden>
+                                <input class="buttonLike" type="button" value="{{$mess->likes_count}} Like" >
+                                <input class="buttonComment" type="button" value="Show Comments" >
+                                <div class="comments" hidden>
+                                    <input type="text" class="comm" placeholder="Comment...">
+                                    <input class="buttonCommentGo" type="button" value="Comment">
+                                    @foreach($mess->comments as $comment)
+                                        <div>
+                                            @if ($comment->user_id == $user_id)
+                                                <p>You: {{$comment->comment}}</p>
+                                            @else
+                                                @foreach($users as $user)
+                                                    @if($comment->user_id == $user->id)
+                                                        <p>{{$user->name}}: {{$comment->comment}}</p>
+                                                    @endif
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endforeach
+                </center>
+            </div>
+        </div>
+        <center>
             <div class="input">
-                <form action="{{ Route('sendPost')}}" method="post" id="messageSend">
+                <form action="{{ Route('sendPost')}}" method="post" id="messageSend" style="margin-right: 15%;">
                     <label for="message">Your post: </label><input type="text" name="message" id="message" >
+                    <input type="file" name="image" id="imageUp" >
                     <input type="submit" id="send" value="Send">
                     <select name="userTo" id="channel">
                                 <option value="_public_channel_">Public channel</option>

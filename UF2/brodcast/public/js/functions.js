@@ -10,7 +10,7 @@ function public(){
         $("#channel option").each(function(){
             if ($(this).val() == e.message.from){        
                 name = $(this).text();
-                $("#walls").prepend("<div class='wallBlock'><p>"+name+": "+e.message.message+"</p></div>");
+                $("#walls center").prepend("<div class='wallBlock'><p>"+name+": "+e.message.message+"</p></div>");
             }
         });
     })
@@ -20,6 +20,19 @@ function public(){
         setTimeout( () => {
             $('.typing').hide()
         }, 5000)
+    });
+    Echo.join("_public_channel_")
+    .here((users) => {
+        users.forEach(element=>{
+            $("#connecteds center").append("<p id='"+element.id+"-conn'>·"+element.name+"</p>")
+        })
+    })
+    .joining((user) => {
+        $("#connecteds center").append("<p id='"+user.id+"-conn'>·"+user.name+"</p>")
+    })
+    .leaving((user) => {
+        console.log(user.name)
+        $("#connecteds").children("center").children("#"+user.id+"-conn").remove();
     });
 }
 
@@ -53,7 +66,7 @@ $(document).ready(()=>{
                 $("#channel option").each(function(){
                     if ($(this).val() == e.message.from){        
                         name = $(this).text();
-                        $("#walls").prepend("<div class='wallBlock'><input type='text' class='postId' value='"+e.message.id+"' hidden><p>"+name+": "+e.message.message+"</p></div>");
+                        $("#walls center").prepend("<div class='wallBlock'><input type='text' class='postId' value='"+e.message.id+"' hidden><p>"+name+": "+e.message.message+"</p></div>");
                     }
                 });
             })
@@ -75,15 +88,16 @@ $(document).ready(()=>{
         var message = $("#message").val();
         var to = $("#channel").val();
         var from = user_id;
+        //var img = $("#imageUp").val()
         $.ajax({
             url: "http://dawjavi.insjoaquimmir.cat/jfuentes/UF2/brodcast/public/facebook",
             type:'POST',
             data: {_token:_token, message:message, to:to,from:from},
             success: function(data) {
-                $("#walls").prepend("<div class='wallBlock'><p>You: "+message+"</p></div>");
+                $("#walls center").prepend("<div class='wallBlock'><p>You: "+message+"</p></div>");
                 $(".wallBlock").eq(0)
                 .append('<input type="text" class="postId" value="'+0+'" hidden><input class="buttonLike" type="button" value="0 Likes"><input class="buttonComment" type="button" value="Show Comments"><div class="comments" hidden><input type="text" class="comm" placeholder="Comment..."><input class="buttonCommentGo" type="button" value="Comment"></div>');
-                $("#message").val("");
+                $("#message").val("");$("#imageUp").val("");
                 buttons();
             }
         })
@@ -103,10 +117,10 @@ $(document).ready(()=>{
             data: {_token:_token, postId:id, userId:user_id},
             success: function(data) {
                 if($(save).hasClass("disabled") == false){
-                    $(save).val(parseInt(($(save).val().charAt(0))+1)+" Likes");
+                    $(save).val((parseInt(($(save).val().charAt(0)))+1)+" Dislike");
                     $(save).addClass("disabled");
                 } else {
-                    $(save).val(parseInt(($(save).val().charAt(0))-1)+" Likes");
+                    $(save).val((parseInt(($(save).val().charAt(0)))-1)+" Like");
                     $(save).removeClass("disabled");
                 }
             }

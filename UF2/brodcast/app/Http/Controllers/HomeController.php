@@ -134,10 +134,14 @@ class HomeController extends Controller
         $toValidate = $request->validate([
             'message' => 'required'
         ]);
+        /*$fileA = $request->file('img_route');
+        $nameA = time().$fileA->getClientOriginalName();
+        $fileA->move(public_path().'/img/',$nameA);*/
 
         $message = new Message;
         $message->setAttribute('from', $request->input('from'));
         $message->setAttribute('to', $request->input('to'));
+        //$message->setAttribute('img_route', $nameA);
         $message->setAttribute('message', $request->input('message'));
         $message->save();
         

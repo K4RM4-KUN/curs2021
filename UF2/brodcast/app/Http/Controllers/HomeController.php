@@ -41,7 +41,23 @@ class HomeController extends Controller
 
         return view('facebook', $data);
     }
+    public function ChannelIndex($to){   
+        if($to == "_public_channel_"){
+            $olds = Message::Where('to', $to)->orderByDesc('created_at')->get();
+        }else{
+            $olds = Message::where('from', Auth::user()->id)->Where('to', $to)->orWhere(function($query) use ($to) {
+                $query->where('from', $to) ->Where('to', Auth::user()->id);})->get();
+        }
+        $data["old"] = $olds;
 
+        $users = User::select("id","name")->where("id","!=",Auth::user()->id)->get();
+        $data["users"] = $users;
+
+        $nameOfUser = User::select("name")->where("id",Auth::user()->id)->get();
+        $data["user_name"] = $nameOfUser;
+  
+        return $data;
+    }
     public function like(Request $request){
         $message = new Like;
         $message->setAttribute('message_id', $request->input('postId'));
@@ -132,17 +148,22 @@ class HomeController extends Controller
     {
         // ...
         // message is being sent
-        $toValidate = $request->validate([
+        $request->validate([
             'message' => 'required'
         ]);
-        /*$fileA = $request->file('img_route');
-        $nameA = time().$fileA->getClientOriginalName();
-        $fileA->move(public_path().'/img/',$nameA);*/
-
         $message = new Message;
+        if($request->image != "undefined"){
+            $request->validate([
+                'image' => 'image|mimes:jpeg,png,jpg,gif,svg'
+            ]);
+            $fileA = $request->file('image');
+            $nameA = time().$fileA->getClientOriginalName();
+            $fileA->move(public_path().'/img/',$nameA);
+            $message->setAttribute('img_route', $nameA);
+            $resp["route"] = $nameA;
+        }
         $message->setAttribute('from', $request->input('from'));
         $message->setAttribute('to', $request->input('to'));
-        //$message->setAttribute('img_route', $nameA);
         $message->setAttribute('message', $request->input('message'));
         $message->save();
         
@@ -154,7 +175,8 @@ class HomeController extends Controller
             event(new NewMessageNotification($message));
         }
         // ...
-        return array("message_id"=>$message->id);
+        $resp["message_id"] = $message->id;
+        return $resp;
     }
 
 }

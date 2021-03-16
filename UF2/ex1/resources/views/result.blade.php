@@ -20,7 +20,7 @@
                 background-color: #253339;
             }
             h3 {
-                color: white;
+                color: black;
             }
         </style>
     </head>

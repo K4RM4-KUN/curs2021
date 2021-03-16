@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  * Class Test
  * @package App\Models
- * @version February 28, 2021, 12:41 am UTC
+ * @version March 15, 2021, 5:50 pm UTC
  *
  * @property string $jajajaja
  * @property integer $Nonono

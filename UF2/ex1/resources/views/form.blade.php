@@ -19,10 +19,10 @@
                 font-family: 'Nunito';
             }
             label {
-                color: white;
+                color: black;
             }
             ul li {
-                color: white;
+                color: black;
             }
         </style>
     </head>

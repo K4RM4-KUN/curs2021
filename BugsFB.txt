@@ -1,0 +1,8 @@
+Importantes:
+    - Carga de mensaje(en chats privados) por JQUERY(JSON) triplicada
+    - Cuando un nuevo usuario entra por primera vez al muro los demas usuarios deben actualizar su pagina para poder ver sus mensajes instantaneamente
+
+Essenciales:
+    - Like instantaneo
+    - Comment instantaneo
+    - Check/DoubleCheck/CheckAzul ???

@@ -4,8 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGolosinas extends Migration
+class CreateGolosinasTable extends Migration
 {
+
     /**
      * Run the migrations.
      *
@@ -14,12 +15,9 @@ class CreateGolosinas extends Migration
     public function up()
     {
         Schema::create('golosinas', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('flavour');
-            $table->string('colour');
-            $table->integer('price');
+            $table->increments('id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -30,6 +28,6 @@ class CreateGolosinas extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('golosinas');
+        Schema::drop('golosinas');
     }
 }

@@ -66,13 +66,25 @@
             left: 85%;
             background-color: #424242;
         }
+        .image{
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+        #lo{
+            position: absolute;
+            top: 15px;
+            left: 5px;
+        }
     </style>
 </head>
     <body> 
         <center>
             <div class="headFB">
+                <a id="lo" href="{{ url('/logout') }}"> Logout </a>
                 <h1>FAKEBOOK</h1>
-                <h4>Welcome {{$user_name[0]->name}}!</h4>
+                <h4>Welcome</h4> 
                 <h5 class="typing"> Alguien esta escribiendo </h5>
             </div>
         </center>
@@ -87,6 +99,9 @@
                 <center>
                         @foreach ($old as $mess)
                             <div class="wallBlock">
+                                @if($mess->img_route != null)
+                                    <img class="image" src="{{asset('img/'.$mess->img_route)}}" alt="image" width="45%">
+                                @endif
                                 @if ($mess->from == $user_id)
                                     <p>You: {{$mess->message}}</p>
                                 @else
@@ -101,7 +116,7 @@
                                 @foreach($mess->likes as $like)
                                     @if($like->user_id == $user_id)
                                         <?php $m = true ?>
-                                        <input class="buttonLike disabled" type="button" value="{{$mess->likes_count}} Like" >
+                                        <input class="buttonLike disabled" type="button" value="{{$mess->likes_count}} Dislike" >
                                     @endif
                                 @endforeach
                                 @if(!$m)
@@ -132,16 +147,16 @@
         </div>
         <center>
             <div class="input">
-                <form action="{{ Route('sendPost')}}" method="post" id="messageSend" style="margin-right: 15%;">
+                <form action="{{ Route('sendPost')}}" enctype="multipart/form-data" method="post" id="messageSend" style="margin-right: 15%;">
                     <label for="message">Your post: </label><input type="text" name="message" id="message" >
-                    <input type="file" name="image" id="imageUp" >
                     <input type="submit" id="send" value="Send">
                     <select name="userTo" id="channel">
                                 <option value="_public_channel_">Public channel</option>
                         @foreach ($users as $user)
                                 <option value="{{$user->id}}">{{$user->name}}</option>
                         @endforeach
-                    </select>
+                    </select><br>
+                    <label for="image">Image(?): </label> <input type="file" name="image" id="imageUp" >
                 </form>
             </div>
         </center>

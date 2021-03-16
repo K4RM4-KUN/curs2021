@@ -27,7 +27,10 @@ Route::get('/channelChange/{to}', [HomeController::class, "ChannelIndex"])->midd
 Route::post('/facebook', [HomeController::class, "send"])->middleware(['auth'])->name('sendPost');
 Route::post('/like', [HomeController::class, "like"])->middleware(['auth'])->name('likePost');
 Route::post('/comment', [HomeController::class, "comment"])->middleware(['auth'])->name('commentPost');
-
+Route::get('/logout', function () {
+    Auth::logout();
+    return view('welcome');
+});
 
 
 require __DIR__.'/auth.php';

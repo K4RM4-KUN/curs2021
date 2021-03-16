@@ -2,23 +2,22 @@
 
 namespace App\Repositories;
 
-use App\Models\Test;
+use App\Models\Golosina;
 use App\Repositories\BaseRepository;
 
 /**
- * Class TestRepository
+ * Class GolosinaRepository
  * @package App\Repositories
- * @version March 15, 2021, 5:50 pm UTC
+ * @version March 15, 2021, 5:48 pm UTC
 */
 
-class TestRepository extends BaseRepository
+class GolosinaRepository extends BaseRepository
 {
     /**
      * @var array
      */
     protected $fieldSearchable = [
-        'jajajaja',
-        'Nonono'
+        
     ];
 
     /**
@@ -36,6 +35,6 @@ class TestRepository extends BaseRepository
      **/
     public function model()
     {
-        return Test::class;
+        return Golosina::class;
     }
 }

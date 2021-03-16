@@ -25,6 +25,10 @@ Broadcast::channel('_public_channel_', function () {
     return Auth::check();
 });
 
-Broadcast::channel("_public_channel_", function ($user) {
+Broadcast::channel('_reactions_', function () {
+    return Auth::check();
+});
+
+Broadcast::channel("_presence_channel_", function ($user) {
         return ['id' => $user->id, 'name' => $user->name];
 });

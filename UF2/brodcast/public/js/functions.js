@@ -5,6 +5,7 @@ var src = "http://dawjavi.insjoaquimmir.cat/jfuentes/UF2/brodcast/public/img/";
 var actualChannel = "_public_channel_"
 $(document).ready(()=>{
 
+    //Instant like & comment
     Echo.private('_reactions_')
     .listenForWhisper('reaction_entry', (e) => {
         //InstantLike
@@ -40,7 +41,8 @@ $(document).ready(()=>{
             $(save).parent().children(".comments").append("<div><p>"+e.name+": "+e.comment+"</p></div>");
         }
     })
-
+    
+    //Like status
     $(".buttonLike").each(function(){
         if($(this).hasClass("disabled") == true){
             $(this).val($(this).val().charAt(0)+" Dislike");
@@ -63,13 +65,10 @@ $(document).ready(()=>{
             if(name == ""){
                 name = "You";
             }
-            console.log(e.message.img_route)
             if(e.message.img_route == undefined){
-                console.log("bye")
                 $("#walls center").prepend("<div class='wallBlock'><input type='text' class='postId' value='"+e.message.id+"' hidden><p>"+name+": "+e.message.message+"</p></div>");
             } else{
-                console.log("hola")
-                $("#walls center").prepend("<div class='wallBlock'><input type='text' class='postId' value='"+e.message.id+"' hidden><img class='image' src='"+src+e.message.img_route+"' alt='image' width='45%'><p>"+name+": "+e.message.message+"</p></div>");
+                $("#walls center").prepend("<div class='wallBlock'><input type='text' class='postId' value='"+e.message.id+"' hidden><a href='http://dawjavi.insjoaquimmir.cat/jfuentes/UF2/brodcast/public/img/"+e.message.img_route+"' target='_blank'><img class='image' src='"+src+e.message.img_route+"' alt='image' width='45%'></a><p>"+name+": "+e.message.message+"</p></div>");
             }
             $(".wallBlock").eq(0).append('<input type="text" class="postId" value="'+e.message.id+'" hidden><input class="buttonLike" type="button" value="0 Like"><input class="buttonComment" type="button" value="Show 0 Comments"><div class="comments" hidden><input type="text" class="comm" placeholder="Comment..."><input class="buttonCommentGo" type="button" value="Comment"></div></div>');
             $("#message").val("");
@@ -85,6 +84,7 @@ $(document).ready(()=>{
         });
     }
 
+    //Presence channel connection
     function presence(){
         Echo.join("_presence_channel_")
         .here((users) => {
@@ -93,11 +93,18 @@ $(document).ready(()=>{
             })
         })
         .joining((user) => {
-            console.log(user.name)
             $("#connecteds center").append("<p class='con-user' id='"+user.id+"-conn'>·"+user.name+"</p>")
+            let bool = false;
+            $("#channel option").each(function(){
+                if ($(this).val() == user.id){     
+                    bool = true;
+                }
+            });
+            if(!bool){
+                $("#channel").append("<option value='"+user.id+"'>"+user.name+"</option>")
+            }
         })
         .leaving((user) => {
-            console.log(user.name)
             $("#connecteds").children("center").children("#"+user.id+"-conn").remove();
         });
     }
@@ -118,6 +125,7 @@ $(document).ready(()=>{
         Echo.leave("_public_channel_");
         if($('#channel').val() != "_public_channel_"){
             $("#walls center").empty(); 
+            $("#upImage").attr("hidden",true);
             $.getJSON("http://dawjavi.insjoaquimmir.cat/jfuentes/UF2/brodcast/public/channelChange/"+$("#channel").val(), (response)=>{
                 $.each( response, function() {
                     usersInfo = response.userName
@@ -136,6 +144,7 @@ $(document).ready(()=>{
                             $("#walls center").prepend("<div class='wallBlock'><input type='text' class='postId' value='"+data.id+"' hidden><p>"+name+": "+data.message+"</p></div>");
                         }
                     })
+                    return false;
                   });
                   if( $("#walls center").children().length == 0){
                     $("#walls center").prepend("<h1>No messages!</h1>")
@@ -153,8 +162,6 @@ $(document).ready(()=>{
                 });
             })
             .listenForWhisper('typing', (e) => {
-                console.log("hola===");
-                console.log(e.name);
             });
         } else {
             //Public(General PrivateChannel) channel connection
@@ -193,6 +200,7 @@ $(document).ready(()=>{
         data.append("message", $("#message").val());
         data.append("to", $("#channel").val());
         data.append("from", user_id);
+        //data.append("name", user_name);
         data.append("image", $("#imageUp").prop('files')[0]);
         $.ajax({
             type: "POST",
@@ -206,7 +214,6 @@ $(document).ready(()=>{
                 } else {
                     $("#walls center").prepend("<div class='wallBlock'><img class='image' src='"+src+data.route+"' alt='image' width='45%'><p>You: "+$("#message").val()+"</p></div>");
                 }
-                console.log(actualChannel)
                 if(actualChannel == "_public_channel_"){
                     $(".wallBlock").eq(0)
                     .append('<input type="text" class="postId" value="'+data.message_id+'" hidden><input class="buttonLike" type="button" value="0 Likes"><input class="buttonComment" type="button" value="Show Comments"><div class="comments" hidden><input type="text" class="comm" placeholder="Comment..."><input class="buttonCommentGo" type="button" value="Comment"></div>');
@@ -215,10 +222,11 @@ $(document).ready(()=>{
                 }*/
                 if($("#channel").val() != "_public_channel_"){
                     $("#walls center").prepend("<div class='wallBlock'><p>You: "+$("#message").val()+"</p></div>");
+                    $("#message").val("");$("#imageUp").val("");
                 }
             },
             error: function(datab) {
-                console.log(datab);
+
             }
         });
         return false;

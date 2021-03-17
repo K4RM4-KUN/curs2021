@@ -166,7 +166,6 @@ class HomeController extends Controller
         $message->setAttribute('to', $request->input('to'));
         $message->setAttribute('message', $request->input('message'));
         $message->save();
-        
         if($request->input('to') == "_public_channel_"){
             // want to broadcast publicWall event
             event(new publicWall($message));

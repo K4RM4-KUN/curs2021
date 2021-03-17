@@ -82,7 +82,7 @@
     <body> 
         <center>
             <div class="headFB">
-                <a id="lo" href="{{ url('/logout') }}"> Logout </a>
+                <a style="color:white;" id="lo" href="{{ url('/logout') }}"> Logout </a>
                 <h1>FAKEBOOK</h1>
                 <h4>Welcome</h4> 
                 <h5 class="typing"> Alguien esta escribiendo </h5>
@@ -100,7 +100,8 @@
                         @foreach ($old as $mess)
                             <div class="wallBlock">
                                 @if($mess->img_route != null)
-                                    <img class="image" src="{{asset('img/'.$mess->img_route)}}" alt="image" width="45%">
+                                    <a href="http://dawjavi.insjoaquimmir.cat/jfuentes/UF2/brodcast/public/img/{{$mess->img_route}}"  target="_blank">
+                                    <img class="image" src="{{asset('img/'.$mess->img_route)}}" alt="image" width="45%"></a>
                                 @endif
                                 @if ($mess->from == $user_id)
                                     <p>You: {{$mess->message}}</p>
@@ -156,7 +157,7 @@
                                 <option value="{{$user->id}}">{{$user->name}}</option>
                         @endforeach
                     </select><br>
-                    <label for="image">Image(?): </label> <input type="file" name="image" id="imageUp" >
+                    <div id="upImage"><label for="image">Image(?): </label> <input type="file" name="image" id="imageUp"></div>
                 </form>
             </div>
         </center>

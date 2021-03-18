@@ -59,9 +59,9 @@
         }
         #connecteds{
             float: right;
-            position: fixed;
+            position:absolute;
             width: 15%;
-            height: 1000px;
+            height: 100%;
             bottom: 0;
             left: 85%;
             background-color: #424242;
@@ -77,6 +77,13 @@
             top: 15px;
             left: 5px;
         }
+        .notifications {
+            color: white;
+            margin-top: 100px;
+        }
+        .notifications p{
+            color: red;
+        }
     </style>
 </head>
     <body> 
@@ -84,15 +91,27 @@
             <div class="headFB">
                 <a style="color:white;" id="lo" href="{{ url('/logout') }}"> Logout </a>
                 <h1>FAKEBOOK</h1>
-                <h4>Welcome</h4> 
+                <h4>Welcome {{$user_name[0]->name}}</h4> 
                 <h5 class="typing"> Alguien esta escribiendo </h5>
             </div>
         </center>
         <div style="width: 100%;">
             <div id="connecteds">
-                <center>
+                <center class="connecteds">
                     <h3>Connected users</h3>
                     <h4 style="margin-bottom: 25px;margin-top:-25px;">-------------------</h4>
+                </center>
+                <center class="notifications">
+                    <h3>New message from</h3>
+                    <h4 style="margin-bottom: 25px;margin-top:-25px;">-------------------</h4>
+                        @foreach ($notis as $notification)
+                            <p class="notification">
+                            @foreach($users as $user)
+                                @if($user->id == $notification->from_id)
+                                -{{$user->name}}-
+                                @endif
+                            @endforeach</p>
+                        @endforeach
                 </center>
             </div>
             <div id="walls">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Events\NewMessageNotification;
+use App\Events\InstantNotify;
 use App\Events\publicWall;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,6 +12,7 @@ use App\Models\Message;
 use App\Models\User;
 use App\Models\Like;
 use App\Models\Comment;
+use App\Models\Notification;
 
 class HomeController extends Controller
 {
@@ -33,6 +35,8 @@ class HomeController extends Controller
         //print($olds);
         $data["old"] = $olds;
 
+        $notifications = Notification::all()->where("to_id",Auth::user()->id);
+        $data["notis"] = $notifications;
         $users = User::select("id","name")->where("id","!=",Auth::user()->id)->get();
         $data["users"] = $users;
 
@@ -75,6 +79,19 @@ class HomeController extends Controller
         $message->setAttribute('user_id', $request->input('userId'));
         $message->setAttribute('comment', $request->input('comment'));
         $message->save();
+    }
+
+    public function notify(Request $request){
+        if(!Notification::where('from_id', $request->input('from_id'))->where('to_id', $request->input('to_id'))->exists()){
+            return false;
+        } else {
+            Notification::where('from_id', $request->input('from_id'))->where('to_id', $request->input('to_id'))->delete();
+            return true;
+        }
+    }
+
+    public function notifyTo(Request $request){
+        event(new InstantNotify(strval($request->input('to_id')),strval($request->input('from_id'))));
     }
  
 
@@ -166,12 +183,18 @@ class HomeController extends Controller
         $message->setAttribute('to', $request->input('to'));
         $message->setAttribute('message', $request->input('message'));
         $message->save();
+        $notification = new Notification;
+        $notification->setAttribute('from_id', intval($request->input('from')));
+        $notification->setAttribute('to_id', intval($request->input('to')));
+        if(!Notification::where('from_id', $request->input('from'))->where('to_id', $request->input('to'))->exists()){
+            $notification->save();
+        }
         if($request->input('to') == "_public_channel_"){
             // want to broadcast publicWall event
             event(new publicWall($message));
         } else {
             // want to broadcast NewMessageNotification event
-            event(new NewMessageNotification($message));
+            event(new NewMessageNotification($message,$request->input('channel')));
         }
         // ...
         $resp["message_id"] = $message->id;

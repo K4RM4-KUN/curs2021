@@ -17,11 +17,19 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('user.{toUserId}', function ($user, $toUserId) {
-    return $user->id == $toUserId;
+Broadcast::channel('user.{u1}.{u2}', function ($user, $u1, $u2) {
+    if($user->id == $u1 || $user->id == $u2){
+        return true;
+    } else {
+        return false;
+    }
 });
 
 Broadcast::channel('_public_channel_', function () {
+    return Auth::check();
+});
+
+Broadcast::channel('user.{to}', function ($to) {
     return Auth::check();
 });
 

@@ -6,4 +6,4 @@ Essenciales:
     - (Hecho)Like instantaneo
     - (Hecho)Comment instantaneo
     - Check/DoubleCheck/CheckAzul ???
-    - Notificacion de chat privado(Seguramente ligado a check/doublecheck/checkazul)ºº
+    - Notificacion de chat privado(Seguramente ligado a check/doublecheck/checkazul)

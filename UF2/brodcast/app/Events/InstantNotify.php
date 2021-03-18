@@ -10,25 +10,23 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-use \App\Models\Message;
+use \App\Models\Notification;
 
-class NewMessageNotification implements ShouldBroadcastNow
+class InstantNotify implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $message;
-    public $channel;
-    
+    public $to;
+    public $from;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Message $message, string $channel)
+    public function __construct(string $to,string $from)
     {
-        //
-        $this->message = $message;
-        $this->channel = $channel;
+        $this->to = $to;
+        $this->from = $from;
     }
 
     /**
@@ -38,6 +36,6 @@ class NewMessageNotification implements ShouldBroadcastNow
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('user.'.$this->channel);
+        return new PrivateChannel('user.'.$this->to);
     }
 }

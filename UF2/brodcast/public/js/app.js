@@ -3828,7 +3828,7 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__.default({
   key: "8b150e9139f2a7a686f3",
   cluster: "eu",
   forceTLS: true,
-  authEndpoint: 'http://dawjavi.insjoaquimmir.cat/jfuentes/UF2/brodcast/public/broadcasting/auth'
+  authEndpoint: 'https://dawjavi.insjoaquimmir.cat/jfuentes/UF2/brodcast/public/broadcasting/auth'
 });
 
 /***/ }),

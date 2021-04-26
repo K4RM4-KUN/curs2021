@@ -33,13 +33,19 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'username' => 'required|string|max:255',
             'name' => 'required|string|max:255',
+            'surname' => 'required|string|max:255',
+            'birth_date' => 'required|date',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|confirmed|min:8',
         ]);
 
         $user = User::create([
+            'username' => $request->username,
             'name' => $request->name,
+            'surname' => $request->surname,
+            'birth_date' => $request->birth_date,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
@@ -47,6 +53,9 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+
+        $path = public_path().'users/' . $user->id;
+        File::makeDirectory($path, $mode = 0777, true, true);
 
         return redirect(RouteServiceProvider::HOME);
     }

@@ -11,12 +11,32 @@
 
         <form method="POST" action="{{ route('register') }}">
             @csrf
+            <!-- Username -->
+            <div>
+                <x-label for="username" :value="__('Username')" />
+
+                <x-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('namusername')" required autofocus />
+            </div>
 
             <!-- Name -->
             <div>
                 <x-label for="name" :value="__('Name')" />
 
                 <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+            </div>
+
+            <!-- Surname -->
+            <div>
+                <x-label for="surname" :value="__('Surname')" />
+
+                <x-input id="surname" class="block mt-1 w-full" type="text" name="surname" :value="old('surname')" required autofocus />
+            </div>
+
+            <!-- Date -->
+            <div>
+                <x-label for="birth_date" :value="__('Birth date')" />
+
+                <x-input id="birth_date" class="block mt-1 w-full" type="date" name="birth_date" :value="old('birth_date')" required autofocus />
             </div>
 
             <!-- Email Address -->

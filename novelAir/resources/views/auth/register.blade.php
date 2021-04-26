@@ -20,21 +20,21 @@
 
             <!-- Name -->
             <div>
-                <x-label for="name" :value="__('Name')" />
+                <x-label for="name" :value="__('Nombre')" />
 
                 <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
             </div>
 
             <!-- Surname -->
             <div>
-                <x-label for="surname" :value="__('Surname')" />
+                <x-label for="surname" :value="__('Apellido/s')" />
 
                 <x-input id="surname" class="block mt-1 w-full" type="text" name="surname" :value="old('surname')" required autofocus />
             </div>
 
             <!-- Date -->
             <div>
-                <x-label for="birth_date" :value="__('Birth date')" />
+                <x-label for="birth_date" :value="__('Fecha de nacimiento')" />
 
                 <x-input id="birth_date" class="block mt-1 w-full" type="date" name="birth_date" :value="old('birth_date')" required autofocus />
             </div>
@@ -48,7 +48,7 @@
 
             <!-- Password -->
             <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
+                <x-label for="password" :value="__('Contraseña')" />
 
                 <x-input id="password" class="block mt-1 w-full"
                                 type="password"

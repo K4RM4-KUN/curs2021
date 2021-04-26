@@ -9,6 +9,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use File;
 
 class RegisteredUserController extends Controller
 {
@@ -54,8 +55,10 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        $path = public_path().'users/' . $user->id;
-        File::makeDirectory($path, $mode = 0777, true, true);
+        $user = auth()->user();
+        $path = public_path() ."/users/". $user->id;
+        File::makeDirectory($path , $mode = 0775, true);
+        File::makeDirectory($path."/novels" , $mode = 0775, true);
 
         return redirect(RouteServiceProvider::HOME);
     }

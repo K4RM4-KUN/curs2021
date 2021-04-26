@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        background-color: rgb(26, 26, 26);
+        color: rgb(255, 178, 13);
+    }
+    td.result{
+        text-align: right;
+        color: rgb(38, 226, 0);
+        height: 30px;
+    }
+    td.sidebar{
+        width: 15px;
+        text-align: center;
+    }
+    td.n{
+        width: 20px;
+        text-align: center;
+    }
+</style>
+<body>
+    <center>
+    <div style="margin-top: 200px;">
+        <table border="1">
+            <tr>
+                <td id="screen" class="result" colspan="4">0</td>
+            </tr>
+            <tr>
+                <td class="n s">1</td>
+                <td class="n s">2</td>
+                <td class="n s">3</td>
+                <td class="sidebar c">+</td>
+            </tr>
+            <tr>
+                <td class="n s">4</td>
+                <td class="n s">5</td>
+                <td class="n s">6</td>
+                <td class="sidebar c">-</td>
+            </tr>
+            <tr>
+                <td class="n s">7</td>
+                <td class="n s">8</td>
+                <td class="n s">9</td>
+                <td class="sidebar c">*</td>
+            </tr>
+            <tr>
+                <td class="n c">C</td>
+                <td class="n s">0</td>
+                <td class="sidebar c">=</td>
+                <td class="sidebar c">/</td>
+            </tr>
+        </table>
+    </div>
+    </center>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.5.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="calculator.js"></script>
+</body>
+</html>

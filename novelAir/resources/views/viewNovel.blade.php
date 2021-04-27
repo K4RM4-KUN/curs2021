@@ -21,6 +21,12 @@
                 <input type="text" name="sinopsis" value="{{$novels[0]->sinopsis}}"><br><br>
                 <input type="submit">
             </form>
+            <a href="{{url('novel_manager/delNovel')}}/{{$novels[0]->id}}"><button>ELIMINAR</button></a>
+            @if (count($chapters)==0)
+                <a href=""><button disabled>No hay capitulos</button></a>
+            @else
+                <a href="{{url('novel_manager/viewChapter')}}/{{$novels[0]->id}}/{{1}}"><button>VER NOVELA</button></a>
+            @endif
         </div>
         <div>
         <table border="1px">
@@ -35,7 +41,7 @@
                     {{ $chapter->chapter_n }}
                 </td>
                 <td>
-                    <a href="#">{{ $chapter->title }}</a>
+                    <a href="{{route('goVC',['id'=>$novels[0]->id,'chapter'=>$chapter->id])}}">{{ $chapter->title }}</a>
                 </td>
                 <td>
                     3

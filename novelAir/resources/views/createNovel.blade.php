@@ -33,6 +33,13 @@
                 <x-input id="sinopsis" class="block mt-1 w-full" type="text" name="sinopsis" :value="old('sinopsis')" required />
             </div>
 
+            <!-- Cover -->
+            <div class="mt-4">
+                <x-label for="cover" :value="__('Cover')" />
+
+                <x-input id="cover" class="block mt-1 w-full" type="file" name="cover" :value="old('cover')" required />
+            </div>
+
             <div class="flex items-center justify-end mt-4">
 
                 <x-button class="ml-4">

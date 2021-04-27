@@ -10,7 +10,7 @@ class Novel extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','genre','sinopsis'];
+    protected $fillable = ['name','genre','sinopsis','adult_content','visual_content','novel_type','public'];
 
     public function chapters()
     {

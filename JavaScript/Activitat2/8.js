@@ -1,0 +1,2 @@
+var d = new Date();
+alert("Dia de la semana: "+d.gedivate()+"\nMes del año: "+d.getMonth()+"\nAño: "+d.getFullYear()+"\nHora: "+d.getHours()+"\nMinutos: "+d.getMinutes()+"\nSegundos: "+d.getSeconds());

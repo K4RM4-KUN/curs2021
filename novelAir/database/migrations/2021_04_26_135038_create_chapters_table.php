@@ -19,6 +19,7 @@ class CreateChaptersTable extends Migration
             $table->string('title',255);
             $table->float('chapter_n');
             $table->string('route',255);
+            $table->integer('views');
             $table->boolean('public');
             $table->timestamps();
         });

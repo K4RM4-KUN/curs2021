@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    body{
+        background-color: black;
+    }
+    #lists{
+        margin:0 auto;
+        width: 300px;
+    }
+    #list{
+        border: 1px solid #eee;
+        width: 142px;
+        min-height: 60px;
+        list-style-type: none;
+        margin: 0;
+        padding: 5px 0 0 0;
+        float: left;
+        margin-right: 10px;
+        color: white;
+    }
+    #chart {
+        border: 1px solid rgb(255, 206, 44);
+        width: 142px;
+        min-height: 60px;
+        list-style-type: none;
+        margin: 0;
+        padding: 5px 0 0 0;
+        float: left;
+        color: rgb(255, 206, 44);
+    }
+    #list li.listItem{
+        margin: 0 5px 5px 5px;
+        border: 1px solid #eee;
+        padding: 5px;
+        font-size: 1.2em;
+        width: 120px;
+    }
+    #chart li.listItem {
+        margin: 0 5px 5px 5px;
+        border: 1px solid  rgb(255, 206, 44);
+        padding: 5px;
+        font-size: 1.2em;
+        width: 120px;
+    }
+    .title{
+        margin: 0 5px 5px 5px;
+        border: dashed 1px;
+    }
+    </style>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.5.1.js"></script>
+</head>
+<body>
+    <center> 
+        <div id="lists">
+            <ul id="list" class="transferable">
+                <li class="title">List</li>
+                <li class="listItem">Bacon</li>
+                <li class="listItem">Cow Meat</li>
+                <li class="listItem">Bread</li>
+                <li class="listItem">Bread</li>
+                <li class="listItem">Cheese</li>
+            </ul>
+            
+            <ul id="chart" class="transferable">
+                <li class="title">Chart</li>
+            </ul>
+        </div>
+    </center>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.5.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="a8.js"></script>
+</body>
+</html>

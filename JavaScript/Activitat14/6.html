@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="cat">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oh!</title>
+</head>
+<style>
+    body{
+        background-color: rgb(37, 37, 37);
+        color: orange;
+    }
+    table{
+        text-align: center;
+    }
+    td.not100 input{
+        width:97%;
+    }
+    td.not100b input{
+        width:100%;
+    }
+</style>
+<body> 
+    <center>
+        <table id="mainTable" border="1" style="margin-top: 250px;">
+           <tr>
+                <td><label for="title">Title</label></td>
+           </tr>
+           <tr>
+                <td><input type="text" name="title" id="titleInput"></td>
+           </tr>
+           <tr>
+                <td><label for="description">Description</label></td>
+           </tr>
+           <tr>
+                <td><input type="text" name="description" id="descriptionInput"></td>
+           </tr>
+           <tr>
+                <td><label for="date">Date</label></td>
+           </tr>
+           <tr>
+                <td class="not100"><input type="date" name="date" id="dateInput"></td>
+           </tr>
+           <tr>
+                <td class="not100b"><input type="submit" name="button" id="submit" value="Send"></td>
+           </tr>
+        </table>
+    </center>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.5.1.js"></script>
+    <script src="6.js"></script>
+</body>
+</html>

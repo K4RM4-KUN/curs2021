@@ -4,30 +4,72 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Novel;
 use App\Models\Chapter;
+use App\Models\NovelContent;
+use App\Http\Requests\ImageUploadRequest;
 use File;
 
 use Illuminate\Http\Request;
 
 class SingleNovelManager extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
+    public function index(){
         //
         return view('createNovel');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
-    {
+    public function novelIndex($id){
+        $data["novels"] = Novel:: where("id",$id)->get();
+        $data["chapters"] = Chapter::where("novel_id",$id)->orderbydesc("chapter_n")->get();
+
+        return view("viewNovel",$data);
+    }
+
+    public function chapterIndex($id,$chapter){
+        $data["novels"] = Novel:: where("id",$id)->get();
+        $data["chapter"] = Chapter:: where("id",$chapter)->get();
+        
+        return view("viewChapter",$data);
+    }
+
+    public function chapterCreationIndex($id){
+        $data["novels"] = Novel:: where("id",$id)->get();
+        $data["chapters"] = Chapter::where("novel_id",$id)->orderbydesc("created_at")->get();
+
+        return view("createChapter",$data);
+    }
+
+    public function viewChapterIndex($id,$chapter){
+        $data["novel"] = Novel:: where("id",$id)->get();
+        $data["chapter"] = Chapter:: where([
+        	["novel_id", $id],
+        	["chapter_n", $chapter]
+        ])->get();
+
+        $data["chapters"] = Chapter:: where([
+        	["novel_id", $id],
+        ])->orderbydesc('chapter_n')->get();
+
+        $data["content"] = NovelContent:: where([
+        	["chapter_id", $data["chapter"][0]->id],
+        ])->orderBy('name',"ASC")->get();
+
+        return view('chapter',$data);
+    }
+
+    public function imageChapterIndex($id,$chapter){
+        $data["novel"] = Novel:: where("id",$id)->get();
+        $data["chapter"] = Chapter:: where([
+        	["novel_id", $id],
+        	["id", $chapter]
+        ])->get();
+        $data["content"] = NovelContent:: where([
+        	["chapter_id", $data["chapter"][0]->id],
+        ])->orderBy('name',"ASC")->get();
+
+        return view('chapterImages',$data);
+    }
+
+    public function create(Request $request){
         //
         $request->validate([
             'name' => 'required|string|max:255',
@@ -43,28 +85,22 @@ class SingleNovelManager extends Controller
         //$novel->setAttribute('novel_dir', public_path()."/users/".Auth::user()->id."/novels/".$novel->id);
         $novel->save();
 
-        $insertedId = $novel->id;
-
-        $novel = Novel::find($insertedId);
-        $novel->novel_dir = public_path()."/users/".Auth::user()->id."/novels/".$insertedId;
+        $novel = Novel::find($novel->id);
+        $novel->novel_dir = "users/".Auth::user()->id."/novels/".$novel->id;
         $novel->save();
         
-        File::makeDirectory(public_path()."/users/".Auth::user()->id."/novels/".$insertedId , $mode = 0775, true);
+        File::makeDirectory(public_path()."/".$novel->novel_dir , $mode = 0775, true);
 
         return redirect('novel_manager');
     }
 
-    public function goCreateChapter($id){
-        $data["novels"] = Novel:: where("id",$id)->get();
-        return view("createChapter",$data);
-    }
-
     public function createChapter(Request $request){
-        /* $request->validate([
+        $request->validate([
             'title' => 'required|string|max:255',
             'chapter_n' => 'required|string|max:255',
-            'sinopsis' => 'required|string|max:400',
-        ]); */
+            'content' => 'required',
+            'content.*' => 'mimes:jpeg,jpg,png|max:1024'
+        ]);
 
         $chapter = new Chapter;
         $chapter->setAttribute('novel_id', $request->id);
@@ -74,15 +110,59 @@ class SingleNovelManager extends Controller
         $chapter->setAttribute('public', 1);
         $chapter->save();
 
-        File::makeDirectory($chapter->route, $mode = 0775, true);
-
-        return redirect('novel_manager/'.$request->id);
+        File::makeDirectory(public_path()."/".$chapter->route, $mode = 0775, true);
+        $counter = 1;
+        foreach($request->file('content') as $image){
+            $novelContent = new NovelContent;
+            $novelContent->SetAttribute('name',$counter);
+            $novelContent->SetAttribute('chapter_id',$chapter->id);
+            $novelContent->SetAttribute('img_type',explode(".", $image->getClientOriginalName())[1]);
+            $novelContent->save();
+            $image->move(public_path()."/".$chapter->route."/",$counter.".".explode(".", $image->getClientOriginalName())[1]);  
+            $counter++;
+        }
+        return redirect('novel_manager/chapterImages/'.$request->id."/".$chapter->id);
     }
 
-    public function GoNovel($id){
-        $data["novels"] = Novel:: where("id",$id)->get();
-        $data["chapters"] = Chapter::where("novel_id",$id)->orderbydesc("created_at")->get();
-        return view("viewNovel",$data);
+    public function delNovel($id){
+        $novel = new Novel;
+        $novel = Novel::find($id);
+
+        File::deleteDirectory($novel->novel_dir);
+
+        Novel::destroy($id);
+
+        return redirect('novel_manager');
+    }
+
+    public function delChapter($id){
+        $chapter = new Chapter;
+        $chapter = Chapter::find($id);
+
+        $novel = $chapter->novel_id;
+
+        File::deleteDirectory($chapter->route);
+
+        Chapter::destroy($id);
+
+        return redirect('novel_manager/'.$novel);
+        //File::deleteDirectory("users/9");
+    }
+
+    public function editChapter(Request $request){
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'public' => 'required|integer',
+            'chapter_n' => 'required|integer',
+        ]);
+
+        $chapter = Chapter::find($request->id);
+        $chapter->title = $request->title;
+        $chapter->public = $request->public;
+        $chapter->chapter_n = $request->chapter_n;
+        $chapter->save();
+
+        return redirect('novel_manager/'.$request->novel_id."/".$request->id);
     }
 
     public function editNovel(Request $request){
@@ -101,59 +181,4 @@ class SingleNovelManager extends Controller
         return redirect('novel_manager/'.$request->id);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

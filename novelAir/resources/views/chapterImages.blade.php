@@ -1,8 +1,8 @@
 <?php
-header('Expires: Sun, 01 Jan 2014 00:00:00 GMT');
-header('Cache-Control: no-store, no-cache, must-revalidate');
-header('Cache-Control: post-check=0, pre-check=0', FALSE);
-header('Pragma: no-cache');
+    header('Expires: Sun, 01 Jan 2014 00:00:00 GMT');
+    header('Cache-Control: no-store, no-cache, must-revalidate');
+    header('Cache-Control: post-check=0, pre-check=0', FALSE);
+    header('Pragma: no-cache');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,7 +35,7 @@ header('Pragma: no-cache');
             <ul id="image-list" style="align-content:space-around; display:flex;flex-wrap:wrap; list-style:none; width:100%;">
                 @foreach ($content as $c)
                     <li class="transferable" style="border:1px solid; width:200px;" >
-                        <a hidden class="code" >{{$c->getFilename()}}</a>
+                        <a class="code" >{{$c->getFilename()}}</a>
                         <img class="contentImg draggable" width="200px" height="250px"  src="{{url($chapter[0]->route)}}{{'/'.$c->getFilename()}}"><br>
                         <a class="toEliminate" style="background-color:red;width:50px;"><button>X</button></a>
                     </li><br><br>
@@ -89,7 +89,8 @@ header('Pragma: no-cache');
                     processData: false,
                     contentType: false,
                     success: function(data) {
-                        window.location.href = "{{url('novel_manager')}}/{{$novel[0]->id}}/{{$chapter[0]->id}}";
+                        //location.reload(true)
+                        //window.location.href = "{{url('novel_manager')}}/{{$novel[0]->id}}/{{$chapter[0]->id}}";
 
                     }
                 });

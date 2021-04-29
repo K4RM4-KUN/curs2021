@@ -21,13 +21,8 @@ class SingleNovelManager extends Controller
 
     public function novelIndex($id){
         $data["novels"] = Novel:: where("id",$id)->get();
-        $data["chapters"] = Chapter::where("novel_id",$id)->orderbydesc("chapter_n")->get();
-        $data["tags"] = Tag_Novel:: where("novel_id", $data["novels"][0]->id);
-        echo $data["novels"][0]->id;
-        echo count($data["tags"]);
-        //echo $data["tags"][0]->novel_id;
-        //print_r($data["novels"]);
-        dd();
+        $data["chapters"] = Chapter:: where("novel_id",$id)->orderbydesc("chapter_n")->get();
+        $data["tags"] = Tag_Novel:: where("novel_id", $data["novels"][0]->id)->get();
         return view("viewNovel",$data);
     }
 
@@ -60,6 +55,10 @@ class SingleNovelManager extends Controller
         
         return view('chapter',$data);
        
+    }
+
+    private function orderNumericString($data){
+        
     }
 
     public function imageChapterIndex($id,$chapter){
@@ -302,6 +301,7 @@ class SingleNovelManager extends Controller
         $route = public_path("/".$request->route);
         $files = File::files($route);
         $update = explode(",",$request->toUpdateNum);
+        //dd("archivos carpeta actual",$files,"Updated array",$update);
         for($i=0;$i<count($files);$i++){
             if($files[$i] != $update[$i]){
                 File::move($route."/".$update[$i],$route."/".($i+1)."-".$update[$i]);

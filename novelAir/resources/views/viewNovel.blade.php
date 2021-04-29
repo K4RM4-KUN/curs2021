@@ -22,11 +22,8 @@
 
                 
                 <label for="tags">Tags</label><br>
-                <input id="tags" type="text" name="tags" value="" placeholder="accion,aventura,romance..." /><br><br>
-                @foreach ($tags as $tag)
-                    <p>1</p>
-                @endforeach
-               
+                <input id="tags" type="text" name="tags" value="@foreach ($tags as $tag){{$tag->tag_id}},@endforeach" placeholder="accion,aventura,romance..." /><br><br>
+             
 
                 <input type="checkbox" name="adultContent" id="adultContent" @if ($novels[0]->adult_content) checked @endif>
                 <label for="adultContent">+18</label><br><br>

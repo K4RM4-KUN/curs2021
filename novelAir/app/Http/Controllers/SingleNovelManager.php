@@ -22,6 +22,12 @@ class SingleNovelManager extends Controller
     public function novelIndex($id){
         $data["novels"] = Novel:: where("id",$id)->get();
         $data["chapters"] = Chapter::where("novel_id",$id)->orderbydesc("chapter_n")->get();
+        $data["tags"] = Tag_Novel:: where("novel_id", $data["novels"][0]->id);
+        echo $data["novels"][0]->id;
+        echo count($data["tags"]);
+        //echo $data["tags"][0]->novel_id;
+        //print_r($data["novels"]);
+        dd();
         return view("viewNovel",$data);
     }
 
@@ -111,23 +117,28 @@ class SingleNovelManager extends Controller
         $novel->novel_dir = "users/".Auth::user()->id."/novels/".$novel->id;
         $novel->save();
 
-        if ($request->tags == null){
+        if ($request->tags != null){
            $newTags = explode(",", $request->tags);
         
             foreach ($newTags as $newTag) {
-                $compTag = Tag:: where("tag_name",$newTag)->get();
-                
-                if (count($compTag) == 0){
-                    $createTag = New Tag;
-                    $createTag->setAttribute('tag_name', $newTag);
-                    $createTag->save();
+
+                if (!($newTag == null || $newTag == " ")){
+                    $newTag = strtoupper($newTag);
+
+                    $compTag = Tag:: where("tag_name",$newTag)->get();
+                    
+                    if (count($compTag) == 0){
+                        $createTag = New Tag;
+                        $createTag->setAttribute('tag_name', $newTag);
+                        $createTag->save();
+                    }
+                    $compTag = Tag:: where("tag_name",$newTag)->get();
+                    
+                    $tagNovel = New Tag_Novel;
+                    $tagNovel->setAttribute('novel_id', $novel->id);
+                    $tagNovel->setAttribute('tag_id', $compTag[0]->id);
+                    $tagNovel->save();
                 }
-                $compTag = Tag:: where("tag_name",$newTag)->get();
-                
-                $tagNovel = New Tag_Novel;
-                $tagNovel->setAttribute('novel_id', $novel->id);
-                $tagNovel->setAttribute('tag_id', $compTag[0]->id);
-                $tagNovel->save();
             } 
         }
 
@@ -163,6 +174,7 @@ class SingleNovelManager extends Controller
         foreach($request->file('content') as $image){
             $image->move(public_path()."/".$chapter->route."/",$counter.".".explode(".", $image->getClientOriginalName())[1]);  
             $counter++;
+            $files = File::files(public_path()."/".$chapter->route);
         }
         return redirect('novel_manager/chapterImages/'.$request->id."/".$chapter->id);
     }
@@ -193,16 +205,14 @@ class SingleNovelManager extends Controller
         return redirect('novel_manager');
     }
 
-    //DANI ARREGLAR (NO BORRA NADA!)(ADEMAS POR LA CARA TE REDIRIGE A EL HOME DE NOVELMANAGER)
-    //Supongo que aun no estaba acabado, pero tampoco parece que borre nada en BD, supongo que era lo ultimo que has hecho en clase xD
     public function delChapter($id){
         $chapter = new Chapter;
-        //$chapter = Chapter::find($id);
+        $chapter = Chapter::find($id);
         $novel = $chapter->novel_id;
 
         File::deleteDirectory($chapter->route);
 
-        //Chapter::destroy($id);
+        Chapter::destroy($id);
         return redirect('novel_manager/'.$novel);
         //File::deleteDirectory("users/9");
     }
@@ -224,6 +234,32 @@ class SingleNovelManager extends Controller
         }
         
         $chapter->save();
+
+        /*
+        if ($request->tags != null){
+            $newTags = explode(",", $request->tags);
+        
+            foreach ($newTags as $newTag) {
+
+                if (!($newTag == null || $newTag == " ")){
+                    $newTag = strtoupper($newTag);
+
+                    $compTag = Tag:: where("tag_name",$newTag)->get();
+                    
+                    if (count($compTag) == 0){
+                        $createTag = New Tag;
+                        $createTag->setAttribute('tag_name', $newTag);
+                        $createTag->save();
+                    }
+                    $compTag = Tag:: where("tag_name",$newTag)->get();
+                    
+                    $tagNovel = New Tag_Novel;
+                    $tagNovel->setAttribute('novel_id', $novel->id);
+                    $tagNovel->setAttribute('tag_id', $compTag[0]->id);
+                    $tagNovel->save();
+                }
+            } 
+        }*/
 
         return redirect('novel_manager/'.$request->novel_id."/".$request->id);
     }
@@ -273,7 +309,7 @@ class SingleNovelManager extends Controller
         }
         $files = File::files($route);
         for($i=0;$i<count($files);$i++){
-            File::move($route."/".$files[$i]->getFilename(),$route."/".$i.".".$files[$i]->getExtension());
+            File::move($route."/".$files[$i]->getFilename(),$route."/".($i+1).".".$files[$i]->getExtension());
         }
         Cache::flush();
     }

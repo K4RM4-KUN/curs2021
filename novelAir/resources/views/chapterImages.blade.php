@@ -1,3 +1,9 @@
+<?php
+header('Expires: Sun, 01 Jan 2014 00:00:00 GMT');
+header('Cache-Control: no-store, no-cache, must-revalidate');
+header('Cache-Control: post-check=0, pre-check=0', FALSE);
+header('Pragma: no-cache');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,19 +30,20 @@
         <input multiple type="file" accept="image/jpg,image/jpeg,image/png" name="content[]" id="content"><br><br>
         <input type="submit" value="AÑADIR">
     </form>
-        <div class="img-container" style=" margin-top:10px;width:1100px; border:1px solid;">
-            <ul id="image-list" style="display:flex; list-style:none; width:1100px;">
+        <div class="img-container" style="display:flex; margin-top:10px;width:80%; border:1px solid;">
+
+            <ul id="image-list" style="align-content:space-around; display:flex;flex-wrap:wrap; list-style:none; width:100%;">
                 @foreach ($content as $c)
-                    <li class="transferable" style="">
+                    <li class="transferable" style="border:1px solid; width:200px;" >
                         <a hidden class="code" >{{$c->getFilename()}}</a>
                         <img class="contentImg draggable" width="200px" height="250px"  src="{{url($chapter[0]->route)}}{{'/'.$c->getFilename()}}"><br>
                         <a class="toEliminate" style="background-color:red;width:50px;"><button>X</button></a>
-                    </li>
+                    </li><br><br>
                 @endforeach
             </ul>
+
         </div>
         <h4 class="amount">Image amount: </h4>
-        <!--href="{{url('novel_manager')}}/{{$novel[0]->id}}/{{$chapter[0]->id}}"-->
         <a id="finish" ><button>SAVE</button></a>
     </center>
     <script>
@@ -82,7 +89,7 @@
                     processData: false,
                     contentType: false,
                     success: function(data) {
-                        window.location.href = "https://dawjavi.insjoaquimmir.cat/jfuentes/novelAir/public/novel_manager/{{$novel[0]->id}}/{{$chapter[0]->id}}";
+                        window.location.href = "{{url('novel_manager')}}/{{$novel[0]->id}}/{{$chapter[0]->id}}";
 
                     }
                 });

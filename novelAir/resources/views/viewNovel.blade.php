@@ -19,6 +19,13 @@
                 <input type="text" name="genre" value="{{$novels[0]->genre}}"><br><br>
                 <label for="sinopsis">Sinopsis:</label><br>
                 <input type="text" name="sinopsis" value="{{$novels[0]->sinopsis}}"><br><br>
+
+                <input type="checkbox" name="adultContent" id="adultContent" @if ($novels[0]->adult_content) checked @endif>
+                <label for="adultContent">+18</label><br><br>
+
+                <input type="checkbox" name="public" id="public" @if ($novels[0]->public) checked @endif>
+                <label for="public">Publico</label><br><br>
+
                 <input type="submit">
             </form>
             <a href="{{url('novel_manager/delNovel')}}/{{$novels[0]->id}}"><button>ELIMINAR</button></a>

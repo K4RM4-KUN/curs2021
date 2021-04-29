@@ -12,11 +12,7 @@
         {{$chapter[0]->title}}<br><br>
 
         @foreach ($content as $c)
-            @if ($c == $chapter[0])
-                @$p = $c->chapter_n;
-                {{$p}}
-            @endif
-            <img src="{{url($chapter[0]->route)}}{{'/'.$c->name.'.'.$c->img_type}}"><br>
+            <img src="{{url($chapter[0]->route)}}{{'/'.$c->getFilename()}}"><br>
         @endforeach
 
         <br><br>

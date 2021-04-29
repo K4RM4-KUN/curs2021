@@ -16,10 +16,12 @@
                 <input type="text" hidden name="novel_id" value="{{$novels[0]->id}}"><br><br>
                 <label for="title">Titulo:</label><br>
                 <input type="text" name="title" value="{{$chapter[0]->title}}"><br><br>
-                <label for="public">Publico:</label><br>
-                <input type="text" name="public" value="{{$chapter[0]->public}}"><br><br>
                 <label for="chapter_n">Numero:</label><br>
                 <input type="number" name="chapter_n" value="{{$chapter[0]->chapter_n}}"><br><br>
+
+                <input type="checkbox" name="public" id="public" @if ($chapter[0]->public) checked @endif>
+                <label for="public">Publico</label><br><br>
+
                 <input type="submit">
             </form>
             <a href="{{url('novel_manager/delChapter')}}/{{$chapter[0]->id}}"><button>ELIMINAR</button></a>

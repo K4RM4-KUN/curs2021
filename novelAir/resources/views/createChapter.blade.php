@@ -15,6 +15,8 @@
             <input type="text" name="title" id="title"><br><br>
             <label for="chapter_n">Numero de capitulo:</label><br>
             <input type="number" name="chapter_n" id="chapter_n"><br><br>
+            <input type="checkbox" name="public" id="public" checked>
+            <label for="public">Publico</label><br><br>
             <label for="title">Contenido del capitulo(".jpg",".png"):</label><br>
             <input multiple type="file" accept="image/jpg,image/jpeg,image/png" name="content[]" id="content"><br><br>
             <input type="submit" value="SEND">

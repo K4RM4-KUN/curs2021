@@ -12,8 +12,9 @@
         <div style="margin-right: 150px;">
             <form action="{{route('editChapter')}}" method="POST">
             @csrf
-                <input type="text" hidden name="id" value="{{$chapter[0]->id}}"><br><br>
-                <input type="text" hidden name="novel_id" value="{{$novels[0]->id}}"><br><br>
+                <input type="text" hidden name="id" value="{{$chapter[0]->id}}">
+                <input type="text" hidden name="id_novel" value="{{$novels[0]->id}}">
+                <input type="text" hidden name="novel_id" value="{{$novels[0]->id}}"><br>
                 <label for="title">Titulo:</label><br>
                 <input type="text" name="title" value="{{$chapter[0]->title}}"><br><br>
                 <label for="chapter_n">Numero:</label><br>

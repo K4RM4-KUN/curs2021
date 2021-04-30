@@ -11,5 +11,10 @@ class Tag_Novel extends Model
 
     protected $fillable = ['novel_id','tag_id'];
 
+    public function tag()
+    {
+        return $this->hasMany(Tag::class);
+    }
+
     protected $table = "tags_novels";
 }

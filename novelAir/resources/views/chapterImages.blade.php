@@ -20,7 +20,7 @@
 </head>
 <body>
     <a href="{{url('novel_manager')}}/{{$novel[0]->id}}/{{$chapter[0]->id}}"><button>BACK</button></a>
-    <center style="margin-top:200px;">
+    <center style="margin-top:100px;">
     <form action="{{route('addImages')}}" method="POST" enctype="multipart/form-data">
         @csrf
         <label for="title">Contenido del capitulo(".jpg",".png"):</label>
@@ -84,13 +84,13 @@
                 data.append("chapter_id", $('meta[name=chapter_id]').attr('content'));
                 $.ajax({
                     type: "POST",
-                    url: "https://dawjavi.insjoaquimmir.cat/jfuentes/novelAir/public/novel_manager/editImages",
+                    url: "{{url('novel_manager/editImages')}}",
                     data: data,
                     processData: false,
                     contentType: false,
                     success: function(data) {
                         //location.reload(true)
-                        //window.location.href = "{{url('novel_manager')}}/{{$novel[0]->id}}/{{$chapter[0]->id}}";
+                        window.location.href = "{{url('novel_manager')}}/{{$novel[0]->id}}/{{$chapter[0]->id}}";
 
                     }
                 });

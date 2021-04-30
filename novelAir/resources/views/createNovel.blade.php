@@ -22,7 +22,7 @@
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        <form method="POST" action="{{ route('insertNovel') }}">
+        <form method="POST" action="{{ route('insertNovel') }}" enctype="multipart/form-data">
             @csrf
             
             <!-- Name -->
@@ -69,7 +69,7 @@
             </div>
 
             <div id="typeNobels">
-                <input type="radio" id="manga" name="gender" value="manga">
+                <input type="radio" id="manga" name="gender" value="manga" checked>
                 <label for="manga">Manga</label><br>
                 <input type="radio" id="manhwa" name="gender" value="manhwa">
                 <label for="manhwa">Manhwa</label><br>
@@ -89,7 +89,7 @@
 
             <!-- Cover -->
             <div class="mt-4">
-                <x-label for="cover" :value="__('Cover')" />
+                <x-label for="cover" :value="__('Portada (300x450)')" />
 
                 <x-input id="cover" class="block mt-1 w-full" type="file" name="cover" :value="old('cover')" required />
             </div>

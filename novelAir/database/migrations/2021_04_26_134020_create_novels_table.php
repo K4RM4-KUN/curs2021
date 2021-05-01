@@ -19,6 +19,7 @@ class CreateNovelsTable extends Migration
             $table->string('name',255);
             $table->string('genre',255);
             $table->string('sinopsis',400);
+            $table->string('imgtype',50);
             $table->boolean('public');
             $table->boolean('adult_content');
             $table->boolean('visual_novel');

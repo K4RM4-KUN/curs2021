@@ -7,7 +7,7 @@
         <meta name="route" content="{{ $chapter[0]->route }}">
         <meta name="chapter_id" content="{{ $chapter[0]->id }}">
 
-        <title>Novel Manager - {{$chapter[0]->chapter_n}}. {{$chapter[0]->title}}</title>
+        <title>Novel Manager</title>
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">

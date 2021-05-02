@@ -24,7 +24,7 @@ class CreateNovelsTable extends Migration
             $table->boolean('adult_content');
             $table->boolean('visual_novel');
             $table->string('novel_type',255);
-            $table->string('novel_dir',400);
+            $table->string('novel_dir',400)->nullable();
             $table->timestamps();
         });
     }

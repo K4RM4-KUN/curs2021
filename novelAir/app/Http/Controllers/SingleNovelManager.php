@@ -31,7 +31,9 @@ class SingleNovelManager extends Controller
 
     public function chapterIndex($id,$chapter){
         $data["novels"] = Novel:: where("id",$id)->get();
-        $data["chapter"] = Chapter:: where("id",$chapter)->get();
+        $data["chapter"] = Chapter::where("id",$chapter)->get();
+        $files = File::files(public_path("/".$data["chapter"][0]->route));
+        $data["preview"] = $data["chapter"][0]->route."/".$files[0]->getFilename();
         
         return view("viewChapter",$data);
     }
@@ -82,10 +84,13 @@ class SingleNovelManager extends Controller
         ]);
             //dimensions:max_width=899,max_height=1349,min_width=299,min_height=449,ratio=9/16|max:1024
 
+        $image = $request->file('cover');
+
         $novel = new Novel;
         $novel->setAttribute('user_id', Auth::user()->id);
         $novel->setAttribute('name', $request->name);
         $novel->setAttribute('genre', $request->genre);
+        $novel->setAttribute('imgtype', ".".explode(".", $image->getClientOriginalName())[1]);
         $novel->setAttribute('sinopsis', $request->sinopsis);
         //$novel->setAttribute('novel_dir', public_path()."/users/".Auth::user()->id."/novels/".$novel->id);
         if (isset($request->adultContent)){
@@ -141,7 +146,6 @@ class SingleNovelManager extends Controller
             } 
         }
         File::makeDirectory(public_path()."/".$novel->novel_dir , $mode = 0775, true);
-        $image = $request->file('cover');
         $image->move(public_path()."/".$novel->novel_dir,"cover.".explode(".", $image->getClientOriginalName())[1]);  
 
         return redirect('novel_manager');

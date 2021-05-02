@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Nuevo capitulo - {{$novels[0]->name}}</title>
+        <title>Create Chapter</title>
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
@@ -39,11 +39,11 @@
 
                 <div class="bg-gradient-to-l from-blue-700 to-blue-500 border-b border-gray-300 pt-3 rounded-t">
 
-                    <p class="text-xl text-white text-center mb-3">Crear capitulo de {{$novels[0]->name}}</p>
+                    <p class="text-xl text-white text-center mb-3">Crea el capitulo</p>
 
                 </div>
 
-                <form action="{{route('createChapters')}}" method="POST" enctype="multipart/form-data" class="bg-white rounded px-8 pt-6 pb-8 mb-4">
+                <form action="{{route('createChapters')}}" method="POST" class="bg-white rounded px-8 pt-6 pb-8 mb-4">
                     @csrf
                     <input type="text" hidden name="id" value="{{$novels[0]->id}}" id="id">
                     <input type="text" hidden name="novel_dir" value="{{$novels[0]->novel_dir}}" id="novel_dir">
@@ -102,8 +102,7 @@
                         <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-blue-600 leading-tight focus:outline-none focus:shadow-outline" 
                         id="title" 
                         type="checkbox"
-                        name="public"
-                        checked
+                        @if ($chapters[0]->public) checked @endif
                         placeholder="Titulo">
                     </div>
                     
@@ -111,7 +110,7 @@
 
                         <input class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
                         type="submit"
-                        value="Crear">
+                        value="Cambiar">
 
                     </div>
 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Novel;
 use App\Models\Chapter;
+use Illuminate\Support\Facades\DB;
 
 class NovelManager extends Controller
 {
@@ -17,11 +18,18 @@ class NovelManager extends Controller
     public function index()
     {
         //
-        $data["novels"] = Novel::with("chapters")->
+        $data["novels"] = Novel::
+        with("chapters")->
+        withSum('chapters', 'views')->
         withCount("chapters")->
         where("user_id",Auth::user()->id)->
         orderbydesc('created_at')->
         get();
+        $data["viewStats"] = 0;
+        $data["followersStats"] = 0;
+        foreach($data["novels"] as $novel){
+            $data["viewStats"] += $novel->chapters_sum_views;
+        }
         return view("novelManager",$data);
     }
 

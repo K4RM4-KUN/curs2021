@@ -1,116 +1,186 @@
-<!-- https://programadorwebvalencia.com/sencillo-boton-on-off-html-y-css/ -->
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <script id="functions" src="{{ asset('js/createNovelJS.js') }}" defer></script>
-</head>
-<body>
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
-        <a href="{{ url()->previous() }}">BACK</a>
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <form method="POST" action="{{ route('insertNovel') }}" enctype="multipart/form-data">
-            @csrf
-            
-            <!-- Name -->
-            <div>
-                <x-label for="name" :value="__('Nombre')" />
+        <title>Novel Manager - Nueva novela</title>
 
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
+        <!-- Scripts -->
+        <script src="{{ asset('js/app.js') }}" defer></script>
+
+        <script id="functions" src="{{ asset('js/createNovelJS.js') }}" defer></script>
+    </head>
+
+    <!-- Body: Tailwind el "bg" funciona raro, no llena toda la pantalla -->
+    <body class="bg-gradient-to-br from-gray-700 to-gray-900 min-h-screen container mx-auto min-h-screen">
+
+        <!-- Pequeño page history: Solo habra un boton de "BACK" 
+        <div class="container mt-5 ">
+
+             Boton back 
+            <a class="text-l text-black font-bold bg-white p-2 py-1 rounded" href="{{route('goNM')}}">BACK</a>
+
+        </div>-->
+
+        <!-- Grid(5x2): Grid que contiene las novelas del usuario. -->
+        <div class="grid grid-cols:3 sm:grid-cols-4 my-5 gap-x-7">
+        
+            <div class="container mt-5 col-start-1 col-span-1 sm:col-start-2 sm:col-span-2 my-5">
+
+                <!-- Boton back -->
+                <a class="text-l text-black font-bold bg-white p-2 py-1 rounded" href="{{route('goNM')}}">BACK</a>
+
             </div>
 
-            <!-- Genre -->
-            <div>
-                <x-label for="genre" :value="__('Genero')" />
+            <div class="bg-white rounded shadow col-span-1 sm:col-span-2 col-start-1 sm:col-start-2 mb-10">
 
-                <x-input id="genre" class="block mt-1 w-full" type="text" name="genre" :value="old('genre')" required autofocus />
-            </div>
+                <div class="bg-gradient-to-l from-blue-700 to-blue-500 border-b border-gray-300 pt-3 rounded-t">
 
-            <!-- Sinopsis -->
-            <div class="mt-4">
-                <x-label for="sinopsis" :value="__('Sinopsis')" />
+                    <p class="text-xl text-white text-center mb-3">Crea Novela</p>
 
-                <x-input id="sinopsis" class="block mt-1 w-full" type="text" name="sinopsis" :value="old('sinopsis')" required />
-            </div>
-
-            <!-- Tags -->
-            <div class="mt-4">
-                <x-label for="tags" :value="__('Tags')" />
-
-                <x-input id="tags" class="block mt-1 w-full" type="text" name="tags" :value="old('tags')" placeholder="accion,aventura,romance..." />
-            </div>
-
-            <!-- AdultContent -->
-            <div class="mt-4">
-                <x-label for="adultContent" :value="__('+18')" />
-
-                <x-input id="adultContent" class="block mt-1 w-full" type="checkbox" name="adultContent" :value="old('adultContent')" />
-            </div>
-
-
-            <!-- VisualNovel -->
-            <div class="mt-4">
-                <x-label for="visualNovel" :value="__('Visual Novel')" />
-
-                <x-input id="visualNovel" class="block mt-1 w-full" type="checkbox" name="visualNovel" :value="old('visualNovel')" />
-            </div>
-
-            <div id="typeNobels">
-                <input type="radio" id="manga" name="gender" value="manga" checked>
-                <label for="manga">Manga</label><br>
-                <input type="radio" id="manhwa" name="gender" value="manhwa">
-                <label for="manhwa">Manhwa</label><br>
-                <input type="radio" id="manhua" name="gender" value="manhua">
-                <label for="manhua">Manhua</label><br>
-                <input type="radio" id="oneShot" name="gender" value="oneShot">
-                <label for="oneShot">One shot</label><br>
-                <input type="radio" id="other" name="gender" value="other">
-                <label for="other">Other</label>        
-                
-                
-                <div id="typeOthers">
-                    <x-input id="typeOther" class="block mt-1 w-full" type="text" name="typeOther" :value="old('typeOther')" />
                 </div>
+
+                <form action="{{route('insertNovel')}}" method="POST" enctype="multipart/form-data" class="bg-white rounded px-8 pt-6 pb-8 mb-4">
+                    @csrf
+                    <div class="mb-4">
+                        
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+                            Nombre
+                        </label>
+
+                        <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                        name="name" 
+                        type="text"
+                        required>
+                    
+                    </div>
+
+                    <div class="mb-4">
+                        
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+                            Genero
+                        </label>
+
+                        <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                        name="genre" 
+                        type="text"
+                        required>
+                    
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+                            Sinopsis
+                        </label>
+
+                        <textarea class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        name="sinopsis"></textarea>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+                            Tags
+                        </label>
+
+                        <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                        name="tags" 
+                        type="text" 
+                        placeholder="accion,aventura,romance...">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+                            +18
+                        </label>
+
+                        <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-blue-600 leading-tight focus:outline-none focus:shadow-outline" 
+                        name="adultContent" 
+                        type="checkbox">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+                            Visual Novel
+                        </label>
+
+                        <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-blue-600 leading-tight focus:outline-none focus:shadow-outline" 
+                        name="visualNovel"
+                        id="visualNovel"
+                        type="checkbox">
+
+                        <div id="typeNobels">
+                            <input type="radio" id="manga" name="gender" value="manga" checked>
+                            <label for="manga">Manga</label><br>
+                            <input type="radio" id="manhwa" name="gender" value="manhwa">
+                            <label for="manhwa">Manhwa</label><br>
+                            <input type="radio" id="manhua" name="gender" value="manhua">
+                            <label for="manhua">Manhua</label><br>
+                            <input type="radio" id="oneShot" name="gender" value="oneShot">
+                            <label for="oneShot">One shot</label><br>
+                            <input type="radio" id="other" name="gender" value="other">
+                            <label for="other">Other</label>        
+                            
+                            
+                            <div id="typeOthers">
+                                <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-blue-600 leading-tight focus:outline-none focus:shadow-outline" 
+                                name="typeOther"
+                                id="typeOther"
+                                type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+                            Portada(300x450):
+                        </label>
+
+                        <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                        name="cover" 
+                        type="file"
+                        accept="image/jpg,image/jpeg,image/png">
+                    </div>
+
+                    <div class="mb-4">
+                        
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+                            Publico
+                        </label>
+
+                        <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-blue-600 leading-tight focus:outline-none focus:shadow-outline" 
+                        name="title" 
+                        type="checkbox"
+                        checked>
+                    
+                    </div>
+
+                    <div class="flex items-center justify-center">
+
+                        <input class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
+                        type="submit"
+                        value="Acceptar">
+
+                    </div>
+
+                </form>
+
             </div>
 
 
-            <!-- Cover -->
-            <div class="mt-4">
-                <x-label for="cover" :value="__('Portada (300x450)')" />
-
-                <x-input id="cover" class="block mt-1 w-full" type="file" name="cover" :value="old('cover')" required />
             </div>
 
-            <!-- Public -->
-            <div class="mt-4">
-                <x-label for="public" :value="__('Publico')" />
+        </div>
 
-                <x-input id="public" class="block mt-1 w-full" type="checkbox" name="public" :value="old('public')" checked />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-
-                <x-button class="ml-4">
-                    Add
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>
-
-</body>
+    </body>
+    
 </html>
-

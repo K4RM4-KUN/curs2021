@@ -18,7 +18,7 @@
     </head>
 
     <!-- Body: Tailwind el "bg" funciona raro, no llena toda la pantalla -->
-    <body class="bg-gradient-to-br from-gray-800 to-gray-900 container mx-auto min-h-screen">
+    <body class="bg-gradient-to-br from-gray-700 to-gray-800 container mx-auto min-h-screen">
 
         <!-- Pequeño page history: Solo habra un boton de "BACK" -->
         <div class="container mt-5">
@@ -34,7 +34,7 @@
             <!-- Seccion Novelas: Contiene todas las novelas del usuario -->
             <!-- Por hacer seccion interaccion -->
             <div class="bg-white rounded col-span-3 row-span-2">
-                <div class="border-b border-gray-300 bg-blue-500 pt-3 rounded-t">
+                <div class="border-b border-gray-300 bg-gradient-to-l from-blue-700 to-blue-500 pt-3 rounded-t">
 
                     <p class="text-xl text-white text-center mb-3">Tus novelas</p>
 
@@ -74,30 +74,28 @@
                             <!-- Seccion imagen: Contiene la imagen de la novela -->
                             <div class="inline-block w-1/5 mx-2.5">
 
-                                <!-- Error imagen: Hay que arreglar de alguna manera que la extension(No siempre es .png) de la imagen llegue junto a la ruta-->
-                                <img class="m-auto" width="65%" src="{{asset($novel->novel_dir.'/cover.jpg')}}" alt="{{ $novel->name }}">
+                                <img class="m-auto" width="65%" src="{{asset($novel->novel_dir.'/cover'.$novel->imgtype)}}" alt="{{ $novel->name }}">
                             
                             </div>
                             
                             <!-- Seccion info: Contiene informacion sobre la novela -->
-                            <div class="inline-block w-3/5 mx-2.5">
+                            <div class="inline-block w-3/5 mx-2.5 ">
 
-                                <p class="text-xl text-black text-left mb-3">{{ $novel->name }}</p>
+                                <p class="h-1/6 text-xl text-black text-left mb-3">{{ $novel->name }}</p>
 
-                                <p class="text-sm text-blue-700 text-left leading-none mb-2">{{ substr($novel->sinopsis,0,100) }}...</p>
+                                <p class="h-3/6 text-sm text-blue-700 text-left hidden sm:block leading-none mb-2">{{ substr($novel->sinopsis,0,150) }}...</p>
 
                                 <!-- Error(Tailwindcss) n_capitulos: No he conseguido con tailwind ponerlo abajo del todo -->
-                                <p class="text-sm text-gray-700 text-right mb-2">{{ $novel->chapters_count }} capitulo/s</p>
+                                <p class="h-1/6 text-sm text-gray-700 text-right mb-2">{{ $novel->chapters_count }} capitulo/s</p>
 
                             </div>
 
                             <!-- Seccion interaccion: Contiene informacion sobre las interacciones con la novela -->
-                            <!-- Por hacer -->
+                            <!-- Por hacer 1/2 -->
                             <div class="inline-block w-1/5 mx-2.5 py-5">
 
                                 <!-- Lecturas: Lecturas dinamicas -->
-                                <!-- Por hacer -->
-                                <p class="text-base text-black text-left mb-3">7983 Leido</p>
+                                <p class="text-base text-black text-left mb-3">@if(count($novel->chapters)==0)0 @else {{$novel->chapters_sum_views}} @endif Leido</p>
 
                                 <!-- Seguidores: Seguidores dinamicas -->
                                 <!-- Por hacer -->
@@ -116,19 +114,19 @@
             <!-- Por hacer -->
             <div class="bg-white rounded col-span-2 min-h-full hidden sm:block ">
 
-                <div class="border-b border-gray-300 bg-blue-500 mb-3 pt-3 rounded-t">
+                <div class="border-b border-gray-300 bg-gradient-to-l from-blue-700 to-blue-500 mb-3 pt-3 rounded-t">
 
                     <p class="text-xl text-white text-center mb-3">Tus estadisticas</p>
 
                 </div>
 
                 <!-- Seccion Lecturas: Lecturas dinamicas -->
-                <!-- Por hacer -->
+                <!-- Por hacer 1/2 -->
                 <div class="border-b border-gray-300 mx-5 my-3">
 
-                    <p class="text-xl text-black text-center mb-3">Lecturas totales: 7983 </p>
+                    <p class="text-xl text-black text-center mb-3">Lecturas totales: {{$viewStats}} </p>
 
-                    <p class="text-lg text-gray-600 text-center mb-5">Lecturas este mes: 7983</p>
+                    <p class="text-lg text-gray-600 text-center mb-5">Lecturas este mes: {{$viewStats}}</p>
 
                 </div>
 

@@ -24,7 +24,7 @@
     <body class="bg-gradient-to-br from-gray-700 to-gray-800 min-h-screen">
 
         <!-- navbar -->
-        <nav class="bg-white border-b-4 border-blue-400 ">
+        <nav class="bg-white border-b-4 border-ourBlue ">
 
             <div class="max-w-7xl mx-auto">
 
@@ -44,11 +44,12 @@
                         </div>
                         
                         <!-- primary -->
-                        <div class="flex items-center mx-5">
+                        <div class="hidden sm:flex items-center mx-5">
 
-                            <a href="">
+                            <!-- BIBLIOTECA -->
+                            <a href="@{{Route('library')}}">
 
-                                <button class="px-5 py-2">
+                                <button class="px-5 py-7 hover:bg-ourBlue hover:text-white">
 
                                     BIBLIOTECA
 
@@ -56,9 +57,10 @@
 
                             </a>
 
-                            <a href="">
+                            <!-- LISTA -->
+                            <a href="@{{Route('lists')}}">
 
-                                <button class="px-5 py-2">
+                                <button class="px-5 py-7 hover:bg-ourBlue hover:text-white">
 
                                     LISTAS
 
@@ -66,9 +68,10 @@
                                 
                             </a>
 
-                            <a href="">
+                            <!-- AUTORES -->
+                            <a href="@{{Route('authors')}}">
 
-                                <button class="px-5 py-2">
+                                <button class="px-5 py-7 hover:bg-ourBlue hover:text-white">
 
                                     AUTORES
 
@@ -76,19 +79,21 @@
                                 
                             </a>
 
-                            <a href="">
+                            <!-- CREAR -->
+                            <a href="{{Route('goNM')}}">
 
-                                <button class="px-5 py-2">
+                                <button class="px-5 py-7 hover:bg-ourBlue hover:text-white bg-gray-100 text-black">
 
-                                    NOVEL MANAGER
+                                    CREAR
 
                                 </button>
                                 
                             </a>
 
-                            <a href="">
+                            <!-- NOSOTROS -->
+                            <a href="@{{Route('aboutUs')}}">
 
-                                <button class="px-5 py-2">
+                                <button class="px-5 py-7 hover:bg-ourBlue hover:text-white">
 
                                     NOSOTROS
 
@@ -101,7 +106,7 @@
                     </div>
 
                     <!-- secondary/auth -->
-                    <div class="flex items-center justify-center">
+                    <div class="hidden lg:flex items-center justify-center">
 
                             <a href="">
 
@@ -144,9 +149,9 @@
         </nav>
 
         <!-- content -->
-        <div class="py-32 text-center">
+        <div class="text-center">
 
-            <h2 class="font-extrabold text-6xl text-blue-400">NovelAir</h2>
+            @include('novelManagerNew')
 
         </div>
 

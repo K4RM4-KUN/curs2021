@@ -98,10 +98,10 @@
                         @foreach ($content as $c)
 
                             <li class="bg-blue-100 transferable shadow-xl border-2 border-blue-100 mb-5">
-                                    
+                            
                                     <p class="code text-center mr-2 my-2">{{$c->getFilename()}}</p>
 
-                                    <img class="contentImg" src="{{url($chapter[0]->route)}}{{'/'.$c->getFilename()}}" alt="{{$c->getFilename()}}   ">
+                                    <img class="contentImg mx-auto w-96 sm:w-72 sm:h-80" src="{{url($chapter[0]->route)}}{{'/'.$c->getFilename()}}?date={{$c->getInode()}}" alt="{{$c->getFilename()}}   ">
 
                                     <a class="toEliminate flex items-center justify-center mr-2 my-2">
 
@@ -180,8 +180,8 @@
                     processData: false,
                     contentType: false,
                     success: function(data) {
-                        location.reload(true)
-                        //window.location.href = "{{url('novel_manager')}}/{{$novel[0]->id}}/{{$chapter[0]->id}}";
+                        //location.reload(true)
+                        window.location.href = "{{url('novel_manager')}}/{{$novel[0]->id}}/{{$chapter[0]->id}}";
                     }
                 });
             } 

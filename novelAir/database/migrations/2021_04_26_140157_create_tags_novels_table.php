@@ -14,6 +14,7 @@ class CreateTagsNovelsTable extends Migration
     public function up()
     {
         Schema::create('tags_novels', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('novel_id')->length(20);
             $table->unsignedBigInteger('tag_id')->length(20);
             $table->timestamps();

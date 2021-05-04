@@ -99,7 +99,7 @@
 
                                 <!-- Seguidores: Seguidores dinamicas -->
                                 <!-- Por hacer -->
-                                <p class="text-base text-black text-left mb-3">2125 Siguiendo</p>
+                                <p class="text-base text-black text-left mb-3">{{$novel->uns_count}} Siguiendo</p>
 
                             </div>
 
@@ -134,9 +134,9 @@
                 <!-- Por hacer -->
                 <div class=" mx-5">
 
-                    <p class="text-xl text-black text-center mb-3">Seguidores totales: 2125</p>
+                    <p class="text-xl text-black text-center mb-3">Seguidores totales: {{$followersStats}}</p>
 
-                    <p class="text-lg text-gray-600 text-center mb-5">Seguidores este mes: 124</p>
+                    <p class="text-lg text-gray-600 text-center mb-5">Seguidores este mes: {{$followersStats}}</p>
 
                 </div>
 

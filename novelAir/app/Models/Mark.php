@@ -4,13 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Chapter;
 
-class Novel extends Model
+class Mark extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','genre','sinopsis','adult_content','visual_content','novel_type','public','imgtype'];
+    protected $fillable = ['novel_id','user_id','like'];
 
     public function chapters()
     {

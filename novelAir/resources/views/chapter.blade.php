@@ -5,24 +5,57 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 <body>
     <center>
         <a href="{{url('novel_manager')}}/{{$novel[0]->id}}"><button>BACK</button></a><br><br>
-        {{$chapter[0]->title}}<br><br>
+        {{$chapter[0]->title}}
+        <a class="text-l text-white font-bold bg-blue-500 hover:bg-blue-700 p-2 py-1 rounded" 
+        href="{{route('goVC',['id'=>$novel[0]->id,'chapter'=>$chapter[0]->id])}}">
+            Editar
+        </a>
+        <br><br>
 
         @foreach ($content as $c)
-            <img src="{{url($chapter[0]->route)}}{{'/'.$c->getFilename()}}"><br>
+            <img" src="{{url($chapter[0]->route)}}{{'/'.$c->getFilename()}}"><br>
         @endforeach
 
         <br><br>
+        <?php 
+            $x = 0;
+            foreach ($chapters as $ch){
+                if ($ch == $chapter[0]){
+                    $chapterIndex = $x;
+                }
+                $x++;
+            }
+            /* 
+            $a=array("red","green","blue");
+            //echo array_search("green",$a);
+            $ch = $chapter[0];
+            dd($chapters);
+            echo array_search($ch,$chapters); */
+        ?>
 
         @if ($chapter[0]->chapter_n != $chapters[count($chapters)-1]->chapter_n)
-            <a href="{{url('novel_manager/viewChapter')}}/{{$novel[0]->id}}/{{$chapter[0]->chapter_n-1}}"><button>Anterior capitulo</button></a>
+            @if ($chapter[0]->chapter_n-1 == $chapters[$chapterIndex+1]->chapter_n)
+                <a href="{{url('novel_manager/viewChapter')}}/{{$novel[0]->id}}/{{$chapter[0]->chapter_n-1}}"><button>Anterior capitulo</button></a>
+            @endif
         @endif
 
         @if (($chapter[0]->chapter_n != $chapters[0]->chapter_n))<!-- ($chapter[0]->chapter_n+1 == ) -->
-            <a href="{{url('novel_manager/viewChapter')}}/{{$novel[0]->id}}/{{$chapter[0]->chapter_n+1}}"><button>Siguiente capitulo</button></a>
+            @if ($chapter[0]->chapter_n+1 == $chapters[$chapterIndex-1]->chapter_n)
+                <a href="{{url('novel_manager/viewChapter')}}/{{$novel[0]->id}}/{{$chapter[0]->chapter_n+1}}"><button>Siguiente capitulo</button></a>
+            @endif
         @endif    
     </center>
 </body>

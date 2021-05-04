@@ -60,25 +60,29 @@
 
                 <!-- Seccion de novelas: el foreach recorre todos los capitulos y crea sus div's en la seccion padre -->
                 @foreach ($chapters as $chapter)
-                    <div class="flex border-b border-gray-300 mx-5 pb-5 pt-5">
-                        
+                    <div class="flex border-b border-gray-300 mx-5 hover:bg-blue-50">
                         <!-- Seccion info: Contiene informacion sobre la novela -->
-                        <div class="flex inline-block w-3/5 mx-2.5 items-center">
+                        <a class="flex w-4/5 pb-4 pt-4" href="{{url('novel_manager/viewChapter')}}/{{$novels[0]->id}}/{{$chapter->chapter_n}}">
+                            <div class="flex inline-block w-4/5 mx-2.5 items-center">
 
-                            <p class="text-xl text-black text-left mb-3">Capitulo {{ $chapter->chapter_n }}: {{ $chapter->title }}</p>
+                                <p class="text-xl text-black text-left mb-3">Capitulo {{ $chapter->chapter_n }}: {{ $chapter->title }}</p>
 
-                        </div>
+                            </div>
 
-                        <div class="inline-block w-1/5 mx-2.5 items-center">
-                        
-                        <p class="text-sm text-gray-700 text-right mb-2">Visitas: {{ $chapter->views }}</p>
-                        <p class="text-sm text-gray-700 text-right mb-2"><? $e = explode(" ", $chapter->updated_at); echo $e[0]?></p>
-                        
-                        </div>
-
+                            <div class="inline-block w-1/5 mx-2.5 items-center">
+                            
+                            <p class="text-sm text-gray-700 text-right mb-2">Visitas: {{ $chapter->views }}</p>
+                            <p class="text-sm text-gray-700 text-right mb-2"><? $e = explode(" ", $chapter->updated_at); echo $e[0]?></p>
+                            
+                            </div>
+                        </a>
+                    
                         <div class="flex items-center justify-center inline-block w-1/5 mx-2.5">
                         
-                            <a class="text-l text-white font-bold bg-blue-500 hover:bg-blue-700 p-2 py-1 rounded" href="{{route('goVC',['id'=>$novels[0]->id,'chapter'=>$chapter->id])}}">Editar</a>
+                            <a class="text-l text-white font-bold bg-blue-500 hover:bg-blue-700 p-2 py-1 rounded" 
+                            href="{{route('goVC',['id'=>$novels[0]->id,'chapter'=>$chapter->id])}}">
+                                Editar
+                            </a>
                         
                         </div>
                     </div>

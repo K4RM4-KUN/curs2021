@@ -14,7 +14,8 @@ class CreateUnsTable extends Migration
     public function up()
     {
         Schema::create('uns', function (Blueprint $table) {
-            $table->string('novel_dir',255);
+            $table->id();
+            $table->unsignedBigInteger('novel_id')->lenght(20);
             $table->unsignedBigInteger('user_id')->lenght(20);
             $table->unsignedBigInteger('state_id')->lenght(20);
             $table->timestamps();

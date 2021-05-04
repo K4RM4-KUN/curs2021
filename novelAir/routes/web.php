@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SingleNovelManager;
 use App\Http\Controllers\NovelManager;
+use App\Http\Controllers\NovelMain;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,12 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+//NovelMain
+Route::get('novel/{id?}',[NovelMain::class, 'index'])->name("viewNovel")->middleware(['auth']);
+Route::get('lista/{type}/{novel_id}', [NovelMain::class, 'novelInteraction'])->name("interactNovel")->middleware(['auth']);
+Route::get('leer/{id_novel}/{id_chapter}', [NovelMain::class, 'readIndex'])->middleware(['auth']);
+
+//NovelManager
 Route::get('novel_manager', [NovelManager::class, 'index'])->name("goNM")->middleware(['auth']);
 Route::get('novel_manager/create', [SingleNovelManager::class, 'index'])->name("createNovel")->middleware(['auth']);
 Route::post('novel_manager/adding', [SingleNovelManager::class, 'createChapter'])->name("createChapters")->middleware(['auth']);
@@ -38,6 +45,7 @@ Route::get('novel_manager/viewChapter/{id?}/{id_chapter}', [SingleNovelManager::
 Route::get('novel_manager/chapterImages/{id?}/{id_chapter}', [SingleNovelManager::class, 'imageChapterIndex'])->name('goIM')->middleware(['auth','novelsecurity']);
 Route::post('novel_manager/editImages', [SingleNovelManager::class,'editChapterImages'])->middleware(["auth"]);
 Route::get('novel_manager/{id}/{chapter}', [SingleNovelManager::class, 'chapterIndex'])->name("goVC")->middleware(['auth','novelsecurity']);
+
 
 Route::view("test","layouts.navigationNew");
 require __DIR__.'/auth.php';

@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Novel;
 use App\Models\Chapter;
 use App\Models\Tag;
+use App\Models\UNS;
+use App\Models\States;
 use App\Models\Tag_Novel;
 use App\Http\Requests\ImageUploadRequest;
 use Illuminate\Support\Facades\Cache;

@@ -1,160 +1,124 @@
-<!DOCTYPE html>
+<!-- navbar -->
+<nav x-data="{ open: false }" class="bg-white border-b-4 border-ourBlue ">
 
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <div class="max-w-7xl mx-auto">
 
-    <head>
+        <div class="flex justify-between">
 
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+            <div class="flex">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+                <!-- logo -->
+                <div class="mx-5">
 
-        <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+                <a class="flex items-center w-40" href="{{url('/')}}">
 
-        <!-- Styles -->
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+                        <img class="h-20 w-40" src="{{asset('images/logo2.png')}}" alt="logo">
 
-        <!-- Scripts -->
-        <script src="{{ asset('js/app.js') }}" defer></script>
+                    </a>
 
-    </head>
-
-    <body class="bg-gradient-to-br from-gray-700 to-gray-800 min-h-screen">
-
-        <!-- navbar -->
-        <nav class="bg-white border-b-4 border-ourBlue ">
-
-            <div class="max-w-7xl mx-auto">
-
-                <div class="flex justify-between">
-
-                    <div class="flex">
-
-                        <!-- logo -->
-                        <div class="mx-5">
-
-                            <a class="flex items-center w-40" href="#">
-
-                                <img class="h-20 w-40" src="{{asset('images/logo2.png')}}" alt="">
-
-                            </a>
-
-                        </div>
-                        
-                        <!-- primary -->
-                        <div class="hidden sm:flex items-center mx-5">
-
-                            <!-- BIBLIOTECA -->
-                            <a href="@{{Route('library')}}">
-
-                                <button class="px-5 py-7 hover:bg-ourBlue hover:text-white">
-
-                                    BIBLIOTECA
-
-                                </button>
-
-                            </a>
-
-                            <!-- LISTA -->
-                            <a href="@{{Route('lists')}}">
-
-                                <button class="px-5 py-7 hover:bg-ourBlue hover:text-white">
-
-                                    LISTAS
-
-                                </button>
-                                
-                            </a>
-
-                            <!-- AUTORES -->
-                            <a href="@{{Route('authors')}}">
-
-                                <button class="px-5 py-7 hover:bg-ourBlue hover:text-white">
-
-                                    AUTORES
-
-                                </button>
-                                
-                            </a>
-
-                            <!-- CREAR -->
-                            <a href="{{Route('goNM')}}">
-
-                                <button class="px-5 py-7 hover:bg-ourBlue hover:text-white bg-gray-100 text-black">
-
-                                    CREAR
-
-                                </button>
-                                
-                            </a>
-
-                            <!-- NOSOTROS -->
-                            <a href="@{{Route('aboutUs')}}">
-
-                                <button class="px-5 py-7 hover:bg-ourBlue hover:text-white">
-
-                                    NOSOTROS
-
-                                </button>
-                                
-                            </a>
-
-                        </div>
-
-                    </div>
-
-                    <!-- secondary/auth -->
-                    <div class="hidden lg:flex items-center justify-center">
-
-                            <a href="">
-
-                                <button class="mx-5 mr-2 px-5 py-2">
-
-                                    LOGIN
-
-                                </button>
-
-                            </a>
-
-                            <a href="">
-
-                                <button class="mx-5 ml-0 px-5 py-2
-                                bg-yellow-500 
-                                hover:bg-yellow-400 
-                                text-white 
-                                font-bold 
-                                border-b-4 
-                                border-yellow-700 
-                                hover:border-yellow-500 
-                                rounded">
-
-                                    REGISTER
-
-                                </button>
-
-                            </a>
-
-                    </div>
+                </div>
                 
+                <!-- primary -->
+                <div class="hidden sm:flex items-center mx-5">
+
+                    <!-- BIBLIOTECA -->
+                    <a href="@{{Route('library')}}">
+
+                        <button class="px-5 py-7 hover:bg-ourBlue hover:text-white font-bold text-ourBlue">
+
+                            BIBLIOTECA
+
+                        </button>
+
+                    </a>
+
+                    <!-- LISTA -->
+                    <a href="@{{Route('lists')}}">
+
+                        <button class="px-5 py-7 hover:bg-ourBlue hover:text-white font-bold text-ourBlue">
+
+                            LISTAS
+
+                        </button>
+                        
+                    </a>
+
+                    <!-- AUTORES -->
+                    <a href="@{{Route('authors')}}">
+
+                        <button class="px-5 py-7 hover:bg-ourBlue hover:text-white font-bold text-ourBlue">
+
+                            AUTORES
+
+                        </button>
+                        
+                    </a>
+
+                    <!-- CREAR  bg-gray-100-->
+                    <a href="{{Route('goNM')}}">
+
+                        <button class="px-5 py-7 hover:bg-ourBlue hover:text-white text-black font-bold text-ourBlue">
+
+                            "NOVEL MANAGER"
+
+                        </button>
+                        
+                    </a>
+
+                    <!-- NOSOTROS -->
+                    <a href="@{{Route('aboutUs')}}">
+
+                        <button class="px-5 py-7 hover:bg-ourBlue hover:text-white font-bold text-ourBlue">
+
+                            NOSOTROS
+
+                        </button>
+                        
+                    </a>
+
                 </div>
 
             </div>
 
-            <!-- mobile -->
-            
+            <!-- secondary/auth -->
+            <div class="hidden lg:flex items-center justify-center">
 
+                    <a href="">
 
-        </nav>
+                        <button class="mx-5 mr-2 px-5 py-2">
 
-        <!-- content -->
-        <div class="text-center">
+                            LOGIN
 
-            @include('novelManagerNew')
+                        </button>
 
+                    </a>
+
+                    <a href="">
+
+                        <button class="mx-5 ml-0 px-5 py-2
+                        bg-yellow-500 
+                        hover:bg-yellow-400 
+                        text-white 
+                        font-bold 
+                        border-b-4 
+                        border-yellow-700 
+                        hover:border-yellow-500 
+                        rounded">
+
+                            REGISTER
+
+                        </button>
+
+                    </a>
+
+            </div>
+        
         </div>
 
-    </body>
+    </div>
 
-</html>
+    <!-- mobile -->
+    
+
+
+</nav>

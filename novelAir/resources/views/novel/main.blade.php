@@ -7,18 +7,22 @@
     <title>Document</title>
 
     <?php
-        if (count($chapters) == 0){ //entra si la novela no tiene capitulos
-            $lastView = null;
-        }elseif (count($views)==1){ //entra al ultimo capitulo leido
-            $lastView = $views[0]->chapter_n;
-            $x=0;
-            foreach ($chapters as $ch){
-                if ($ch->chapter_n == $lastView){
-                    $chapterIndex = $x;
+        if(Auth::check()){
+            if (count($chapters) == 0){ //entra si la novela no tiene capitulos
+                $lastView = null;
+            }elseif (count($views)==1){ //entra al ultimo capitulo leido
+                $lastView = $views[0]->chapter_n;
+                $x=0;
+                foreach ($chapters as $ch){
+                    if ($ch->chapter_n == $lastView){
+                        $chapterIndex = $x;
+                    }
+                    $x++;
                 }
-                $x++;
+            }else{  //entra si no has empezado a ller la novela
+                $lastView = $chapters[count($chapters)-1]->chapter_n;
             }
-        }else{  //entra si no has empezado a ller la novela
+        } else {
             $lastView = $chapters[count($chapters)-1]->chapter_n;
         }
     ?>
@@ -32,14 +36,29 @@
         
         </div>
 
-        <div style="width:400px; display:flex;">
+        <div style="width:400px; display:flex; margin-bottom:4rem;">
+            <div>
+                <img 
+                style="margin-top:1rem;" 
+                width="120px" 
+                height="60%" 
+                src="{{asset($novel[0]->novel_dir.'/cover'.$novel[0]->imgtype)}}" 
+                alt="">
+                <p>{{$mark}}/10</p>
+                <a style="text-decoration:none;" href="{{url('vote/'.$novel[0]->id.'/pos')}}">
+                    <button>
+                        @if($liked->like == 1) Liked @else Like @endif
+                    </button>
+                </a>
 
-            <img 
-            style="margin-top:1rem;" 
-            width="100px" 
-            height="100%" 
-            src="{{asset($novel[0]->novel_dir.'/cover'.$novel[0]->imgtype)}}" 
-            alt="">
+                <a style="text-decoration:none;" href="{{url('vote/'.$novel[0]->id.'/neg')}}">
+                    <button>
+                        @if($liked->like == 0) Disliked @else Dislike @endif
+                    </button>
+                </a>
+
+            </div>
+
             <div>
                 <h5 style="margin-left:2rem;" >{{$novel[0]->sinopsis}}</h5>
 

@@ -26,14 +26,34 @@ class NovelMain extends Controller
 
         $data["tags"] = DB::table("tags_novels")->join('tags',"tags_novels.tag_id","=","tags.id")->where("novel_id",$id)->get();
 
-        $tmp = UNS::where("user_id", Auth::user()->id)->where("novel_id",$id)->first();
-
-        if($tmp == null){
+        if(Auth::check()){
+            $data["liked"] = Mark::where("user_id", Auth::user()->id)->where("novel_id",$id)->first();
+            if($data["liked"] == null){
+                $liked = new Mark;
+                $liked->SetAttribute("like",3);
+                $data["liked"] = $liked;
+            }
+            $tmp = UNS::where("user_id", Auth::user()->id)->where("novel_id",$id)->first();
+    
+            if($tmp == null){
+                $state = new States;
+                $state->SetAttribute("state_name","none");
+                $data["userUNS"] = [$state];
+            } else {
+                $data["userUNS"] = States::where("id",$tmp->state_id)->get();
+            }
+            $data["views"] = User_LastView:: where([
+                ["user_id", Auth::user()->id],
+                ["novel_id", $id],
+            ])->get();
+            
+        } else {
             $state = new States;
             $state->SetAttribute("state_name","none");
             $data["userUNS"] = [$state];
-        } else {
-            $data["userUNS"] = States::where("id",$tmp->state_id)->get();
+            $liked = new Mark;
+            $liked->SetAttribute("like",3);
+            $data["liked"] = $liked;
         }
 
         $data["followers"] = count(
@@ -52,14 +72,17 @@ class NovelMain extends Controller
             (UNS::where('novel_id',$id)->where("state_id",(States::where('state_name', "favorite")->first())->id)->get())
         );
 
+        $pos = Mark::where('novel_id',$id)->where("like",1)->get();
+        $neg =  Mark::where('novel_id',$id)->where("like",0)->get();
+        if(count($pos)+count($neg) != 0){
+            $data["mark"] = ((count($pos)*100)/(count($pos)+count($neg)))/10;
+        } else {
+            $data["mark"] = 0;
+        }
+
         $data["chapters"] = Chapter:: where([
             ["novel_id", $id],
         ])->orderbydesc('chapter_n')->get();
-
-        $data["views"] = User_LastView:: where([
-            ["user_id", Auth::user()->id],
-            ["novel_id", $id],
-        ])->get();
 
         return view('novel.main',$data);
     }
@@ -77,25 +100,30 @@ class NovelMain extends Controller
 
         $data["content"] = File::files(public_path()."/".$data["chapter"][0]->route);
         
-        $tmpChapter = Chapter::find($data["chapter"][0]->id);
-        $tmpChapter->views = ($data["chapter"][0]->views+1);
-        $tmpChapter->save();
+        if(Auth::check()){
+            $tmpChapter = Chapter::find($data["chapter"][0]->id);
+            $tmpChapter->views = ($data["chapter"][0]->views+1);
+            $tmpChapter->save();
 
-        $existViewLast = User_LastView::where([
-            ['user_id', Auth::user()->id],
-            ['novel_id', $id_novel],
-        ])->get();
+            $existViewLast = User_LastView::where([
+                ['user_id', Auth::user()->id],
+                ['novel_id', $id_novel],
+            ])->get();
+            
+            if (count($existViewLast) == 0){
+                $viewLast = new User_LastView;
+                $viewLast->setAttribute('user_id', Auth::user()->id);
+                $viewLast->setAttribute('novel_id', $id_novel);
+                $viewLast->setAttribute('chapter_n', $data["chapter"][0]->chapter_n);
+                $viewLast->save();
+            }elseif ($existViewLast[0]->chapter_n < $data["chapter"][0]->chapter_n){
+                $existViewLast[0]->chapter_n = $data["chapter"][0]->chapter_n;
+                $existViewLast[0]->save();
+            }
+        } else{
 
-        if (count($existViewLast) == 0){
-            $viewLast = new User_LastView;
-            $viewLast->setAttribute('user_id', Auth::user()->id);
-            $viewLast->setAttribute('novel_id', $id_novel);
-            $viewLast->setAttribute('chapter_n', $data["chapter"][0]->chapter_n);
-            $viewLast->save();
-        }elseif ($existViewLast[0]->chapter_n < $data["chapter"][0]->chapter_n){
-            $existViewLast[0]->chapter_n = $data["chapter"][0]->chapter_n;
-            $existViewLast[0]->save();
         }
+
 
         return view('novel.read',$data);
     }
@@ -122,5 +150,28 @@ class NovelMain extends Controller
             $alredyState->save();
         }
         return redirect('novel/'.$novel_id);
+    }
+
+    public function voteNovel($id,$vote){
+        $alredyVoted = Mark::where([["user_id",Auth::user()->id],["novel_id",$id]])->first();
+        if($vote == "pos" || $vote == "neg"){
+            $value = 0;
+            if($vote == "pos"){
+                $value = 1;
+            }
+            if($alredyVoted == null){
+                $newVote = new Mark;
+                $newVote->SetAttribute("novel_id",$id);
+                $newVote->SetAttribute("user_id",Auth::user()->id);
+                $newVote->SetAttribute("like",$value);
+                $newVote->save();
+            } else if($alredyVoted->like == $value) {
+                Mark::where([["user_id", Auth::user()->id],['novel_id', $id]])->delete();
+            } else {
+                $alredyVoted->like = $value;
+                $alredyVoted->save();
+            }
+        }
+        return redirect("novel/".$id);
     }
 }

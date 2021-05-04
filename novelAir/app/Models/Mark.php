@@ -11,14 +11,5 @@ class Mark extends Model
 
     protected $fillable = ['novel_id','user_id','like'];
 
-    public function chapters()
-    {
-        return $this->hasMany(Chapter::class);
-    }
-    public function uns()
-    {
-        return $this->hasMany(UNS::class);
-    }
-
-    protected $table = "novels";
+    protected $table = "marks";
 }

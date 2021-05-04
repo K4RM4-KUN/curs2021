@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Novel;
 use App\Models\Chapter;
+use App\Models\Mark;
 use App\Models\UNS;
 use App\Models\States;
 use Illuminate\Support\Facades\DB;
@@ -29,12 +30,17 @@ class NovelManager extends Controller
         orderbydesc('created_at')->
         get();
         $data["viewStats"] = 0;
-        foreach($data["novels"] as $novel){
-            $data["viewStats"] += $novel->chapters_sum_views;
-        }
         $data["followersStats"] = 0;
         foreach($data["novels"] as $novel){
+            $data["viewStats"] += $novel->chapters_sum_views;        
             $data["followersStats"] += $novel->uns_count;
+            $pos = Mark::where('novel_id',$novel->id)->where("like",1)->get();
+            $neg =  Mark::where('novel_id',$novel->id)->where("like",0)->get();
+            if(count($pos)+count($neg) != 0){
+                $novel->SetAttribute("Mark",((count($pos)*100)/(count($pos)+count($neg)))/10);
+            } else {
+                $novel->SetAttribute("Mark",0);
+            }
         }
         return view("novelManager",$data);
     }

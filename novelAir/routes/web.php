@@ -25,9 +25,10 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 //NovelMain
-Route::get('novel/{id?}',[NovelMain::class, 'index'])->name("viewNovel")->middleware(['auth']);
+Route::get('novel/{id?}',[NovelMain::class, 'index'])->name("viewNovel");
 Route::get('lista/{type}/{novel_id}', [NovelMain::class, 'novelInteraction'])->name("interactNovel")->middleware(['auth']);
-Route::get('leer/{id_novel}/{id_chapter}', [NovelMain::class, 'readIndex'])->middleware(['auth']);
+Route::get('vote/{id}/{vote}', [NovelMain::class, 'voteNovel'])->name("voteNovel")->middleware(['auth']);
+Route::get('leer/{id_novel}/{id_chapter}', [NovelMain::class, 'readIndex']);
 
 //NovelManager
 Route::get('novel_manager', [NovelManager::class, 'index'])->name("goNM")->middleware(['auth']);

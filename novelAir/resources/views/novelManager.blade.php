@@ -101,6 +101,10 @@
                                 <!-- Por hacer -->
                                 <p class="text-base text-black text-left mb-3">{{$novel->uns_count}} Siguiendo</p>
 
+                                <!-- Seguidores: Seguidores dinamicas -->
+                                <!-- Por hacer -->
+                                <p class="text-base text-black text-left mb-3">Nota: {{$novel->Mark}}/10</p>
+
                             </div>
 
 

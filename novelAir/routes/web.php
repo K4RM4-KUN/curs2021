@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SingleNovelManager;
+use App\Http\Controllers\Library;
 use App\Http\Controllers\NovelManager;
 use App\Http\Controllers\NovelMain;
 
@@ -23,6 +24,10 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+//Library
+Route::get('biblioteca/{type}',[Library::class,'index'])->name('goLibrary');
+Route::post('biblioteca/resultado',[Library::class,'resultSercher'])->name('goLibraryResult');
 
 //NovelMain
 Route::get('novel/{id?}',[NovelMain::class, 'index'])->name("viewNovel");

@@ -11,14 +11,21 @@
             if (count($chapters) == 0){ //entra si la novela no tiene capitulos
                 $lastView = null;
             }elseif (count($views)==1){ //entra al ultimo capitulo leido
-                $lastView = $views[0]->chapter_n;
-                $x=0;
-                foreach ($chapters as $ch){
-                    if ($ch->chapter_n == $lastView){
-                        $chapterIndex = $x;
+                $lastView = $views[0]->chapter_n; //coge el capitulo de la DB
+                
+                $chapterIndex = false;
+                foreach ($chapters as $ch){ //forech de todos los capitulos
+                    if ($ch->chapter_n == $lastView+1){
+                        $chapterIndex = true;
                     }
-                    $x++;
                 }
+
+                if ($chapterIndex){
+                    $lastView = $lastView+1;
+                }else {
+                    $lastView = null;
+                }
+
             }else{  //entra si no has empezado a ller la novela
                 $lastView = $chapters[count($chapters)-1]->chapter_n;
             }

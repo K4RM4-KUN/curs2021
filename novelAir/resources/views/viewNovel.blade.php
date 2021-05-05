@@ -167,7 +167,6 @@
                             <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-blue-600 leading-tight focus:outline-none focus:shadow-outline" 
                             name="adultContent" 
                             type="checkbox" 
-                            value="@foreach($tags as $tag){{strtolower($tag->tag_name)}},@endforeach"
                             @if ($novels[0]->adult_content) checked @endif>
                         </div>
 
@@ -179,8 +178,17 @@
                             <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-blue-600 leading-tight focus:outline-none focus:shadow-outline" 
                             name="public" 
                             type="checkbox" 
-                            value="@foreach($tags as $tag){{strtolower($tag->tag_name)}},@endforeach"
                             @if ($novels[0]->public) checked @endif>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+                                Finalizado
+                            </label>
+
+                            <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-blue-600 leading-tight focus:outline-none focus:shadow-outline" 
+                            name="end" 
+                            type="checkbox" 
+                            @if ($novels[0]->ended) checked @endif>
                         </div>
 
                         <div class="flex items-center justify-between">

@@ -1,16 +1,16 @@
 <!-- navbar -->
 <nav x-data="{ open: false }" class="bg-white border-b-4 border-ourBlue ">
 
-    <div class="max-w-7xl mx-auto">
+    <div class="max-w-7xl mx-auto h-1/1">
 
         <div class="flex justify-between">
 
             <div class="flex">
 
                 <!-- logo -->
-                <div class="mx-5">
+                <div class="mx-5 flex items-center justify-center w-40">
 
-                <a class="flex items-center w-40" href="{{url('/')}}">
+                    <a class="" href="{{url('/')}}">
 
                         <img class="h-20 w-40" src="{{asset('images/logo2.png')}}" alt="logo">
 
@@ -22,15 +22,21 @@
                 <div class="hidden sm:flex items-center mx-5">
 
                     <!-- BIBLIOTECA -->
-                    <a href="@{{Route('library')}}">
+                    <div x-data="{ dropdownOpen: false }">
 
-                        <button class="px-5 py-7 hover:bg-ourBlue hover:text-white font-bold text-ourBlue">
+                        <button @click="dropdownOpen = !dropdownOpen" class="px-5 py-7 hover:bg-ourBlue hover:text-white font-bold text-ourBlue">
 
                             BIBLIOTECA
 
                         </button>
 
-                    </a>
+                        <div x-show="dropdownOpen" @click="dropdownOpen = false" class="fixed inset-0 h-full w-full z-10"></div>
+
+                        <div x-show="dropdownOpen" class="absolute mt-2 bg-white rounded-md overflow-hidden shadow-xl z-20">
+                            <a href="{{url('biblioteca/novelas')}}" class="block px-4 py-2 text-sm hover:bg-ourBlue hover:text-white font-bold text-ourBlue"><p class="text-center">Novelas</p></a>
+                            <a href="{{url('biblioteca/visual_novels')}}" class="block px-4 py-2 text-sm hover:bg-ourBlue hover:text-white font-bold text-ourBlue"><p class="text-center">Visual Novels</p></a>
+                        </div>
+                    </div>
 
                     <!-- LISTA -->
                     <a href="@{{Route('lists')}}">
@@ -51,7 +57,7 @@
                             AUTORES
 
                         </button>
-                        
+
                     </a>
 
                     <!-- CREAR  bg-gray-100-->
@@ -59,7 +65,7 @@
 
                         <button class="px-5 py-7 hover:bg-ourBlue hover:text-white text-black font-bold text-ourBlue">
 
-                            "NOVEL MANAGER"
+                            CREAR
 
                         </button>
                         

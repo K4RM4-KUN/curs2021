@@ -103,6 +103,7 @@ class NovelMain extends Controller
         if(Auth::check()){
             $tmpChapter = Chapter::find($data["chapter"][0]->id);
             $tmpChapter->views = ($data["chapter"][0]->views+1);
+            //Hacer comprobacion de novelas populares
             $tmpChapter->save();
 
             $existViewLast = User_LastView::where([

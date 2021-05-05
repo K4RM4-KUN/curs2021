@@ -272,6 +272,8 @@ class SingleNovelManager extends Controller
             'genre' => 'string|max:255',
             'sinopsis' => 'string|max:400',
             'cover' => 'mimes:jpeg,jpg,png|max:1024|dimensions:,width=300,height=450',
+            //'tags' => 'regex:/^[-_a-zA-Z0-9.]+$/"',
+            //'tags' => 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x]).*$/'
         ]);
 
         $novel = Novel::find($request->id);
@@ -290,6 +292,11 @@ class SingleNovelManager extends Controller
         }else{
         	$novel->public = 0;
         }
+        if (isset($request->end)){
+        	$novel->ended = 1;
+        }else{
+        	$novel->ended = 0;
+        }
         
         $novel->save();
         
@@ -305,7 +312,8 @@ class SingleNovelManager extends Controller
         
             foreach ($newTags as $newTag) {
 
-                if (!($newTag == null || $newTag == " ")){
+                if (!($newTag == null || $newTag == " " || strlen($newTag)<4)){
+
                     $newTag = strtoupper($newTag);
 
                     $compTag = Tag:: where("tag_name",$newTag)->get();

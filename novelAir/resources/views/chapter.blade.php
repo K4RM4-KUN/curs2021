@@ -26,7 +26,7 @@
         <br><br>
 
         @foreach ($content as $c)
-            <img" src="{{url($chapter[0]->route)}}{{'/'.$c->getFilename()}}"><br>
+            <img src="{{url($chapter[0]->route)}}{{'/'.$c->getFilename()}}"><br>
         @endforeach
 
         <br><br>

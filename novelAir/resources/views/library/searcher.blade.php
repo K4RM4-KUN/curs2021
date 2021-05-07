@@ -17,49 +17,50 @@
         @csrf
         <div>
             <input type="text" name="type" hidden value="{{$type}}">
-            <input type="text" name="searcher" placeholder="Buscar...">
+            <input type="text" name="searcher" placeholder="Buscar..." value="{{$filters['text']}}">
             <input type="submit" valie="Buscar">
         </div>
         <div>
             <div>
+                {{$filters["order"]}}
                 <label for="order">Order</label>
                 <select name="order" id="order">
-                    <option value="desc">Más nuevos</option>
-                    <option value="asc">Más viejos</option>
-                    <option value="more">Más capitulos</option>
-                    <option value="minus">Menos capitulos</option>
-                    <option value="alfa">Alfabetico</option>
-                    <option value="alfaC">Contrario al alfabetico</option>
-                    <option value="moreMark">Más buenos</option>
-                    <option value="minMark">Más malos</option>
+                    <option value="desc" @if ($filters["order"] == 0) selected @endif>Más nuevos</option>
+                    <option value="asc" @if ($filters["order"] == 1) selected @endif>Más viejos</option>
+                    <option value="more" @if ($filters["order"] == 2) selected @endif>Más capitulos</option>
+                    <option value="minus" @if ($filters["order"] == 3) selected @endif>Menos capitulos</option>
+                    <option value="alfa" @if ($filters["order"] == 4) selected @endif>Alfabetico</option>
+                    <option value="alfaC" @if ($filters["order"] == 5) selected @endif>Contrario al alfabetico</option>
+                    <option value="moreMark" @if ($filters["order"] == 6) selected @endif>Más buenos</option>
+                    <option value="minMark" @if ($filters["order"] == 7) selected @endif>Más malos</option>
                 </select>
                 <div>
                 <label for="both">Ambos</label>
-                <input type="checkbox" name="both" value="both" checked>:
+                <input type="checkbox" name="both" value="both" @if ($filters["adult_content"] == 0) checked @endif>:
                 <label for="adult_content">+18</label>
-                <input type="checkbox" name="adult_content" value="0">
+                <input type="checkbox" name="adult_content" value="0" @if ($filters["adult_content"] == 1) checked @endif>
                 </div>
             </div>
             <!--VisualNovel type-->
             @if($type == 1)
                 <div>
                     <label for="all">Todos</label>
-                    <input type="checkbox" name="all" value="all" checked>:
+                    <input type="checkbox" name="all" value="all" @if ($filters["type"]["all"] == 0) checked @endif>:
                     <label for="manhwa">Manhwa</label>
-                    <input type="checkbox" name="manhwa" value="manhwa">
+                    <input type="checkbox" name="manhwa" value="manhwa" @if ($filters["type"]["manhwa"] == 1) checked @endif>
                     <label for="manhua">Manhua</label>
-                    <input type="checkbox" name="manhua" value="manhua">
+                    <input type="checkbox" name="manhua" value="manhua" @if ($filters["type"]["manhua"] == 1) checked @endif>
                     <label for="manga">Manga</label>
-                    <input type="checkbox" name="manga" value="manga">
+                    <input type="checkbox" name="manga" value="manga" @if ($filters["type"]["manga"] == 1) checked @endif>
                     <label for="oneShot">One Shot</label>
-                    <input type="checkbox" name="oneShot" value="oneShot">
+                    <input type="checkbox" name="oneShot" value="oneShot" @if ($filters["type"]["oneShot"] == 1) checked @endif>
                 </div>
             @endif
             <div>
                 <label for="bothE">Ambos</label>
-                <input type="checkbox" name="bothE" value="bothE" checked>:
+                <input type="checkbox" name="bothE" value="bothE" @if ($filters["finished"] == 0) checked @endif>:
                 <label for="ended">Finalizado</label>
-                <input type="checkbox" name="ended" value="ended">
+                <input type="checkbox" name="ended" value="ended" @if ($filters["finished"] == 1) checked @endif>
             </div>
             <div>
                 <label for="markOrder">Nota:</label>
@@ -73,10 +74,10 @@
                 <label for="filtrarTag">
                     Filtrar por tag
                 </label>
-                <input name="filtrarTag" id="filtrarTag" type="checkbox">
+                <input name="filtrarTag" id="filtrarTag" type="checkbox" @if ($filters["tag"] != 0) checked @endif>
                 <div class="tagsDiv">
                     @foreach ($tags as $tag)
-                        <input type="radio" id="{{$tag->id}}" name="tag" value="{{$tag->id}}" checked>
+                        <input type="radio" id="{{$tag->id}}" name="tag" value="{{$tag->id}}" @if ($filters["tag"] == $tag->id) checked @endif>
                         <label for="{{$tag->id}}">{{$tag->tag_name}}</label><br>
                     @endforeach
                 </div>

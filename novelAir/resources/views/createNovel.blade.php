@@ -158,7 +158,7 @@
                         </label>
 
                         <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-blue-600 leading-tight focus:outline-none focus:shadow-outline" 
-                        name="title" 
+                        name="public" 
                         type="checkbox"
                         checked>
                     
@@ -173,6 +173,15 @@
                     </div>
 
                 </form>
+                @if ($errors->any())
+                    <div class="mb-4 flex align-center justify-center">
+                        <table>
+                        @foreach ($errors->all() as $error)
+                            <tr><td><a>{{ $error }}</a></td></tr>
+                        @endforeach
+                        </table>
+                    </div>
+                @endif
 
             </div>
 

@@ -24,7 +24,7 @@
         </div>
 
         <!-- Grid(5x2): Grid que contiene los capitulos del usuario. -->
-        <div class="grid grid-cols-3 sm:grid-cols-5 gap-x-5 grid-rows-2 gap-y-5 sm:grid-rows-2 my-5">
+        <div class="grid grid-cols-3 sm:grid-cols-5 gap-x-5 grid-rows-2 gap-y-5 sm:grid-rows-1 my-5">
 
             <!-- Seccion Novelas: Contiene todas los capitulos del usuario -->
             <div class="bg-white rounded col-span-3 h-auto">

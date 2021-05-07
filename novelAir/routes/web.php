@@ -3,8 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SingleNovelManager;
 use App\Http\Controllers\Library;
+use App\Http\Controllers\FeaturedSidebar;
 use App\Http\Controllers\NovelManager;
 use App\Http\Controllers\NovelMain;
+use App\Http\Controllers\Lista;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,12 +27,26 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+//Test
+Route::get('text2/{id_novel}/{id_chapter}',[NovelMain::class, 'test2']);
+Route::get('test/{list?}',[Lista::class,'test'])->name('list')->middleware(['auth']);
+
+//Featured
+Route::get('featured',[FeaturedSidebar::class,'index']);
+
 //Library
-Route::get('biblioteca/{type}',[Library::class,'index'])->name('goLibrary');
+Route::get('biblioteca/{type?}',[Library::class,'index'])->name('goLibrary');
 Route::post('biblioteca/resultado',[Library::class,'resultSercher'])->name('goLibraryResult');
+//Test
+Route::get('biblioteca/test2/{type?}',[Library::class,'indextest2'])->name('goLibrarytest2');
+Route::post('biblioteca/test2/resultado',[Library::class,'resultSerchertest2'])->name('goLibraryResulttest2');
+
+//List
+Route::get('listas/{list?}',[Lista::class,'index'])->name('list')->middleware(['auth']);
 
 //NovelMain
-Route::get('novel/{id?}',[NovelMain::class, 'index'])->name("viewNovel");
+Route::get('novel/{id?}/{order?}',[NovelMain::class, 'index'])->name("viewNovel");
+Route::get('deleteMark/{id?}',[NovelMain::class, 'deleteMark']);
 Route::get('lista/{type}/{novel_id}', [NovelMain::class, 'novelInteraction'])->name("interactNovel")->middleware(['auth']);
 Route::get('vote/{id}/{vote}', [NovelMain::class, 'voteNovel'])->name("voteNovel")->middleware(['auth']);
 Route::get('leer/{id_novel}/{id_chapter}', [NovelMain::class, 'readIndex']);
@@ -53,5 +69,5 @@ Route::post('novel_manager/editImages', [SingleNovelManager::class,'editChapterI
 Route::get('novel_manager/{id}/{chapter}', [SingleNovelManager::class, 'chapterIndex'])->name("goVC")->middleware(['auth','novelsecurity']);
 
 
-Route::view("test","layouts.navigationNew");
+//Route::view("test","layouts.navigationNew");
 require __DIR__.'/auth.php';

@@ -1,5 +1,5 @@
 <!-- navbar -->
-<nav x-data="{ open: false }" class="bg-white border-b-4 border-ourBlue ">
+<nav x-data="{ open: false }" class="sticky top-0 | bg-white border-b-4 border-ourBlue ">
 
     <div class="max-w-7xl mx-auto h-1/1">
 
@@ -39,7 +39,7 @@
                     </div>
 
                     <!-- LISTA -->
-                    <a href="@{{Route('lists')}}">
+                    <a href="{{url('listas')}}">
 
                         <button class="px-5 py-7 hover:bg-ourBlue hover:text-white font-bold text-ourBlue">
 
@@ -88,6 +88,16 @@
 
             <!-- secondary/auth -->
             <div class="hidden lg:flex items-center justify-center">
+                    <!-- Authentication -->
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+
+                        <x-responsive-nav-link :href="route('logout')"
+                                onclick="event.preventDefault();
+                                            this.closest('form').submit();">
+                            {{ __('Log out') }}
+                        </x-responsive-nav-link>
+                    </form>
 
                     <a href="">
 
@@ -118,7 +128,6 @@
                     </a>
 
             </div>
-        
         </div>
 
     </div>

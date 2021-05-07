@@ -22,7 +22,9 @@ class NovelManager extends Controller
     {
         //$data["followers"] = count((UNS::where('novel_id',1)->where("state_id",(States::where('state_name', "following")->first())->id)->get()));
         $data["novels"] = Novel::
-        withCount("uns")->
+        withCount([ 'uns','uns as uns_count' => function ($query) {
+            $query->where('state_id',(States::where('state_name', "following")->first())->id);
+        }])->
         with("chapters")->
         withSum('chapters', 'views')->
         withCount("chapters")->

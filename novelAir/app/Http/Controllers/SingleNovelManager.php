@@ -26,7 +26,7 @@ class SingleNovelManager extends Controller
     public function novelIndex($id){
         $data["novels"] = Novel:: where("id",$id)->get();
         $data["tags"] = DB::table("tags_novels")->join('tags',"tags_novels.tag_id","=","tags.id")->where("novel_id",$id)->get();
-        $data["chapters"] = Chapter:: where("novel_id",$id)->orderbydesc("chapter_n")->get();
+        $data["chapters"] = Chapter:: where("novel_id",$id)->orderby("chapter_n")->get();
         
         return view("viewNovel",$data);
     }
@@ -101,7 +101,7 @@ class SingleNovelManager extends Controller
         	$novel->setAttribute('adult_content', 0);
         }
         
-        if (isset($request->gender)){
+        if (isset($request->visualNovel)){
         	$novel->setAttribute('visual_novel', 1);
         	if (isset($request->typeOther)){
         		$novel->setAttribute('novel_type', $request->typeOther);
@@ -110,6 +110,7 @@ class SingleNovelManager extends Controller
         	}
         }else{
         	$novel->setAttribute('visual_novel', 0);
+            $novel->setAttribute('novel_type', 'novel');
         }
         
         if (isset($request->public)){
@@ -117,6 +118,7 @@ class SingleNovelManager extends Controller
         }else{
         	$novel->setAttribute('public', 0);
         }
+        //dd($novel);
         $novel->save();
 
         $novel = Novel::find($novel->id);
@@ -272,8 +274,7 @@ class SingleNovelManager extends Controller
             'genre' => 'string|max:255',
             'sinopsis' => 'string|max:400',
             'cover' => 'mimes:jpeg,jpg,png|max:1024|dimensions:,width=300,height=450',
-            //'tags' => 'regex:/^[-_a-zA-Z0-9.]+$/"',
-            //'tags' => 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x]).*$/'
+            'tags' => 'regex:/([A-Za-z0-9 ,])/i',
         ]);
 
         $novel = Novel::find($request->id);

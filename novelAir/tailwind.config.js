@@ -19,6 +19,13 @@ module.exports = {
                 indigo: colors.indigo,
                 red: colors.rose,
                 yellow: colors.amber,
+                gold: "#E8B933",
+                silver: "#C0C0C0",
+                bronze: "#CD7F32",
+                manhua: "#D19E40",
+                manhwa: "#34CB5B",
+                manga: "#7DCFF8",
+                oneShot: "#F1875C",
                 ourBlue: "#5978c7",
             },
             fontFamily: {

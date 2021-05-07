@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Chapter;
 use App\Models\UNS;
 use App\Models\Tag_Novel;
+use App\Models\User_LastView;
 
 class Novel extends Model
 {
@@ -25,6 +26,10 @@ class Novel extends Model
     public function tag_novel()
     {
         return $this->hasMany(Tag_Novel::class);
+    }
+    public function user_lastviews()
+    {
+        return $this->hasMany(User_LastView::class);
     }
 
     protected $table = "novels";

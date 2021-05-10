@@ -59,6 +59,7 @@ class RegisteredUserController extends Controller
         $path = public_path() ."/users/". $user->id;
         File::makeDirectory($path , $mode = 0775, true);
         File::makeDirectory($path."/novels" , $mode = 0775, true);
+        File::makeDirectory($path."/profile" , $mode = 0775, true);
 
         return redirect(RouteServiceProvider::HOME);
     }

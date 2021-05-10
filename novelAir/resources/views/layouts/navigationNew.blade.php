@@ -1,5 +1,5 @@
 <!-- navbar -->
-<nav x-data="{ open: false }" class="sticky top-0 | bg-white border-b-4 border-ourBlue ">
+<nav x-data="{ open: false }" class="sm:sticky top-0 | bg-white border-b-4 border-ourBlue ">
 
     <div class="max-w-7xl mx-auto h-1/1">
 
@@ -19,7 +19,7 @@
                 </div>
                 
                 <!-- primary -->
-                <div class="hidden sm:flex items-center mx-5">
+                <div class="hidden md:flex items-center mx-5">
 
                     <!-- BIBLIOTECA -->
                     <div x-data="{ dropdownOpen: false }">
@@ -87,7 +87,7 @@
             </div>
 
             <!-- secondary/auth -->
-            <div class="hidden lg:flex items-center justify-center">
+            <div class="hidden md:flex items-center justify-center">
                     <!-- Authentication -->
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf

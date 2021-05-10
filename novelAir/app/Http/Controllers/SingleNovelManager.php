@@ -9,6 +9,7 @@ use App\Models\Tag;
 use App\Models\UNS;
 use App\Models\States;
 use App\Models\Tag_Novel;
+use App\Models\Genre;
 use App\Http\Requests\ImageUploadRequest;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -20,13 +21,16 @@ class SingleNovelManager extends Controller
 {
     public function index(){
         //
-        return view('createNovel');
+        $data["genres"] = Genre::all();
+
+        return view('createNovel',$data);
     }
 
     public function novelIndex($id){
         $data["novels"] = Novel:: where("id",$id)->get();
         $data["tags"] = DB::table("tags_novels")->join('tags',"tags_novels.tag_id","=","tags.id")->where("novel_id",$id)->get();
         $data["chapters"] = Chapter:: where("novel_id",$id)->orderby("chapter_n")->get();
+        $data["genres"] = Genre::all();
         
         return view("viewNovel",$data);
     }
@@ -35,7 +39,11 @@ class SingleNovelManager extends Controller
         $data["novels"] = Novel:: where("id",$id)->get();
         $data["chapter"] = Chapter::where("id",$chapter)->get();
         $files = File::files(public_path("/".$data["chapter"][0]->route));
-        $data["preview"] = $data["chapter"][0]->route."/".$files[0]->getFilename();
+        if(count($files) == 0){
+            $data["preview"] = 'images/noimage.png';
+        } else {
+            $data["preview"] = $data["chapter"][0]->route."/".$files[0]->getFilename();
+        }
         
         return view("viewChapter",$data);
     }
@@ -80,9 +88,9 @@ class SingleNovelManager extends Controller
     public function create(Request $request){
         $request->validate([
             'name' => 'required|string|max:255',
-            'genre' => 'required|string|max:255',
+            //'genre' => 'required|string|max:255',
             'sinopsis' => 'required|string|max:400',
-            'cover' => 'required|mimes:jpeg,jpg,png|max:1024|dimensions:,width=300,height=450',
+            'cover' => 'required|mimes:jpeg,jpg,png|max:1024|dimensions:max_width=900,max_height=1350,min_width=300,min_height=450',
         ]);
             //dimensions:max_width=899,max_height=1349,min_width=299,min_height=449,ratio=9/16|max:1024
 
@@ -110,7 +118,7 @@ class SingleNovelManager extends Controller
         	}
         }else{
         	$novel->setAttribute('visual_novel', 0);
-            $novel->setAttribute('novel_type', 'novel');
+            $novel->setAttribute('novel_type', 'novela');
         }
         
         if (isset($request->public)){
@@ -244,7 +252,7 @@ class SingleNovelManager extends Controller
     public function editChapter(Request $request){
         $request->validate([
             'title' => 'required|string|max:255',
-            'chapter_n' => 'required|integer',
+            'chapter_n' => 'required',
         ]);
 
         if (!(Chapter::where('chapter_n', $request->chapter_n)->where('novel_id', $request->id_novel))->exists()){
@@ -271,10 +279,9 @@ class SingleNovelManager extends Controller
     public function editNovel(Request $request){
         $request->validate([
             'name' => 'string|max:255',
-            'genre' => 'string|max:255',
             'sinopsis' => 'string|max:400',
-            'cover' => 'mimes:jpeg,jpg,png|max:1024|dimensions:,width=300,height=450',
-            'tags' => 'regex:/([A-Za-z0-9 ,])/i',
+            'cover' => 'mimes:jpeg,jpg,png|max:1024|dimensions:max_width=900,max_height=1350,min_width=300,min_height=450',
+            //'tags' => 'regex:/([A-Za-z0-9 ,])/i',
         ]);
 
         $novel = Novel::find($request->id);

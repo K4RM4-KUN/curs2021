@@ -71,10 +71,11 @@
                             Genero
                         </label>
 
-                        <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-                        name="genre" 
-                        type="text"
-                        required>
+                        <select name="genre" class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="order">
+                            @foreach ($genres as $genre)
+                                <option value="{{$genre->id}}">{{$genre->name}}</option>
+                            @endforeach
+                        </select>
                     
                     </div>
 
@@ -142,7 +143,7 @@
 
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
-                            Portada(300x450):
+                            Portada(300x450px | 600x900px | 900x1350px):
                         </label>
 
                         <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 

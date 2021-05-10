@@ -25,17 +25,17 @@
 
         @include('layouts.navigationNew')
 
-        <div class="flex | lg:ml-7">
+        <div class="flex w-full">
 
             <!--Main novel-->
-            <div class=" w-9/12 w-10/12 | mx-auto  lg:mx-0 | bg-black bg-opacity-30">
+            <div class="w-10/12 mx-auto | bg-black bg-opacity-30">
 
                 <div class="flex | w-1/1">
 
                     <!--Image and image frame -->
-                    <div class="w-1/1 sm:w-2/6 | mx-auto">
+                    <div class="w-1/1 sm:w-2/6">
 
-                        <div class="flex flex-col | w-1/1 | mx-auto | w-48 sm:w-64">
+                        <div class="flex flex-col | | w-1/2 | mx-auto | mx-auto | w-48 sm:w-64">
 
                             <p class="text-white text-center text-base font-bold | my-1 mt-5 | rounded | bg-{{$novel[0]->novel_type}}">
                                 {{strtoupper($novel[0]->novel_type)}}
@@ -136,7 +136,7 @@
                 </div>
 
                 <!--Lists bar-->
-                <div class="flex flex-wrap items-center justify-center | w-1/1 | my-5 | bg-black bg-opacity-60">
+                <div class="flex flex-wrap items-center justify-center sm:justify-around  | w-full | my-5 | bg-black bg-opacity-60">
                     <a class="mx-5 py-1 px-2.5 
                     text-center 
                     @if($userUNS[0]->state_name == 'following')
@@ -144,7 +144,7 @@
                     @endif" 
                     href="{{url('lista/following/'.$novel[0]->id)}}">
                         <p class="text-xl text-gray-300">{{$followers}}</p>
-                        <p class="text-gray-50 font-bold">SIGUIENDO</p>
+                        <p class="text-xs sm:text-sm md:text-base text-gray-50 font-bold">SIGUIENDO</p>
                     </a>
 
                     <a class="mx-5 py-1 px-2.5 
@@ -154,7 +154,7 @@
                     @endif" 
                     href="{{url('lista/pending/'.$novel[0]->id)}}">
                         <p class="text-xl text-gray-300">{{$pending}}</p>
-                        <p class="text-gray-50 font-bold">PENDIENTE</p>
+                        <p class="text-xs sm:text-sm md:text-base text-gray-50 font-bold">PENDIENTE</p>
                     </a>
 
                     <a class="mx-5 py-1 px-2.5 
@@ -164,7 +164,7 @@
                     @endif" 
                     href="{{url('lista/readed/'.$novel[0]->id)}}">
                         <p class="text-xl text-gray-300">{{$readed}}</p>
-                        <p class="text-gray-50 font-bold">LEIDO</p>
+                        <p class="text-xs sm:text-sm md:text-base text-gray-50 font-bold">LEIDO</p>
                     </a>
 
                     <a class="mx-5 py-1 px-2.5 
@@ -174,7 +174,7 @@
                     @endif" 
                     href="{{url('lista/favorite/'.$novel[0]->id)}}">
                         <p class="text-xl text-gray-300">{{$favorite}}</p>
-                        <p class="text-gray-50 font-bold">FAVORITO</p>
+                        <p class="text-xs sm:text-sm md:text-base text-gray-50 font-bold">FAVORITO</p>
                     </a>
 
                     <a class="mx-5 py-1 px-2.5 
@@ -184,13 +184,13 @@
                     @endif" 
                     href="{{url('lista/abandoned/'.$novel[0]->id)}}">
                         <p class="text-xl text-gray-300">{{$abandoned}}</p>
-                        <p class="text-gray-50 font-bold">ABANDONADO</p>
+                        <p class="text-xs sm:text-sm md:text-base text-gray-50 font-bold">ABANDONADO</p>
                     </a>
                     
                 </div>
 
                 <!--Chapters-->
-                <div class="| w-1/1">
+                <div class="| w-full">
                         <div class="flex justify-center | w-1/1 | my-2.5 mb-6">
                             <a class="" @if($lastView != null) href="{{url('leer')}}/{{$novel[0]->id}}/{{$lastView}}" @else href="#" @endif>
                                 <p class="p-1 mx-0 sm:mx-5 | text-green-500 text-xs sm:text-base | border-2 border-green-500 rounded ">Seguir Leyendo</p>
@@ -235,11 +235,11 @@
                 
             </div>
 
-            <div class="hidden  lg:block lg:w-3/12">
+        <!--<div class="hidden lg:block lg:w-3/12">
 
-                    @include('feature.sidebarNovelsNew')
+                    @@include('feature.sidebarNovelsNew')
 
-            </div>
+            </div>-->
 
         </div>
 

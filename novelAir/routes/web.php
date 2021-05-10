@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SingleNovelManager;
 use App\Http\Controllers\Library;
 use App\Http\Controllers\FeaturedSidebar;
+use App\Http\Controllers\UserProfile;
 use App\Http\Controllers\NovelManager;
 use App\Http\Controllers\NovelMain;
 use App\Http\Controllers\Lista;
@@ -27,9 +28,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-//Test
-Route::get('text2/{id_novel}/{id_chapter}',[NovelMain::class, 'test2']);
-Route::get('test/{list?}',[Lista::class,'test'])->name('list')->middleware(['auth']);
+//User
+Route::get('profile/{id}/{username?}',[UserProfile::class,'profileIndex'])->middleware(['auth']);
+Route::get('user/settings/{config?}',[UserProfile::class,'settingsIndex'])->middleware(['auth']);
+Route::post('editingUser',[UserProfile::class,'userUpdate'])->name('updateUser')->middleware(['auth']);
 
 //Featured
 Route::get('featured',[FeaturedSidebar::class,'index']);
@@ -37,12 +39,9 @@ Route::get('featured',[FeaturedSidebar::class,'index']);
 //Library
 Route::get('biblioteca/{type?}',[Library::class,'index'])->name('goLibrary');
 Route::post('biblioteca/resultado',[Library::class,'resultSercher'])->name('goLibraryResult');
-//Test
-Route::get('biblioteca/test2/{type?}',[Library::class,'indextest2'])->name('goLibrarytest2');
-Route::post('biblioteca/test2/resultado',[Library::class,'resultSerchertest2'])->name('goLibraryResulttest2');
 
 //List
-Route::get('listas/{list?}',[Lista::class,'index'])->name('list')->middleware(['auth']);
+Route::get('listas/{list?}/{filter?}',[Lista::class,'index'])->name('list')->middleware(['auth']);
 
 //NovelMain
 Route::get('novel/{id?}/{order?}',[NovelMain::class, 'index'])->name("viewNovel");

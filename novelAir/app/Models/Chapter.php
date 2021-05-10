@@ -13,7 +13,7 @@ class Chapter extends Model
 
     public function novels()
     {
-        return $this->hasMany(Novel::class);
+        return $this->belongsTo(Novel::class);
     }
 
     protected $table = "chapters";

@@ -83,7 +83,7 @@
 
                                 <p class="h-1/6 text-xl text-black text-left mb-3">{{ $novel->name }}</p>
 
-                                <p class="h-3/6 text-sm text-blue-700 text-left hidden sm:block leading-none mb-2">{{ substr($novel->sinopsis,0,150) }}...</p>
+                                <p class="h-3/6 text-sm text-blue-700 text-left hidden sm:block leading-none mb-2">{{ substr($novel->sinopsis,0,200) }}...</p>
 
                                 <!-- Error(Tailwindcss) n_capitulos: No he conseguido con tailwind ponerlo abajo del todo -->
                                 <p class="h-1/6 text-sm text-gray-700 text-right mb-2">{{ $novel->chapters_count }} capitulo/s</p>

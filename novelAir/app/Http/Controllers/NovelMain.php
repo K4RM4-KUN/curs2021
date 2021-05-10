@@ -180,47 +180,6 @@ class NovelMain extends Controller
         return view('novel.read',$data);
     }
 
-    public function test2($id_novel,$id_chapter){
-        $data["novel"] = Novel::where("id",$id_novel)->get();
-        $data["chapter"] = Chapter::where([
-            ["novel_id", $id_novel],
-            ["chapter_n", $id_chapter]
-        ])->get();
-
-        $data["chapters"] = Chapter:: where([
-            ["novel_id", $id_novel],
-        ])->orderbydesc('chapter_n')->get();
-
-        $data["content"] = File::files(public_path()."/".$data["chapter"][0]->route);
-        
-        if(Auth::check()){
-            $tmpChapter = Chapter::find($data["chapter"][0]->id);
-            $tmpChapter->views = ($data["chapter"][0]->views+1);
-            $tmpChapter->save();
-
-            $existViewLast = User_LastView::where([
-                ['user_id', Auth::user()->id],
-                ['novel_id', $id_novel],
-            ])->get();
-            
-            if (count($existViewLast) == 0){
-                $viewLast = new User_LastView;
-                $viewLast->setAttribute('user_id', Auth::user()->id);
-                $viewLast->setAttribute('novel_id', $id_novel);
-                $viewLast->setAttribute('chapter_n', $data["chapter"][0]->chapter_n);
-                $viewLast->save();
-            }elseif ($existViewLast[0]->chapter_n < $data["chapter"][0]->chapter_n){
-                $existViewLast[0]->chapter_n = $data["chapter"][0]->chapter_n;
-                $existViewLast[0]->save();
-            }
-        } else{
-
-        }
-
-
-        return view('novel.readNew',$data);
-    }
-
     //Interaction
     public function novelInteraction($type,$novel_id){	
         $state_id = States::where('state_name', $type)->first();

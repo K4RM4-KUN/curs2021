@@ -66,7 +66,7 @@
 
                         <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
                         id="number" 
-                        type="number"
+                        type="float"
                         name="chapter_n"
                         min="0" 
                         value="{{$chapter[0]->chapter_n}}"
@@ -103,6 +103,15 @@
                         </a>
 
                     </div>
+                    @if ($errors->any())
+                        <div class="mb-4 flex align-center justify-center">
+                            <table>
+                            @foreach ($errors->all() as $error)
+                                <tr><td><a>{{ $error }}</a></td></tr>
+                            @endforeach
+                            </table>
+                        </div>
+                    @endif
 
                 </form>
 

@@ -70,7 +70,7 @@
 
                         <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
                         id="title" 
-                        type="number"
+                        type="float"
                         name="chapter_n"
                         min="0" 
                         value=""

@@ -132,10 +132,12 @@
                                 Genero
                             </label>
 
-                            <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-                            name="genre" 
-                            type="text" 
-                            value="{{$novels[0]->genre}}">
+                            <select name="genre" class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="order">
+                                @foreach ($genres as $genre)
+                                    <option value="{{$genre->id}}" @if($genre->id == $novels[0]->genre) selected @endif>{{$genre->name}}</option>
+                                @endforeach
+                            </select>
+
                         </div>
 
                         <div class="mb-4">

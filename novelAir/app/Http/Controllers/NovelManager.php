@@ -39,7 +39,7 @@ class NovelManager extends Controller
             $pos = Mark::where('novel_id',$novel->id)->where("like",1)->get();
             $neg =  Mark::where('novel_id',$novel->id)->where("like",0)->get();
             if(count($pos)+count($neg) != 0){
-                $novel->SetAttribute("Mark",((count($pos)*100)/(count($pos)+count($neg)))/10);
+                $novel->SetAttribute("Mark", round(((count($pos)*100)/(count($pos)+count($neg)))/10,1));
             } else {
                 $novel->SetAttribute("Mark",0);
             }

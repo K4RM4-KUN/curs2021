@@ -17,7 +17,7 @@ class CreateSubscriptionsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->lenght(20);
             $table->unsignedBigInteger('subscriber_id')->lenght(20);
-            $table->float('suscription_price',6,2);
+            $table->float('subscription_price',6,2);
             $table->timestamps();
         });
     }

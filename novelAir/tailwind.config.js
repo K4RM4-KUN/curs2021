@@ -26,6 +26,7 @@ module.exports = {
                 manhwa: "#34CB5B",
                 manga: "#7DCFF8",
                 oneShot: "#F1875C",
+                novela: "#EC83B4",
                 ourBlue: "#5978c7",
             },
             fontFamily: {

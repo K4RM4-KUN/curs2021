@@ -29,9 +29,9 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 //User
-Route::get('profile/{id}/{username?}',[UserProfile::class,'profileIndex'])->middleware(['auth']);
-Route::get('user/settings/{config?}',[UserProfile::class,'settingsIndex'])->middleware(['auth']);
-Route::post('editingUser',[UserProfile::class,'userUpdate'])->name('updateUser')->middleware(['auth']);
+Route::get('perfil/{id}/{username?}',[UserProfile::class,'profileIndex'])->middleware(['auth']);
+Route::get('usuario/ajustes/{config?}',[UserProfile::class,'settingsIndex'])->middleware(['auth']);
+Route::post('editarUsuario',[UserProfile::class,'userUpdate'])->name('updateUser')->middleware(['auth']);
 
 //Featured
 Route::get('featured',[FeaturedSidebar::class,'index']);

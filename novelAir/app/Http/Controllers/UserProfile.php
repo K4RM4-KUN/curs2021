@@ -11,6 +11,7 @@ use App\Models\Mark;
 use App\Models\Chapter;
 use App\Models\UNS;
 use App\Models\States;
+use File;
 
 class UserProfile extends Controller
 {
@@ -22,12 +23,27 @@ class UserProfile extends Controller
             } else {
                 $data['myProfile'] = false;
             }
-
-            $data["novels"] = Novel:: where("user_id",$id)->get();
+            $path = public_path() ."/users/". Auth::user()->id; 
+            if(file_exists( $path."/profile/usericon". Auth::user()->imgtype)){ 
+                $data['image'] = "users/".Auth::user()->id."/profile/usericon". Auth::user()->imgtype;
+            } else {
+                $data['image'] = 'images/noimage.png';
+            }
+            $data["novels"] = Novel:: where([["user_id",$id],["public",1]])->get();
 
             $data["user"] = User:: where("id",$id)->first();
 
-
+            foreach($data["novels"] as $novel){
+                
+                //Nota
+                $pos = Mark::where('novel_id',$novel->id)->where("like",1)->get();
+                $neg =  Mark::where('novel_id',$novel->id)->where("like",0)->get();
+                if(count($pos)+count($neg) != 0){
+                    $novel->SetAttribute('mark',round(((count($pos)*100)/(count($pos)+count($neg)))/10,1));
+                } else {
+                    $novel->SetAttribute('mark',0);
+                }
+            }
 
 
 
@@ -42,6 +58,12 @@ class UserProfile extends Controller
     public function settingsIndex($config = "null"){ 
         if($config == 'personal'){
             $data['config'] = 'personal';
+            $path = public_path() ."/users/". Auth::user()->id; 
+            if(file_exists( $path."/profile/usericon". Auth::user()->imgtype)){ 
+                $data['image'] = "users/".Auth::user()->id."/profile/usericon". Auth::user()->imgtype;
+            } else {
+                $data['image'] = 'images/noimage.png';
+            }
         }elseif($config == 'perfil'){
             $data['lists'] = States::all();
             foreach($data['lists']  as $list){
@@ -71,12 +93,13 @@ class UserProfile extends Controller
         }elseif($config == 'ayuda'){
             $data['config'] = 'ayuda';
         }else{
-            return redirect('user/settings/personal');
+            return redirect('usuario/ajustes/personal');
         }
         return view('user.settings',$data);
     }
 
     public function userUpdate(Request $request){
+        File::deleteDirectory(public_path() ."/users/". Auth::user()->id."/profile");
         $request->validate([
             'username' => 'string|max:255',
             'name' => 'string|max:255',
@@ -85,48 +108,43 @@ class UserProfile extends Controller
             'email' => 'string|email|max:255|unique:users',
             'profileImage' => 'mimes:jpeg,jpg,png|max:1024|dimensions:ratio=1/1,max_width=1500',
         ]);
-        
-        if(Auth::user()->username == $request->username){
 
-        } else if($request->username == ""){
-            
-        } else {
+        $user = User::find(Auth::user()->id);
 
+        if(isset($request->username)){
+            $user->username = $request->username;
+        } 
+
+        if(isset($request->name)){
+            $user->name = $request->name;
+        } 
+
+        if(isset($request->surname)){
+            $user->surname = $request->surname;
+        } 
+
+        if(isset($request->birth_date)){
+            $user->birth_date = $request->birth_date;
+        } 
+
+        if(isset($request->email)){
+            $user->email = $request->email;
         }
 
-        if(Auth::user()->name == $request->name){
-            
-        } else if($request->name == ""){
-             
-        } else {
+        if(isset($request->profileImage)){
+            $file = $request->file('profileImage');
+            $user->imgtype = ".".explode(".",$file->getClientOriginalName())[1];
+            $path = public_path() ."/users/". Auth::user()->id; 
+            if(file_exists(public_path($path."/profile" ))){ 
+                File::makeDirectory($path."/profile" , $mode = 0775, true);
+            }
+            $file->move($path."/profile","usericon".Auth::user()->imgtype);
 
         }
-
-        if(Auth::user()->surname == $request->surname){
-
-        } else if($request->surname == ""){
-             
-        } else {
-
-        }
-
-        if(Auth::user()->birth_date == $request->birth_date){
-
-        } else if($request->birth_date == ""){
-             
-        } else {
-
-        }
-
-        if(Auth::user()->email == $request->email){
-
-        } else if($request->email == ""){
-             
-        } else {
-
-        }
+        //dd($user);
+        $user->save();
 
         
-        return redirect('user/settings/personal');
+        return redirect('usuario/ajustes/personal');
     }
 }

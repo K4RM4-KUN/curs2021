@@ -33,7 +33,7 @@
                 Foto de perfil(Fotos de 1:1):
             </label>
             <div class="flex items-center justify-around">
-                <img width="10% " src="{{asset('images/noimage.png')}}" alt="">
+                <img class="rounded-full" width="10% " src="{{asset($image)}}" alt="">
                 <input class="border-none appearance-none rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline" 
                 name="profileImage" 
                 type="file"
@@ -71,14 +71,14 @@
         </div>
         <div class="mb-4">
             
-            <label class="block text-white text-sm font-bold mb-2" for="surname">
+            <label class="block text-white text-sm font-bold mb-2" for="birth_date">
                 Fecha de nacimiento
             </label>
 
             <input class="shadow-lg border-none appearance-none 
             rounded w-full py-2 px-3 text-whtie leading-tight" 
             type="date" 
-            name="surname" 
+            name="birth_date" 
             value="{{Auth::user()->birth_date}}">
         
         </div>
@@ -95,7 +95,7 @@
         <div class="mb-4 flex align-center justify-center">
             <table>
             @foreach ($errors->all() as $error)
-                <tr><td><a>{{ $error }}</a></td></tr>
+                <tr><td><a class="text-whtie">{{ $error }}</a></td></tr>
             @endforeach
             </table>
         </div>

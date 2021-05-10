@@ -36,27 +36,27 @@
                 <div class="flex">
                     <!--Navigator-->
                     <div class="flex flex-col | w-3/12 | bg-black bg-opacity-30">
-                        <a href="{{url('user/settings/personal')}}">
+                        <a href="{{url('usuario/ajustes/personal')}}">
                             <div class="w-10/12 | mx-auto | border-b-2" >
                                 <p class="text-white text-base | py-2 px-5">Configuración</p>
                             </div>
                         </a>
-                        <a href="{{url('user/settings/perfil')}}">
+                        <a href="{{url('usuario/ajustes/perfil')}}">
                             <div class="w-10/12 | mx-auto | border-b-2" >
                                 <p class="text-white text-base | py-2 px-5">Perfil</p>
                             </div>
                         </a>
-                        <a href="{{url('user/settings/preferencias')}}">
+                        <a href="{{url('usuario/ajustes/preferencias')}}">
                             <div class="w-10/12 | mx-auto | border-b-2" >
                                 <p class="text-white text-base | py-2 px-5">Preferencias</p>
                             </div>
                         </a>
-                        <a href="{{url('user/settings/author')}}">
+                        <a href="{{url('usuario/ajustes/author')}}">
                             <div class="w-10/12 | mx-auto | border-b-2" >
                                 <p class="text-white text-base | py-2 px-5">Author</p>
                             </div>
                         </a>
-                        <a href="{{url('user/settings/ayuda')}}">
+                        <a href="{{url('usuario/ajustes/ayuda')}}">
                             <div class="w-10/12 | mx-auto | border-b-2" >
                                 <p class="text-white text-base | py-2 px-5">Ayuda</p>
                             </div>

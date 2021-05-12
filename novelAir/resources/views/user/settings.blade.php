@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>THINGS</title>
+        <title>{{ucfirst($config)}}</title>
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
@@ -30,8 +30,13 @@
             <div class="w-11/12 | bg-black bg-opacity-30">
 
                 <!--Header-->
-                <div class="w-1/1 | bg-black bg-opacity-50">
-                    <p class="text-white font-bold text-2xl text-ourBlue | pl-10 p-5">Ajustes de usuario</p>
+                <div class="flex justify-around items-center | w-1/1 | bg-black bg-opacity-50">
+                    <p class="text-white font-bold text-2xl text-ourBlue | pl-10 p-5">{{ucfirst($config)}}</p>
+                    <a href="{{url('perfil/'.Auth::user()->id.'/'.Auth::user()->username)}}">
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                            Volver a tu perfil
+                        </button>
+                    </a>                    
                 </div>
                 <div class="flex">
                     <!--Navigator-->
@@ -46,14 +51,19 @@
                                 <p class="text-white text-base | py-2 px-5">Perfil</p>
                             </div>
                         </a>
-                        <a href="{{url('usuario/ajustes/preferencias')}}">
+                        <a href="{{url('usuario/ajustes/subscripciones')}}">
                             <div class="w-10/12 | mx-auto | border-b-2" >
-                                <p class="text-white text-base | py-2 px-5">Preferencias</p>
+                                <p class="text-white text-base | py-2 px-5">Subscripciones y pagos<p>
                             </div>
                         </a>
                         <a href="{{url('usuario/ajustes/author')}}">
                             <div class="w-10/12 | mx-auto | border-b-2" >
                                 <p class="text-white text-base | py-2 px-5">Author</p>
+                            </div>
+                        </a>
+                        <a href="{{url('usuario/ajustes/estadisticas')}}">
+                            <div class="w-10/12 | mx-auto | border-b-2" >
+                                <p class="text-white text-base | py-2 px-5">Estadisticas<p>
                             </div>
                         </a>
                         <a href="{{url('usuario/ajustes/ayuda')}}">
@@ -68,6 +78,16 @@
                             @include('user.profile')
                         @elseif($config == 'personal')
                             @include('user.editUser')
+                        @elseif($config == 'subscripciones')
+                            @include('user.subscriptionManager')
+                        @elseif($config == 'estadisticas')
+                            @include('user.stats')
+                        @elseif($config == 'author')
+                            @include('user.author')
+                        @elseif($config == 'ayuda')
+                            @include('user.help')
+                        @elseif($config == 'contraseña')
+                            @include('user.password')
                         @endif
                     </div>
                 </div>

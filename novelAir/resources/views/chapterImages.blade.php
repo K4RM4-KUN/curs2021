@@ -53,7 +53,7 @@
                     
                     <div class="form">
 
-                        <form action="@{{route('addImages')}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{route('addImages')}}" method="POST" enctype="multipart/form-data">
                             @csrf
 
                             <div class="hidden">

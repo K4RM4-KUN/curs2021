@@ -5,7 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Genres extends Model
+class Author extends Model
 {
     use HasFactory;
+    protected $fillable = ['user_id','paypal','subscriptions','donations'];
+    protected $table = 'authors';
 }

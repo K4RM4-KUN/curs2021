@@ -138,7 +138,8 @@
                                     <input type="number" class="text-black" name="mark" value="0" min="0" max="10">
                                 </div>
 
-                            <hr class="w-9/12 mx-auto justify-items-center"> -->
+                                <hr class="w-9/12 mx-auto justify-items-center">
+                            -->
 
                             <!-- +18 -->
                             <div class="my-4 ml-3">

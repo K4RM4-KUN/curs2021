@@ -50,7 +50,7 @@
                     </a>
 
                     <!-- AUTORES -->
-                    <a href="@{{Route('authors')}}">
+                    <a href="{{Route('authors')}}">
 
                         <button class="px-5 py-7 hover:bg-ourBlue hover:text-white font-bold text-ourBlue">
 

@@ -50,13 +50,13 @@
                             <div class="flex w-1/1">
 
                                 <a class="w-1/2" href="{{url('vote/'.$novel[0]->id.'/pos')}}">
-                                    <p class="text-green-400 text-center text-2xl font-bold | py-0.5 | border-b-4 border-green-500 | bg-green-800 bg-opacity-60">
+                                    <p class="text-green-400 text-center text-base sm:text-2xl font-bold | py-0.5 | border-b-4 border-green-500 | bg-green-800 bg-opacity-60">
                                         LIKE
                                     </p>
                                 </a>
 
                                 <a class="w-1/2" href="{{url('vote/'.$novel[0]->id.'/neg')}}">
-                                    <p class="text-red-400 text-center text-2xl font-bold | py-0.5 | border-b-4 border-red-500 | bg-red-800 bg-opacity-60">
+                                    <p class="text-red-400 text-center text-base sm:text-2xl font-bold | py-0.5 | border-b-4 border-red-500 | bg-red-800 bg-opacity-60">
                                         DISLIKE
                                     </p>
                                 </a>
@@ -65,8 +65,36 @@
                             <div class="flex sm:hidden justify-left | w-1/1 | mt-5 mb-2">
                                 <p class="text-base text-white | border-b-2">{{$novel[0]->name}}</p>
                             </div>
-                            <div class="flex sm:hidden justify-left | w-1/1 | mb-5">
-                                <p class="pl-2 | text-sm text-gray-300">{{$novel[0]->sinopsis}}</p>
+                            <div class="flex sm:hidden justify-left | w-1/1 | ">
+                                <p class="pl-2 | text-sm text-gray-300">{{substr($novel[0]->sinopsis,0,100)}}...</p>
+                            </div>
+                            <div class="block sm:hidden | mr-2.5">
+                                <div class="flex | w-1/1">
+                                    <p class="text-base font-bold text-white | mt-5 | rounded">
+                                        Estado
+                                    </p>
+                                </div>
+
+                                <div class="flex | w-1/1">
+                                @if($novel[0]->ended == 0)
+                                    <p class="text-sm font-bold text-green-500 | ml-2 px-2 mt-1 | border-2 border-green-500 rounded">
+                                        PUBLICANDOSE
+                                    </p>
+                                    @else
+                                    <p class="text-sm font-bold text-red-500 | ml-2 px-2 mt-1 | border-2 border-red-500 rounded">
+                                        FINALIZADA
+                                    </p>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="flex sm:hidden | w-1/1 | my-5">
+                                <a class="flex" href="{{url('perfil/'.$author[0]->id.'/'.$author[0]->username)}}">
+                                    <p class="text-base font-bold text-white | mt-4 | rounded">
+                                        Author: {{$author[0]->username}}
+                                    </p>
+                                    <img class="w-16 h-16 | rounded-full | ml-2" src="{{asset('users/'.$author[0]->id.'/profile/usericon'.$author[0]->imgtype)}}?date={{$author[0]->created_at}}" alt="">
+                                </a>
                             </div>
 
                         </div>
@@ -120,11 +148,11 @@
                             </div>
 
                             <div class="flex | w-1/1 | mt-10">
-                                <a class="flex" href="">
+                                <a class="flex" href="{{url('perfil/'.$author[0]->id.'/'.$author[0]->username)}}">
                                     <p class="text-base font-bold text-white | mt-4 | rounded">
                                         Author: {{$author[0]->username}}
                                     </p>
-                                    <img class="w-16 h-16 | ml-2" src="https://lh3.googleusercontent.com/-SqRaAa48opg/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucmp3h-yn2btukmqMmAHWvTDoo83JQ/photo.jpg?sz=46" alt="">
+                                    <img class="w-16 h-16 | rounded-full | ml-2" src="{{asset('users/'.$author[0]->id.'/profile/usericon'.$author[0]->imgtype)}}?date={{$author[0]->created_at}}" alt="">
                                 </a>
                             </div>
                             

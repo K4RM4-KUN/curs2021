@@ -25,7 +25,7 @@ class NovelMain extends Controller
         }
         $data["novel"] = Novel::where("id",$id)->get();
 
-        $data["author"] = User::select('username','id')->where("id",$data["novel"][0]->user_id)->get();
+        $data["author"] = User::select('username','id','imgtype','created_at')->where("id",$data["novel"][0]->user_id)->get();
 
         $data["tags"] = DB::table("tags_novels")->join('tags',"tags_novels.tag_id","=","tags.id")->where("novel_id",$id)->get();
 

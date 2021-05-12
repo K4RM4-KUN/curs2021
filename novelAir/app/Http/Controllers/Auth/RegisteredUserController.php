@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Profile;
+use App\Models\User_Role;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -56,6 +58,16 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         $user = auth()->user();
+
+        $newProfile = new Profile;
+        $newProfile->SetAttribute('user_id',$user->id);
+        $newProfile->save();
+
+        $newRole = new User_Role;
+        $newRole->SetAttribute('user_id',$user->id);
+        $newRole->SetAttribute('role_id',1);
+        $newRole->save();
+
         $path = public_path() ."/users/". $user->id;
         File::makeDirectory($path , $mode = 0775, true);
         File::makeDirectory($path."/novels" , $mode = 0775, true);

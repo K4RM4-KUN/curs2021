@@ -66,6 +66,13 @@
                                 <p class="text-white text-base | py-2 px-5">Estadisticas<p>
                             </div>
                         </a>
+                        @if($role->role->rol_name == 'admin')
+                            <a href="{{url('usuario/ajustes/admin')}}">
+                                <div class="w-10/12 | mx-auto | border-b-2" >
+                                    <p class="text-white text-base | py-2 px-5">Página del admin</p>
+                                </div>
+                            </a>
+                        @endif
                         <a href="{{url('usuario/ajustes/ayuda')}}">
                             <div class="w-10/12 | mx-auto | border-b-2" >
                                 <p class="text-white text-base | py-2 px-5">Ayuda</p>
@@ -88,6 +95,8 @@
                             @include('user.help')
                         @elseif($config == 'contraseña')
                             @include('user.password')
+                        @elseif($config == 'admin' && $role->role->rol_name == 'admin')
+                            @include('user.admin')
                         @endif
                     </div>
                 </div>

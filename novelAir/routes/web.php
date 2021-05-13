@@ -7,6 +7,7 @@ use App\Http\Controllers\FeaturedSidebar;
 use App\Http\Controllers\UserProfile;
 use App\Http\Controllers\NovelManager;
 use App\Http\Controllers\NovelMain;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\Lista;
 
 /*
@@ -30,6 +31,7 @@ Route::get('/dashboard', function () {
 
 //Test 
 Route::get('test',[FeaturedSidebar::class,'authorIndex'])->middleware(['auth']);
+Route::post('verificar',[MailController::class,'verificationRequest'])->name('verificationRequest')->middleware(['auth']);
 
 //User
 Route::get('perfil/{id}/{username?}',[UserProfile::class,'profileIndex'])->middleware(['auth']);
@@ -37,7 +39,6 @@ Route::get('usuario/ajustes/{config?}',[UserProfile::class,'settingsIndex'])->mi
 Route::post('editarUsuario',[UserProfile::class,'userUpdate'])->name('updateUser')->middleware(['auth']);
 Route::post('cambiarPass',[UserProfile::class,'changePassword'])->name('changePass')->middleware(['auth']);
 Route::post('authorConfig',[UserProfile::class,'authorConfig'])->name('configAuthor')->middleware(['auth']);
-Route::post('verificar',[UserProfile::class,'verificationRequest'])->name('verificationRequest')->middleware(['auth']);
 Route::post('editarPerfil',[UserProfile::class,'profileUpdate'])->name('updateProfile')->middleware(['auth']);
 Route::get('seguir/{id?}',[UserProfile::class,'followUser'])->middleware(['auth']);
 Route::get('usuarios',[UserProfile::class,'allUsers'])->name('authors')->middleware(['auth']);

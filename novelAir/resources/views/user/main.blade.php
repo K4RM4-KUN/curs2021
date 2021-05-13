@@ -34,12 +34,14 @@
                 <div class="bg-cover bg-no-repeat bg-center" style="background-image:url('{{asset('users/'.$user->id.'/profile/bgImage'.$profile->imgtype)}}');">
                     <div class="w-1/1 | flex flex-wrap | bg-black bg-opacity-50 | border-b-2">
 
+                        <!-- Imagen Perfil -->
                         <div class="w-full sm:w-3/12 | my-5 sm:my-10">
                             <div class="flex flex-wrap | justify-center content-center">
                                 <img class="rounded-full" width="50%" src="{{asset($image)}}?date={{$image}}" alt="">
                             </div>
                         </div>
 
+                        <!-- Descripcion -->
                         <div class="w-1/1 sm:w-7/12 | mt-5 sm:mt-10 mx-5 sm:mx-0 | flex flex-col | text-white">
                             <div>
                                 <p class="font-bold text-3xl">{{$user->username}}</p>
@@ -50,15 +52,36 @@
                                 </div>
                             @endif
                         </div>
-                        <div class="w-1/1 sm:w-2/12 | mt-5 sm:mt-10 mx-5 sm:mx-0 | flex flex-col | text-white">
-                            <div class="flex flex-wrap | justify-center content-center">
-                                @if ($myProfile)
-                                    <a class="my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
-                                    href="{{url('usuario/ajustes/perfil')}}">Editar Usuario</a>
-                                @else
-                                    <a class="my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
-                                    href="{{url('seguir/'.$user->id)}}">
-                                    @if($followUser)Siguiendo @else Seguir @endif {{$followersNum}}</a>
+
+                        <!-- Botones perfil -->
+                        <div class="w-full sm:w-2/12 | mt-5 sm:mt-10 mx-5 sm:mx-0 | flex flex-col | text-white">
+                            <div class="flex flex-col | content-end">
+                                <div class="my-3">
+                                    @if ($myProfile)
+                                        <a class="my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
+                                        href="{{url('usuario/ajustes/perfil')}}">Editar Usuario</a>
+                                    @else
+                                        <a class="my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
+                                        href="{{url('seguir/'.$user->id)}}">
+                                        @if($followUser)Siguiendo @else Seguir @endif {{$followersNum}}</a>
+                                    @endif
+                                </div>
+
+                                @if($authorUser && !($rolUser->role->rol_name == 'user')  && !($profile->private))
+                                    @if($author->subscriptions)
+                                        <div class="my-3">
+                                            <a class="my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
+                                            href="">
+                                            Suscribir</a>
+                                        </div>
+                                    @endif
+                                    @if($author->donations)
+                                    <div class="my-3">
+                                        <a class="my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
+                                        href="">
+                                        Donar</a>
+                                    </div>
+                                    @endif
                                 @endif
                             </div>
                         </div>
@@ -117,73 +140,99 @@
 
                     <!-- Enlaces persoanles -->
                     @if(!($profile->private))
-                        <div class="flex flex-wrap | w-full sm:w-3/12 | px:2 sm:px-10">
-                            <div class="flex flex-col | w-full | mt-5 | p-2">
-                                <div class="bg-white bg-opacity-30">
-                                    <div class="pl-2">
-                                        <p class="text-lg text-white">Social</p>
-                                        <hr class="w-1/1 mx-auto">
+                        <div class="flex flex-wrap justify-center content-around | w-full sm:w-3/12 | px:2 sm:px-3 sm:pl-0">
+                            @if(($profile->showFace) || ($profile->showTwitter) || ($profile->showInstagram) || ($profile->showPatreon) || ($profile->showOther))
+                                <div>
+                                    <div class="flex flex-col | w-full sm:1/2 md:w-full | mt-5 | p-2">
+                                        <div class="bg-white bg-opacity-30">
+                                            <div class="pl-2">
+                                                <p class="text-lg text-white p-2">Social</p>
+                                                <hr class="w-1/1 mx-auto">
+                                            </div>
+                                            <div class="flex flex-wrap | justify-center | text-white">
+                                                @if($profile->showFace)
+                                                    <div class="m-2">
+                                                        <a href="{{$profile->facebook}}" target="_blank">
+                                                            <button type="button" class="transform hover:scale-110">
+                                                                <div class="flex flex-wrap | justify-center content-center | h-10 w-10 | bg-blue-500 | rounded">
+                                                                    <i class="fab fa-facebook-f"></i>
+                                                                </div>
+                                                            </button>
+                                                        </a>
+                                                    </div>
+                                                @endif
+
+                                                @if($profile->showTwitter)
+                                                    <div class="m-2">
+                                                        <a href="{{$profile->twitter}}" target="_blank">
+                                                            <button type="button" class="transform hover:scale-110">
+                                                                <div class="flex flex-wrap | justify-center content-center | h-10 w-10 | bg-blue-400 | rounded">
+                                                                    <i class="fab fa-twitter"></i>
+                                                                </div>
+                                                            </button>
+                                                        </a>
+                                                    </div>
+                                                @endif
+
+                                                @if($profile->showInstagram)
+                                                    <div class="m-2">
+                                                        <a href="{{$profile->instagram}}" target="_blank">
+                                                            <button type="button" class="transform hover:scale-110">
+                                                                <div class="flex flex-wrap | justify-center content-center | h-10 w-10 | bg-gradient-to-b from-purple-500 to-yellow-500 | rounded">
+                                                                    <i class="fab fa-instagram"></i>
+                                                                </div>
+                                                            </button>
+                                                        </a>
+                                                    </div>
+                                                @endif
+
+                                                @if($profile->showPatreon)
+                                                    <div class="m-2">
+                                                        <a href="{{$profile->patreon}}" target="_blank">
+                                                            <button type="button" class="transform hover:scale-110">
+                                                                <div class="flex flex-wrap | justify-center content-center | h-10 w-10 | bg-yellow-600 | rounded">
+                                                                    <i class="fab fa-patreon"></i>
+                                                                </div>
+                                                            </button>
+                                                        </a>
+                                                    </div>
+                                                @endif
+
+                                                @if($profile->showOther)
+                                                    <div class="m-2">
+                                                        <a href="{{$profile->other}}" target="_blank">
+                                                            <button type="button" class="transform hover:scale-110">
+                                                                <div class="flex flex-wrap | justify-center content-center | h-10 w-10 | bg-black | rounded">
+                                                                    ...
+                                                                </div>
+                                                            </button>
+                                                        </a>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="flex flex-wrap | text-white">
-                                        @if($profile->showFace)
-                                            <div class="m-2">
-                                                <a href="{{$profile->facebook}}" target="_blank">
-                                                    <button type="button" class="transform hover:scale-110">
-                                                        <div class="flex flex-wrap | justify-center content-center | h-10 w-10 | bg-blue-500 | rounded">
-                                                            <i class="fab fa-facebook-f"></i>
-                                                        </div>
-                                                    </button>
-                                                </a>
-                                            </div>
-                                        @endif
-
-                                        @if($profile->showTwitter)
-                                            <div class="m-2">
-                                                <a href="{{$profile->twitter}}" target="_blank">
-                                                    <button type="button" class="transform hover:scale-110">
-                                                        <div class="flex flex-wrap | justify-center content-center | h-10 w-10 | bg-blue-400 | rounded">
-                                                            <i class="fab fa-twitter"></i>
-                                                        </div>
-                                                    </button>
-                                                </a>
-                                            </div>
-                                        @endif
-
-                                        @if($profile->showInstagram)
-                                            <div class="m-2">
-                                                <a href="{{$profile->instagram}}" target="_blank">
-                                                    <button type="button" class="transform hover:scale-110">
-                                                        <div class="flex flex-wrap | justify-center content-center | h-10 w-10 | bg-gradient-to-b from-purple-500 to-yellow-500 | rounded">
-                                                            <i class="fab fa-instagram"></i>
-                                                        </div>
-                                                    </button>
-                                                </a>
-                                            </div>
-                                        @endif
-
-                                        @if($profile->showPatreon)
-                                            <div class="m-2">
-                                                <a href="{{$profile->patreon}}" target="_blank">
-                                                    <button type="button" class="transform hover:scale-110">
-                                                        <div class="flex flex-wrap | justify-center content-center | h-10 w-10 | bg-yellow-600 | rounded">
-                                                            <i class="fab fa-patreon"></i>
-                                                        </div>
-                                                    </button>
-                                                </a>
-                                            </div>
-                                        @endif
-
-                                        @if($profile->showOther)
-                                            <div class="m-2">
-                                                <a href="{{$profile->other}}" target="_blank">
-                                                    <button type="button" class="transform hover:scale-110">
-                                                        <div class="flex flex-wrap | justify-center content-center | h-10 w-10 | bg-black | rounded">
-                                                            ...
-                                                        </div>
-                                                    </button>
-                                                </a>
-                                            </div>
-                                        @endif
+                                </div>
+                            @endif
+                            <div>
+                                <div class="flex flex-col | w-full | p-2 mt-5 sm:mt-0">
+                                    <div class="bg-white bg-opacity-30">
+                                        <div class="pl-2">
+                                            <p class="text-lg text-white | p-2">Autores Recomendados</p>
+                                            <hr class="w-1/1 mx-auto">
+                                        </div>
+                                        <div class="flex flex-wrap | text-white">
+                                            @if(isset($authors1))
+                                                <div class="m-2 bg-cover bg-no-repeat bg-center" style="background-image:url('{{asset('users/'.$result->id.'/profile/bgImage'.$result->imgtype)}}');">
+                                                    <a href="{{url('perfil/'.$authors1->id.'/'.$authors1->username)}}">
+                                                        <button type="button" class="transform hover:scale-110">
+                                                            <div class="flex flex-wrap | justify-center content-center | h-10 w-10 | bg-blue-500 | rounded">
+                                                            </div>
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -254,7 +303,7 @@
                         </div>
                     @endif
 
-                    <!-- Perfil private -->
+                    <!-- Perfil privado -->
                     @if($profile->private)
                         <div class="w-full flex text-white | my-10">
                             <div class="flex flex-col | w-full sm:w-6/12 xl-4/12 | mx-auto | py-14 | bg-black bg-opacity-60">

@@ -69,6 +69,43 @@ class UserProfile extends Controller
                 return $query->where('user_id',$x['user'])->where('state_id',(States::where('id', $x["list"])->first())->id);
             })->get();
 
+            $data['rolUser'] = User_Role::with('role')->where('user_id',Auth::user()->id)->first();
+
+
+            if(Author::where('user_id',$id)->exists()){
+                $data["authorUser"] = 1;
+                $data["author"] = Author::where('user_id',$id)->first();
+            }else{
+                $data["authorUser"] = 0;
+            }
+
+            
+            /* Recomendacion de autor */
+            $idAuthors = explode(",", $data["profile"]->idAuthorsRecomended);
+            unset($idAuthors[0]);
+            $x=0;
+            foreach($idAuthors as $idAuthor){
+                $user = User::where("id",$idAuthor)->first();
+                switch($x){
+                    case 0:
+                        $data["authors1"] = $user;
+                        break;
+                    case 1:
+                        $data["authors2"] = $user;
+                        break;
+                    case 2:
+                        $data["authors3"] = $user;
+                        break;
+                    case 3:
+                        $data["authors4"] = $user;
+                        break;
+                    case 4:
+                        $data["authors5"] = $user;
+                        break;
+                }
+                $x++;
+            }
+        
 
         } else {
             return redirect("/dashboard");
@@ -77,7 +114,9 @@ class UserProfile extends Controller
         return view('user.main',$data);
     }
 
-    public function settingsIndex($config = "null"){ 
+    public function settingsIndex($config = "null"){
+        $data['role'] = User_Role::with('role')->where('user_id',Auth::user()->id)->first();
+        $data["users"] = User::all();
         if($config == 'personal'){
             $data['config'] = 'personal';
             $path = public_path() ."/users/". Auth::user()->id; 
@@ -114,6 +153,43 @@ class UserProfile extends Controller
                         break;
                 }
             }
+
+            $authors = array(
+                "authors1" => "",
+                "authors2" => "",
+                "authors3" => "",
+                "authors4"  => "",
+                "authors5" => "",
+            );
+
+            $idAuthors = explode(",", $data["profile"]->idAuthorsRecomended);
+            unset($idAuthors[0]);
+            //dd($idAuthors);
+            $x=0;
+            foreach($idAuthors as $idAuthor){
+                $user = User::where("id",$idAuthor)->first();
+                switch($x){
+                    case 0:
+                        $authors["authors1"] = $user->username;
+                        break;
+                    case 1:
+                        $authors["authors2"] = $user->username;
+                        break;
+                    case 2:
+                        $authors["authors3"] = $user->username;
+                        break;
+                    case 3:
+                        $authors["authors4"] = $user->username;
+                        break;
+                    case 4:
+                        $authors["authors5"] = $user->username;
+                        break;
+                }
+                $x++;
+            }
+            //dd($authors);
+            $data["authorsUsername"] = $authors;
+
             $data['config'] = 'perfil'; }
         elseif($config == 'subscripciones'){
             $data['subscriptions'] = Subscription::join('users','users.id',"=",'subscriptions.user_id')->where('subscriber_id',Auth::user()->id)->get();
@@ -124,18 +200,25 @@ class UserProfile extends Controller
             } else {
                 $data['author'] = new Author;
                 $data['author']->SetAttribute('paypal',null);   
-            }
-            $data['role'] = User_Role::with('role')->where('user_id',Auth::user()->id)->first();
+            } 
             $data['config'] = 'author';
         }elseif($config == 'ayuda'){
             $data['config'] = 'ayuda';
         }elseif($config == 'estadisticas'){
             $data['subscriptions'] =  Subscription::where('user_id',Auth::user()->id)->get();
-            $data['follows'] = count(Follow::where([['user_id',Auth::user()->id]])->get());
-            $data['donations'] = Donation::where([['user_id',Auth::user()->id]])->get();
+            $thing =  Subscription::where([['user_id',Auth::user()->id],['created_at',">",date("Y-m-d H:i:s", strtotime('monday this week'))]])->get();
+            foreach($thing as $i){
+                $i->SetAttribute('username',(User::where('id',$i->subscriber_id)->first())->username);
+            } 
+            $data['subscriptionsThisWeek'] = $thing;
+            $data['follows'] = count(Follow::where('user_id',Auth::user()->id)->get());
+            $data['donations'] = Donation::where('user_id',Auth::user()->id)->get();
+            $data['donationsThisWeek'] =  Donation::where([['user_id',Auth::user()->id],['created_at',">",date("Y-m-d H:i:s", strtotime('monday this week'))]])->get();
             $data['config'] = 'estadisticas';
         }elseif($config == 'contraseña'){
             $data['config'] = 'contraseña';
+        }elseif($config == 'admin'){
+            $data['config'] = 'admin';
         }else{
             return redirect('usuario/ajustes/personal');
         }
@@ -272,8 +355,50 @@ class UserProfile extends Controller
         } 
         if(isset($request->other)){
             $newProfile->SetAttribute('other',$request->other);
-        } 
-        $newProfile->save() ;
+        }
+
+        /* Authors Recomended */
+        if(isset($request->authorsRecomended)){
+            $newProfile->SetAttribute('authorsRecomended',1);
+            $str = "";
+            
+            if(($request->autor1 != "") && (isset($request->checkAutor1))){
+                if(User::where([['username',$request->autor1]])->exists()){
+                    $user = User::where([['username',$request->autor1]])->first();
+                    $str = $str .",". $user->id;
+                }
+            }
+            if(($request->autor2 != "") && (isset($request->checkAutor2))){
+                if(User::where([['username',$request->autor2]])->exists()){
+                    $user = User::where([['username',$request->autor2]])->first();
+                    $str = $str .",". $user->id;
+                }
+            }
+            if(($request->autor3 != "") && (isset($request->checkAutor3))){
+                if(User::where([['username',$request->autor3]])->exists()){
+                    $user = User::where([['username',$request->autor3]])->first();
+                    $str = $str .",". $user->id;
+                }
+            }
+            if(($request->autor4 != "") && (isset($request->checkAutor4))){
+                if(User::where([['username',$request->autor4]])->exists()){
+                    $user = User::where([['username',$request->autor4]])->first();
+                    $str = $str .",". $user->id;
+                }
+            }
+            if(($request->autor5 != "") && (isset($request->checkAutor5))){
+                if(User::where([['username',$request->autor5]])->exists()){
+                    $user = User::where([['username',$request->autor5]])->first();
+                    $str = $str .",". $user->id;
+                }
+            }
+
+            $newProfile->SetAttribute('idAuthorsRecomended',$str);
+
+        }else{
+            $newProfile->SetAttribute('authorsRecomended',0);
+        }
+        $newProfile->save();
 
         return redirect('usuario/ajustes/perfil');
     }
@@ -327,7 +452,7 @@ class UserProfile extends Controller
 
     public function authorConfig(Request $request){ 
         $request->validate([
-            'paypal' => 'string|max:400'
+            'paypal' => 'max:400'
         ]);
         if(Author::where('user_id',Auth::user()->id)->exists()){ 
             $update = Author::where('user_id',Auth::user()->id)->first();
@@ -347,6 +472,7 @@ class UserProfile extends Controller
             $update->save();
         }else{
             $newAuthor = new Author;
+            $newAuthor->SetAttribute('user_id',Auth::user()->id);
             if(isset($request->subscriptions)){
                 $newAuthor->SetAttribute('subscriptions',1);
             } else {
@@ -358,13 +484,11 @@ class UserProfile extends Controller
                 $newAuthor->SetAttribute('donations',0);
             } 
             if(isset($request->paypal)){
-                $newProfile->SetAttribute('paypal',$request->paypal);
+                $newAuthor->SetAttribute('paypal',$request->paypal);
             } 
-            $newProfile->save(); 
+            $newAuthor->save(); 
         }
         return redirect('usuario/ajustes/author');
     }
-    public function verificationRequest(Request $request){
-        return redirect('usuario/ajustes/author');
-    }
+
 }

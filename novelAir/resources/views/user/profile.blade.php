@@ -2,6 +2,7 @@
 
     <form action="{{Route('updateProfile')}}" method="POST" enctype="multipart/form-data">
         @csrf
+        <!-- Perfil privado -->
         <div class="mt-5 mb-2 | border-b-2 border-whtie">
             <p class="text-lg text-white | pl-2">Perfil privado</p>
         </div>
@@ -21,6 +22,7 @@
             </div>
         
         </div>
+        <!-- Personalización -->
         <div class="mt-5 mb-2 | border-b-2 border-whtie">
             <p class="text-lg text-white | pl-2">Personalización</p>
         </div>
@@ -36,7 +38,6 @@
                 accept="image/jpg,image/jpeg,image/png">
             </div>
         </div>
-
         <div class="pl-5 mb-4">
             <label class="block text-white text-sm font-bold mb-2" for="presentation">
                 Presentación
@@ -63,6 +64,8 @@
             </select>
         
         </div>
+
+        <!-- Redes sociales -->
         <div class="mt-5 mb-2 | border-b-2 border-whtie">
             <p class="text-lg text-white | pl-2">Redes sociales</p>
         </div>
@@ -171,6 +174,153 @@
             </div>
             
         </div>
+
+        <!-- Autores recomendados -->
+        <div class="mt-5 mb-2 | border-b-2 border-whtie">
+            <p class="text-lg text-white | pl-2">Autores Recomendados</p>
+        </div>
+
+        <div class="pl-5 mb-4">
+            
+            <label class="block text-white text-sm font-bold mb-2" for="private">
+                Recomienda algun autor
+            </label>
+            <div class="flex items-center justify-start">
+                <input class="shadow-lg border-none appearance-none rounded h-7 w-7 mx-3 px-3 text-whtie leading-tight" 
+                type="checkbox"
+                name="authorsRecomended"
+                id="checkAuthors"
+                @if($profile->authorsRecomended == 1) checked @endif>
+                <label class="text-white" for="checkAuthors">Recomendar</label>
+            </div>
+
+
+
+
+
+            <div id="inputdivAuthors" class="my-4">
+
+                <div class="pl-5 mb-4">
+                    
+                    <label class="block text-white text-sm font-bold mb-2" for="autor1">
+                        Autor 1
+                    </label>
+                    <div class="flex items-center justify-start">
+                        <select class="mi-selector shadow-lg border-none appearance-none rounded w-3/6 py-2 px-3 text-whtie leading-tight"
+                            name="autor1">
+                                <option value='' @if($authorsUsername['authors1'] == "") selected @endif></option>
+                                @foreach($users as $user)
+                                    <option value='{{$user->username}}' @if($authorsUsername['authors1'] == $user->username) selected @endif>{{$user->username}}</option>
+                                @endforeach
+                        </select>
+                        <input class="shadow-lg border-none appearance-none rounded h-7 w-7 mx-3 px-3 text-whtie leading-tight" 
+                            type="checkbox" 
+                            id="autor1"
+                            name="checkAutor1" 
+                            checked>
+                        <label for="autor1" class="text-white">Mostrar</label>
+                    </div>
+                
+                </div>
+
+
+                <div class="pl-5 mb-4">
+                    
+                    <label class="block text-white text-sm font-bold mb-2" for="autor2">
+                        Autor 2
+                    </label>
+                    <div class="flex items-center justify-start">
+                        <select class="mi-selector shadow-lg border-none appearance-none rounded w-3/6 py-2 px-3 text-whtie leading-tight"
+                            name="autor2">
+                                <option value='' @if($authorsUsername['authors2'] == "") selected @endif></option>
+                                @foreach($users as $user)
+                                    <option value='{{$user->username}}' @if($authorsUsername['authors2'] == $user->username) selected @endif>{{$user->username}}</option>
+                                @endforeach
+                        </select>
+                        <input class="shadow-lg border-none appearance-none rounded h-7 w-7 mx-3 px-3 text-whtie leading-tight" 
+                            type="checkbox" 
+                            id="autor2"
+                            name="checkAutor2" 
+                            checked>
+                        <label for="autor2" class="text-white">Mostrar</label>
+                    </div>
+                
+                </div>
+
+
+                <div class="pl-5 mb-4">
+                    
+                    <label class="block text-white text-sm font-bold mb-2" for="autor3">
+                        Autor 3
+                    </label>
+                    <div class="flex items-center justify-start">
+                        <select class="mi-selector shadow-lg border-none appearance-none rounded w-3/6 py-2 px-3 text-whtie leading-tight"
+                            name="autor3">
+                                <option value='' @if($authorsUsername['authors3'] == "") selected @endif></option>
+                                @foreach($users as $user)
+                                    <option value='{{$user->username}}' @if($authorsUsername['authors3'] == $user->username) selected @endif>{{$user->username}}</option>
+                                @endforeach
+                        </select>
+                        <input class="shadow-lg border-none appearance-none rounded h-7 w-7 mx-3 px-3 text-whtie leading-tight" 
+                            type="checkbox" 
+                            id="autor3"
+                            name="checkAutor3" 
+                            checked>
+                        <label for="autor3" class="text-white">Mostrar</label>
+                    </div>
+                
+                </div>
+
+
+                <div class="pl-5 mb-4">
+                    
+                    <label class="block text-white text-sm font-bold mb-2" for="autor4">
+                        Autor 4
+                    </label>
+                    <div class="flex items-center justify-start">
+                        <select class="mi-selector shadow-lg border-none appearance-none rounded w-3/6 py-2 px-3 text-whtie leading-tight"
+                            name="autor4">
+                                <option value='' @if($authorsUsername['authors4'] == "") selected @endif></option>
+                                @foreach($users as $user)
+                                    <option value='{{$user->username}}' @if($authorsUsername['authors4'] == $user->username) selected @endif>{{$user->username}}</option>
+                                @endforeach
+                        </select>
+                        <input class="shadow-lg border-none appearance-none rounded h-7 w-7 mx-3 px-3 text-whtie leading-tight" 
+                            type="checkbox" 
+                            id="autor4"
+                            name="checkAutor4" 
+                            checked>
+                        <label for="autor4" class="text-white">Mostrar</label>
+                    </div>
+                
+                </div>
+
+
+                <div class="pl-5 mb-4">
+                    
+                    <label class="block text-white text-sm font-bold mb-2" for="autor5">
+                        Autor 5
+                    </label>
+                    <div class="flex items-center justify-start">
+                        <select class="mi-selector shadow-lg border-none appearance-none rounded w-3/6 py-2 px-3 text-whtie leading-tight"
+                            name="autor5">
+                                <option value='' @if($authorsUsername['authors5'] == "") selected @endif></option>
+                                @foreach($users as $user)
+                                    <option value='{{$user->username}}' @if($authorsUsername['authors5'] == $user->username) selected @endif>{{$user->username}}</option>
+                                @endforeach
+                        </select>
+                        <input class="shadow-lg border-none appearance-none rounded h-7 w-7 mx-3 px-3 text-whtie leading-tight" 
+                            type="checkbox" 
+                            name="checkAutor5"
+                            id="autor5"
+                            checked>
+                        <label for="autor5" class="text-white">Mostrar</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Guardar -->
         <div class="flex items-center justify-start">
 
             <input class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
@@ -190,3 +340,9 @@
     @endif
 
 </div>
+
+<script id="functions" src="{{ asset('js/recomendedAuthorsJS.js') }}" defer></script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>

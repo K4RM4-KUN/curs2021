@@ -22,6 +22,8 @@ class Profile extends Model
     'patreon',
     'showPatreon',
     'other',
+    'authorsRecomended',
+    'idAuthorsRecomended',
     'showOther'];
 
     protected $table = "profile";

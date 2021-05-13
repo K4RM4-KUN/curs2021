@@ -16,7 +16,7 @@ class CreateProfileTable extends Migration
         Schema::create('profile', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->length(20);
-            $table->boolean('private')->default(false);;
+            $table->boolean('private')->default(false);
             $table->string('imgtype',40)->nullable()->default(null);
             $table->string('presentation',500)->nullable()->default(null);
             $table->unsignedBigInteger('state_id')->length(20)->default(1);
@@ -30,6 +30,8 @@ class CreateProfileTable extends Migration
             $table->boolean('showPatreon')->default(false);
             $table->string('other',255)->nullable()->default(null);
             $table->boolean('showOther')->default(false);
+            $table->boolean('authorsRecomended')->default(false);
+            $table->string('idAuthorsRecomended',40)->nullable()->default(null);
             $table->timestamps();
         });
     }

@@ -7,6 +7,7 @@ use App\Mail\VerificationTest;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Verification;
 
 class MailController extends Controller
 {
@@ -20,6 +21,10 @@ class MailController extends Controller
             'content.*' => 'max:4096'
         ]);
         //Hacer que se guarde en la base de datos
+        $newVerify = new Verification;
+        $newVerify->SetAttribute('user_id',Auth::user()->id);
+        $newVerify->SetAttribute('num_id', $request->numId);
+        $newVerify->save();
         $user = User::where('id',Auth::user()->id)->first();
         $mail = new VerificationTest($request->all(),$user);
         Mail::to('javierfuenteabalo@gmail.com')->send($mail);

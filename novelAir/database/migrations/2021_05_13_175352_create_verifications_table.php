@@ -17,6 +17,7 @@ class CreateVerificationsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->lenght(20);
             $table->string('num_id',30);
+            $table->string('request_state',255)->default('pendiente');
             $table->timestamps();
         });
     }

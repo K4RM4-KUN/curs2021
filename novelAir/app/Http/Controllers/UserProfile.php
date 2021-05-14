@@ -16,6 +16,7 @@ use App\Models\Role;
 use App\Models\Mark;
 use App\Models\Subscription;
 use App\Models\Chapter;
+use App\Models\Verification;
 use App\Models\UNS;
 use App\Models\States;
 use App\Models\Follow;
@@ -195,6 +196,12 @@ class UserProfile extends Controller
             $data['subscriptions'] = Subscription::join('users','users.id',"=",'subscriptions.user_id')->where('subscriber_id',Auth::user()->id)->get();
             $data['config'] = 'subscripciones';
         }elseif($config == 'author'){
+            $data['request_state'] = null;
+            if(Verification::where('user_id',Auth::user()->id)->exists()){
+                $data['request_state'] = (Verification::where('user_id',Auth::user()->id)->orderbydesc('created_at')->first())->request_state;
+            } else {
+                $data['request_state'] = null;
+            }
             if(Author:: where('user_id',Auth::user()->id)->exists()){
                 $data['author'] = Author:: where('user_id',Auth::user()->id)->first();
             } else {
@@ -265,7 +272,7 @@ class UserProfile extends Controller
             if(file_exists(public_path($path."/profile" ))){ 
                 File::makeDirectory($path."/profile" , $mode = 0775, true);
             }
-            $file->move($path."/profile","usericon".Auth::user()->imgtype);
+            $file->move($path."/profile","usericon".".".$save[count($save)-1]);
 
         }
         //dd($user);
@@ -331,7 +338,7 @@ class UserProfile extends Controller
             if(file_exists(public_path($path."/profile" ))){ 
                 File::makeDirectory($path."/profile" , $mode = 0775, true);
             }
-            $file->move($path."/profile","bgImage".Auth::user()->imgtype);
+            $file->move($path."/profile","bgImage".".".$save[count($save)-1]);
         } else{  
             $newProfile->SetAttribute('imgtype',$save->imgtype); 
         }
@@ -423,14 +430,14 @@ class UserProfile extends Controller
     }
 
     public function allUsers(){
-        $data["users"] = User::with('profile')->get();
+        $data["users"] = User::with('profile')->orderbydesc('created_at')->orderbydesc('created_at')->get();
         $data["usersSearch"] = null;
 
         return view('user.searchUser',$data);
     }
 
     public function allUsersSearch(Request $request){
-        $data["users"] = User::with('profile')->get();
+        $data["users"] = User::with('profile')->orderbydesc('created_at')->get();
 
         $data["usersSearch"] = User::with('profile')->where('username', 'like', '%' . $request->searcher . '%')->get();
 

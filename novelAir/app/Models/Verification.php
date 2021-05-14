@@ -9,12 +9,12 @@ use App\Models\User;
 class Verification extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id','num_id'];
+    protected $fillable = ['user_id','num_id','request_state'];
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    protected $table = "tags_novels";
+    protected $table = "verifications";
 }

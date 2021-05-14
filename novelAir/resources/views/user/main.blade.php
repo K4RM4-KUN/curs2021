@@ -221,12 +221,82 @@
                                             <p class="text-lg text-white | p-2">Autores Recomendados</p>
                                             <hr class="w-1/1 mx-auto">
                                         </div>
-                                        <div class="flex flex-wrap | text-white">
+                                        <div class="flex flex-wrap | justify-center | text-white">
                                             @if(isset($authors1))
-                                                <div class="m-2 bg-cover bg-no-repeat bg-center" style="background-image:url('{{asset('users/'.$result->id.'/profile/bgImage'.$result->imgtype)}}');">
+                                                <div class="m-2">
                                                     <a href="{{url('perfil/'.$authors1->id.'/'.$authors1->username)}}">
-                                                        <button type="button" class="transform hover:scale-110">
-                                                            <div class="flex flex-wrap | justify-center content-center | h-10 w-10 | bg-blue-500 | rounded">
+                                                        <button type="button" class="transform hover:scale-110 bg-cover bg-no-repeat bg-center rounded-full" 
+                                                        @if(file_exists(public_path() ."/users/". $authors1->id ."/profile/usericon". $authors1->imgtype))
+                                                            style="background-image:url('{{asset("/users/". $authors1->id ."/profile/usericon". $authors1->imgtype)}}')"
+                                                        @else
+                                                            style="background-image:url('{{asset("/images/noimage.png")}}')"
+                                                        @endif
+                                                        >
+                                                            <div class="flex flex-wrap | justify-center content-center | h-10 w-10 | rounded">
+                                                            </div>
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                            @endif
+                                            @if(isset($authors2))
+                                                <div class="m-2">
+                                                    <a href="{{url('perfil/'.$authors2->id.'/'.$authors2->username)}}">
+                                                        <button type="button" class="transform hover:scale-110 bg-cover bg-no-repeat bg-center rounded-full" 
+                                                        @if(file_exists(public_path() ."/users/". $authors2->id ."/profile/usericon". $authors2->imgtype))
+                                                            style="background-image:url('{{asset("/users/". $authors2->id ."/profile/usericon". $authors2->imgtype)}}')"
+                                                        @else
+                                                            style="background-image:url('{{asset("/images/noimage.png")}}')"
+                                                        @endif
+                                                        >
+                                                            <div class="flex flex-wrap | justify-center content-center | h-10 w-10 | rounded">
+                                                            </div>
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                            @endif
+                                            @if(isset($authors3))
+                                                <div class="m-2">
+                                                    <a href="{{url('perfil/'.$authors3->id.'/'.$authors3->username)}}">
+                                                        <button type="button" class="transform hover:scale-110 bg-cover bg-no-repeat bg-center rounded-full" 
+                                                        @if(file_exists(public_path() ."/users/". $authors3->id ."/profile/usericon". $authors3->imgtype))
+                                                            style="background-image:url('{{asset("/users/". $authors3->id ."/profile/usericon". $authors3->imgtype)}}')"
+                                                        @else
+                                                            style="background-image:url('{{asset("/images/noimage.png")}}')"
+                                                        @endif
+                                                        >
+                                                            <div class="flex flex-wrap | justify-center content-center | h-10 w-10 | rounded">
+                                                            </div>
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                            @endif
+                                            @if(isset($authors4))
+                                                <div class="m-2">
+                                                    <a href="{{url('perfil/'.$authors4->id.'/'.$authors4->username)}}">
+                                                        <button type="button" class="transform hover:scale-110 bg-cover bg-no-repeat bg-center rounded-full" 
+                                                        @if(file_exists(public_path() ."/users/". $authors4->id ."/profile/usericon". $authors4->imgtype))
+                                                            style="background-image:url('{{asset("/users/". $authors4->id ."/profile/usericon". $authors4->imgtype)}}')"
+                                                        @else
+                                                            style="background-image:url('{{asset("/images/noimage.png")}}')"
+                                                        @endif
+                                                        >
+                                                            <div class="flex flex-wrap | justify-center content-center | h-10 w-10 | rounded">
+                                                            </div>
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                            @endif
+                                            @if(isset($authors5))
+                                                <div class="m-2">
+                                                    <a href="{{url('perfil/'.$authors5->id.'/'.$authors5->username)}}">
+                                                        <button type="button" class="transform hover:scale-110 bg-cover bg-no-repeat bg-center rounded-full" 
+                                                        @if(file_exists(public_path() ."/users/". $authors5->id ."/profile/usericon". $authors5->imgtype))
+                                                            style="background-image:url('{{asset("/users/". $authors5->id ."/profile/usericon". $authors5->imgtype)}}')"
+                                                        @else
+                                                            style="background-image:url('{{asset("/images/noimage.png")}}')"
+                                                        @endif
+                                                        >
+                                                            <div class="flex flex-wrap | justify-center content-center | h-10 w-10 | rounded">
                                                             </div>
                                                         </button>
                                                     </a>

@@ -111,6 +111,9 @@
                         </div>
                     </a>
                 @endforeach
+                <div class="my-5 w-full text-white flex justify-center">
+                    {!! $novels->links() !!}
+                </div>
 
             </div>
 

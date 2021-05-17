@@ -142,19 +142,6 @@
 
                             <hr class="w-9/12 mx-auto justify-items-center">
 
-                            <!-- Nota
-                                <div class="my-4 ml-3">
-                                    <label for="markOrder">Nota:</label>
-                                    <select name="markOrder" class="text-black" id="markOrder">
-                                        <option value="mas">Mayor</option>
-                                        <option value="men">Menor</option>
-                                    </select>
-                                    <input type="number" class="text-black" name="mark" value="0" min="0" max="10">
-                                </div>
-
-                                <hr class="w-9/12 mx-auto justify-items-center">
-                            -->
-
                             <!-- +18 -->
                             <div class="my-4 ml-3">
                                 <p>Contenido Adulto</p>
@@ -173,22 +160,6 @@
                             </div>
 
                             <hr class="w-9/12 mx-auto justify-items-center">
-
-                            <!-- Tags
-                            <div class="my-4 ml-3">
-                                <input name="filtrarTag" id="filtrarTag" type="checkbox" @@if ($filters["tag"] != 0) checked @@endif>
-                                <label for="filtrarTag">
-                                    Filtrar por tag
-                                </label>
-                                <div class="tagsDiv flex flex-wrap">
-                                    @@foreach ($tags as $tag)
-                                        <div class="mx-2 my-1">
-                                            <input type="radio" id="@{{$tag->id}}" name="tag" value="@{{$tag->id}}" @@if ($filters["tag"] == $tag->id) checked @@endif>
-                                            <label for="@{{$tag->id}}">@{{$tag->tag_name}}</label><br>
-                                        </div>
-                                    @@endforeach
-                                </div>
-                            </div> -->
                         </div>
                     </div>
                 </form>

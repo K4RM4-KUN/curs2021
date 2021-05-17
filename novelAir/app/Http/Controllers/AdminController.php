@@ -19,8 +19,8 @@ class AdminController extends Controller
     public function adminIndex(){
         $data['rolUser'] = User_Role::with('role')->where('user_id',Auth::user()->id)->first();
         if($data['rolUser']->role->rol_name == 'admin'){
-            $data['users'] = User::all();
-            $data["novels"] = Novel::all();
+            $data['users'] = User::orderbydesc('created_at')->take(24)->get();
+            $data["novels"] = Novel::orderbydesc('created_at')->take(24)->get();
             return view('admin.main',$data);
         }else{
             return redirect("/dashboard");
@@ -31,8 +31,8 @@ class AdminController extends Controller
         $data['rolUser'] = User_Role::with('role')->where('user_id',Auth::user()->id)->first();
         if($data['rolUser']->role->rol_name == 'admin' && $id != null){
             
-            $data['users'] = User::all();
-            $data["novels"] = Novel::all();
+            $data['user'] = User::where('id',$id)->first();
+            $data["novels"] = Novel::where('user_id',$id)->get();
 
             return view('admin.user',$data);
         }else{
@@ -45,7 +45,7 @@ class AdminController extends Controller
         if($data['rolUser']->role->rol_name == 'admin' && $id != null){
 
             $data['users'] = User::all();
-            $data["novels"] = Novel::all();
+            $data["novel"] = Novel::where('id',$id)->first();
 
             return view('admin.novel',$data);
         }else{

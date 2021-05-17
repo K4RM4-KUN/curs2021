@@ -33,7 +33,7 @@ class SingleNovelManager extends Controller
         $data["novels"] = Novel:: where("id",$id)->get();
         //Cosas de tags
         //$data["tags"] = DB::table("tags_novels")->join('tags',"tags_novels.tag_id","=","tags.id")->where("novel_id",$id)->get();
-        $data["chapters"] = Chapter:: where("novel_id",$id)->orderby("chapter_n")->get();
+        $data["chapters"] = Chapter:: where("novel_id",$id)->orderby("chapter_n")->paginate(10);
         $data["genres"] = Genre::all();
         $data['rolUser'] = User_Role::with('role')->where('user_id',Auth::user()->id)->first();
         $data['payChapter'] = PaymentChapter::where('novel_id',$id)->first();

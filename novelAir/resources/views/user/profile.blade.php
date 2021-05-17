@@ -218,7 +218,7 @@
                             id="autor1"
                             name="checkAutor1" 
                             checked>
-                        <label for="autor1" class="text-white">Mostrar</label>
+                        <label for="autor1" class="hidden sm:block text-white">Mostrar</label>
                     </div>
                 
                 </div>
@@ -242,7 +242,7 @@
                             id="autor2"
                             name="checkAutor2" 
                             checked>
-                        <label for="autor2" class="text-white">Mostrar</label>
+                        <label for="autor2" class="hidden sm:block text-white">Mostrar</label>
                     </div>
                 
                 </div>
@@ -266,7 +266,7 @@
                             id="autor3"
                             name="checkAutor3" 
                             checked>
-                        <label for="autor3" class="text-white">Mostrar</label>
+                        <label for="autor3" class="hidden sm:block text-white">Mostrar</label>
                     </div>
                 
                 </div>
@@ -290,7 +290,7 @@
                             id="autor4"
                             name="checkAutor4" 
                             checked>
-                        <label for="autor4" class="text-white">Mostrar</label>
+                        <label for="autor4" class="hidden sm:block text-white">Mostrar</label>
                     </div>
                 
                 </div>
@@ -314,7 +314,7 @@
                             name="checkAutor5"
                             id="autor5"
                             checked>
-                        <label for="autor5" class="text-white">Mostrar</label>
+                        <label for="autor5" class="hidden sm:block text-white">Mostrar</label>
                     </div>
                 </div>
             </div>

@@ -11,6 +11,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\Lista;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,9 +24,7 @@ use App\Http\Controllers\AdminController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/',[HomeController::class,'index']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -60,8 +59,8 @@ Route::post('verificar',[MailController::class,'verificationRequest'])->name('ve
 Route::get('featured',[FeaturedSidebar::class,'index']);
 
 //Library
-Route::get('biblioteca/{type?}',[Library::class,'index'])->name('goLibrary');
 Route::post('biblioteca/resultado',[Library::class,'resultSercher'])->name('goLibraryResult');
+Route::get('biblioteca/{type?}',[Library::class,'index'])->name('goLibrary');
 
 //List
 Route::get('listas/{list?}/{filter?}',[Lista::class,'index'])->name('list')->middleware(['auth']);

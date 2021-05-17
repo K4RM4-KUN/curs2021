@@ -30,7 +30,7 @@ class NovelManager extends Controller
         withCount("chapters")->
         where("user_id",Auth::user()->id)->
         orderbydesc('created_at')->
-        get();
+        paginate(5);
         $data["viewStats"] = 0;
         $data["followersStats"] = 0;
         foreach($data["novels"] as $novel){

@@ -89,6 +89,7 @@
 
                 <!-- Body -->
                 <div class="flex flex-wrap | w-1/1">
+
                     <!-- Mis novelas -->
                     <div class="flex flex-wrap | w-full @if(!($profile->private))sm:w-9/12 @endif | px:2 sm:px-5">
                         <div class="flex flex-wrap | text-white | w-full | mt-5 | p-2 | bg-black bg-opacity-30">
@@ -136,6 +137,9 @@
 
                                     </a>
                                 @endforeach
+                                <div class="w-full text-white flex justify-center">
+                                    {!! $novels->links() !!}
+                                </div>
                             @endif
                         </div>
                     </div>
@@ -398,7 +402,6 @@
             </div>
 
         </div>
-
     </body>
 
 </html>

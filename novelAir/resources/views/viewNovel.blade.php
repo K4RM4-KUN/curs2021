@@ -87,6 +87,9 @@
                         </div>
                     </div>
                 @endforeach
+                <div class="my-5 w-full text-white flex justify-center">
+                    {!! $chapters->links() !!}
+                </div>
             </div>
             
             <!-- Seccion Estadisticas: Formulario para editar la novela -->

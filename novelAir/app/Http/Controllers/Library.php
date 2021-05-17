@@ -60,17 +60,6 @@ class Library extends Controller
             orderbydesc('created_at')->
             take(6)->
             get();
-            $data["followersStats"] = 0;
-            foreach($data["novels"] as $novel){      
-                $data["followersStats"] += $novel->uns_count;
-                $pos = Mark::where('novel_id',$novel->id)->where("like",1)->get();
-                $neg =  Mark::where('novel_id',$novel->id)->where("like",0)->get();
-                if(count($pos)+count($neg) != 0){
-                    $novel->SetAttribute("Mark",((count($pos)*100)/(count($pos)+count($neg)))/10);
-                } else {
-                    $novel->SetAttribute("Mark",0);
-                }
-            }
             foreach($data["novels"] as $novel){
                 
                 //Nota
@@ -84,7 +73,7 @@ class Library extends Controller
             }
             $data["type"] = $value;
             return view('library.searcher',$data);
-        } else {
+        }else {
             return redirect('/dashboard');
         }
     }
@@ -94,6 +83,7 @@ class Library extends Controller
 
         //Cosas de tags
         //$data["tags"] = Tag::orderby('tag_name')->get();
+
 
         if($type == 0 || $type == 1){
             
@@ -229,7 +219,7 @@ class Library extends Controller
         }
 
         //dd($filters);
-        $data["results"] = $tmp->get();
+        $data["results"] = $tmp->take(24)->get();;
 
 
         $data["genres"] = Genre::all();

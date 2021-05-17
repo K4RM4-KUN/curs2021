@@ -43,7 +43,7 @@ class UserProfile extends Controller
             } else {
                 $data['image'] = 'images/noimage.png';
             }
-            $data["novels"] = Novel:: where([["user_id",$id],["public",1]])->get();
+            $data["novels"] = Novel:: where([["user_id",$id],["public",1]])->paginate(6);
     
 
             foreach($data["novels"] as $novel){
@@ -78,7 +78,7 @@ class UserProfile extends Controller
             $x['user'] = $id;
             $data["novelsList"] = Novel::whereHas('uns', function ($query) use ($x){
                 return $query->where('user_id',$x['user'])->where('state_id',(States::where('id', $x["list"])->first())->id);
-            })->where('public',1)->get();
+            })->where('public',1)->take(6)->get();
 
             /* Rol user */
             $data['rolUser'] = User_Role::with('role')->where('user_id',$id)->first();

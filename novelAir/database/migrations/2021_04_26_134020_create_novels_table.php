@@ -17,8 +17,9 @@ class CreateNovelsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->lenght(20);
             $table->string('name',255);
-            $table->string('genre',255);
-            $table->string('sinopsis',400);
+            $table->unsignedBigInteger('genre')->lenght(20);
+            $table->string('sinopsis',600);
+            $table->string('author_comment',400);
             $table->string('imgtype',50);
             $table->boolean('public');
             $table->boolean('ended');

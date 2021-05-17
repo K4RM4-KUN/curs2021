@@ -1,5 +1,5 @@
 <!-- navbar -->
-<nav x-data="{ open: false }" class="sm:sticky top-0 | bg-white border-b-4 border-ourBlue ">
+<nav x-data="{ open: false }" class="sticky top-0 | bg-white border-b-4 border-ourBlue ">
 
     <div class="max-w-7xl mx-auto h-1/1">
 

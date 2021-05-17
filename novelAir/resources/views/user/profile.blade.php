@@ -31,7 +31,7 @@
                 Fondo de perfil(Fotos de 9:16):
             </label>
             <div class="flex items-center justify-around">
-                <img class="rounded-full" width="10% " src="{{asset($image)}}" alt="">
+                <img class="rounded-full | w-4/12 sm:w-3/12 lg:w-2/12" src="{{asset($image)}}" alt="">
                 <input class="border-none appearance-none rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline" 
                 name="bgImage" 
                 type="file"
@@ -208,7 +208,7 @@
                     <div class="flex items-center justify-start">
                         <select class="mi-selector shadow-lg border-none appearance-none rounded w-3/6 py-2 px-3 text-whtie leading-tight"
                             name="autor1">
-                                <option value='' @if($authorsUsername['authors1'] == "") selected @endif></option>
+                                <option value='' @if($authorsUsername['authors1'] == "") selected @endif>elige un usuario</option>
                                 @foreach($users as $user)
                                     <option value='{{$user->username}}' @if($authorsUsername['authors1'] == $user->username) selected @endif>{{$user->username}}</option>
                                 @endforeach
@@ -232,7 +232,7 @@
                     <div class="flex items-center justify-start">
                         <select class="mi-selector shadow-lg border-none appearance-none rounded w-3/6 py-2 px-3 text-whtie leading-tight"
                             name="autor2">
-                                <option value='' @if($authorsUsername['authors2'] == "") selected @endif></option>
+                                <option value='' @if($authorsUsername['authors2'] == "") selected @endif>elige un usuario</option>
                                 @foreach($users as $user)
                                     <option value='{{$user->username}}' @if($authorsUsername['authors2'] == $user->username) selected @endif>{{$user->username}}</option>
                                 @endforeach
@@ -256,7 +256,7 @@
                     <div class="flex items-center justify-start">
                         <select class="mi-selector shadow-lg border-none appearance-none rounded w-3/6 py-2 px-3 text-whtie leading-tight"
                             name="autor3">
-                                <option value='' @if($authorsUsername['authors3'] == "") selected @endif></option>
+                                <option value='' @if($authorsUsername['authors3'] == "") selected @endif>elige un usuario</option>
                                 @foreach($users as $user)
                                     <option value='{{$user->username}}' @if($authorsUsername['authors3'] == $user->username) selected @endif>{{$user->username}}</option>
                                 @endforeach
@@ -280,7 +280,7 @@
                     <div class="flex items-center justify-start">
                         <select class="mi-selector shadow-lg border-none appearance-none rounded w-3/6 py-2 px-3 text-whtie leading-tight"
                             name="autor4">
-                                <option value='' @if($authorsUsername['authors4'] == "") selected @endif></option>
+                                <option value='' @if($authorsUsername['authors4'] == "") selected @endif>elige un usuario</option>
                                 @foreach($users as $user)
                                     <option value='{{$user->username}}' @if($authorsUsername['authors4'] == $user->username) selected @endif>{{$user->username}}</option>
                                 @endforeach
@@ -304,7 +304,7 @@
                     <div class="flex items-center justify-start">
                         <select class="mi-selector shadow-lg border-none appearance-none rounded w-3/6 py-2 px-3 text-whtie leading-tight"
                             name="autor5">
-                                <option value='' @if($authorsUsername['authors5'] == "") selected @endif></option>
+                                <option value='' @if($authorsUsername['authors5'] == "") selected @endif>elige un usuario</option>
                                 @foreach($users as $user)
                                     <option value='{{$user->username}}' @if($authorsUsername['authors5'] == $user->username) selected @endif>{{$user->username}}</option>
                                 @endforeach

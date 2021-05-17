@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTagsNovelsTable extends Migration
+class CreatePaymentChaptersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateTagsNovelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tags_novels', function (Blueprint $table) {
+        Schema::create('payment_chapters', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('novel_id')->length(20);
-            $table->unsignedBigInteger('tag_id')->length(20);
+            $talbe->integer('payment_chapters')->default(0);
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateTagsNovelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tags_novels');
+        Schema::dropIfExists('payment_chapters');
     }
 }

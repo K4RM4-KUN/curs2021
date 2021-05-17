@@ -6,12 +6,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Novel;
-use App\Models\Mark;
 use App\Models\Chapter;
+use App\Models\Genre;
+use App\Models\Mark;
 use App\Models\UNS;
 use App\Models\States;
-use App\Models\Tag;
-use App\Models\Tag_Novel;
+use App\Models\PaymentChapter;
+use App\Models\Subscription;
+use App\Models\User_Role;
+//use App\Models\Tag;
+//use App\Models\Tag_Novel;
 use App\Models\User_LastView;
 use Illuminate\Http\Request;
 use File;
@@ -27,11 +31,22 @@ class NovelMain extends Controller
 
         $data["author"] = User::select('username','id','imgtype','created_at')->where("id",$data["novel"][0]->user_id)->get();
 
-        $data["tags"] = DB::table("tags_novels")->join('tags',"tags_novels.tag_id","=","tags.id")->where("novel_id",$id)->get();
+        //$data["tags"] = DB::table("tags_novels")->join('tags',"tags_novels.tag_id","=","tags.id")->where("novel_id",$id)->get();
 
         $tmp = Chapter:: where([
             ["novel_id", $id],
+            ['public',1]
         ]);
+        $data['payment'] = (PaymentChapter::where('novel_id',$data["novel"][0]->id)->first())->payment_chapters;
+        $data['genre'] = (Genre::where("id",$data["novel"][0]->genre)->first())->name;
+        
+        $path = public_path() ."/users/". $data["author"][0]->id; 
+        if(file_exists( $path."/profile/usericon". $data["author"][0]->imgtype)){ 
+            $data['image'] = "users/". $data["author"][0]->id."/profile/usericon". $data["author"][0]->imgtype;
+        } else {
+            $data['image'] = 'images/noimage.png';
+            //dd($data['image'],file_exists( $path."/profile/usericon". $data["author"][0]->imgtype));
+        }
         
         if($order == "desc"){
             $data["chaptersOrder"] = $order;
@@ -89,10 +104,15 @@ class NovelMain extends Controller
                     $data["lastView"] = null;
                 }
 
-            }else{  //entra si no has empezado a ller la novela
+            }else{  //entra si no has empezado a leer la novela
                 $data["lastView"] = $data["chapters"][count($data["chapters"])-1]->chapter_n;
             }
-            
+
+            $data['subscribed'] = Subscription::where([['subscriber_id',Auth::user()->id],['caducate_at',">",date("Y-m-d H:i:s")],['user_id',$data['novel'][0]->user_id]])->exists();
+            if(Auth::user()->id == $data["author"][0]->user_id || User_Role::where([['user_id',Auth::user()->id],['role_id',3]])->exists()){
+                $data['subscribed'] = true;
+            }
+
         } else {
             $state = new States;
             $state->SetAttribute("state_name","none");
@@ -100,6 +120,13 @@ class NovelMain extends Controller
             $liked = new Mark;
             $liked->SetAttribute("like",3);
             $data["liked"] = $liked;
+            if(count($data["chapters"]) == 0){
+                $data["lastView"] = 0;
+            } else {
+                $data["lastView"] = $data["chapters"][count($data["chapters"])-1]->chapter_n;
+            }
+            $data['actualChapter'] = null;
+            $data['subscribed'] = false;
         }
 
         $data["followers"] = count(
@@ -130,24 +157,24 @@ class NovelMain extends Controller
             $query->where('updated_at',">",date("Y-m-d H:i:s", strtotime('monday this week')));
         }])->orderbydesc('uns_count')->get(10); 
         
-
         return view('novel.main',$data);
     }
     
-    public function deleteMark($id){
+    public function deleteLastView($id){
         User_LastView:: where([['novel_id',$id],['user_id',Auth::user()->id]])->delete();
         return redirect('novel/'.$id);
     }
 
-    public function readIndex($id_novel,$id_chapter){
-        $data["novel"] = Novel::where("id",$id_novel)->get();
+    public function readIndex($id,$id_chapter){
+        $data["novel"] = Novel::where("id",$id)->get();
         $data["chapter"] = Chapter::where([
-            ["novel_id", $id_novel],
+            ["novel_id", $id],
             ["chapter_n", $id_chapter]
         ])->get();
 
         $data["chapters"] = Chapter:: where([
-            ["novel_id", $id_novel],
+            ["novel_id", $id],
+            ["public", 1],
         ])->orderbydesc('chapter_n')->get();
 
         $data["content"] = File::files(public_path()."/".$data["chapter"][0]->route);
@@ -159,13 +186,13 @@ class NovelMain extends Controller
 
             $existViewLast = User_LastView::where([
                 ['user_id', Auth::user()->id],
-                ['novel_id', $id_novel],
+                ['novel_id', $id],
             ])->get();
             
             if (count($existViewLast) == 0){
                 $viewLast = new User_LastView;
                 $viewLast->setAttribute('user_id', Auth::user()->id);
-                $viewLast->setAttribute('novel_id', $id_novel);
+                $viewLast->setAttribute('novel_id', $id);
                 $viewLast->setAttribute('chapter_n', $data["chapter"][0]->chapter_n);
                 $viewLast->save();
             }elseif ($existViewLast[0]->chapter_n < $data["chapter"][0]->chapter_n){
@@ -181,27 +208,27 @@ class NovelMain extends Controller
     }
 
     //Interaction
-    public function novelInteraction($type,$novel_id){	
+    public function novelInteraction($type,$id){	
         $state_id = States::where('state_name', $type)->first();
-        $alredyState = UNS::where([['user_id', Auth::user()->id],['novel_id',$novel_id]])->first();
+        $alredyState = UNS::where([['user_id', Auth::user()->id],['novel_id',$id]])->first();
         if($alredyState == null){
             $state = new UNS;
             $state->setAttribute('user_id', Auth::user()->id);
-            $state->setAttribute('novel_id', $novel_id);
+            $state->setAttribute('novel_id', $id);
             $state->setAttribute('state_id', $state_id->id);
             $state->save();
         }else if($state_id->id == $alredyState->state_id){
             UNS::
             where([
                 ["user_id", Auth::user()->id],
-                ['novel_id', $novel_id]
+                ['novel_id', $id]
             ])
             ->delete();
         } else{
             $alredyState->state_id = $state_id->id;
             $alredyState->save();
         }
-        return redirect('novel/'.$novel_id);
+        return redirect('novel/'.$id);
     }
 
     public function voteNovel($id,$vote){

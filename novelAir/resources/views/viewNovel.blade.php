@@ -151,15 +151,25 @@
 
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+                                Comentario del autor
+                            </label>
+
+                            <textarea class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            name="authorComment">{{$novels[0]->author_comment}}</textarea>
+                        </div>
+
+                        <!--Tags
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                                 Tags
                             </label>
 
                             <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
                             name="tags" 
                             type="text" 
-                            value="@foreach($tags as $tag){{strtolower($tag->tag_name)}},@endforeach"
+                            value="@@foreach($tags as $tag)@{{strtolower($tag->tag_name)}},@@endforeach"
                             placeholder="accion,aventura,romance...">
-                        </div>
+                        </div>-->
 
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
@@ -192,6 +202,50 @@
                             type="checkbox" 
                             @if ($novels[0]->ended) checked @endif>
                         </div>
+
+                        @if($rolUser->role->role_name != 'user')
+                            <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+                                    Capitulos de Pago
+                                </label>
+                                <div class="mx-5">
+
+                                    <div class="mt-1">
+                                        <input class="shadow-lg border-none appearance-none rounded py-3 px-3 leading-tight focus:outline-none focus:shadow-outline" 
+                                        name="noPaymentChapters"
+                                        id="noPaymentChapters"
+                                        type="checkbox"
+                                        @if($payChapter->payment_chapters == 0) checked @endif>
+                                        <label class="text-gray-700 text-sm font-bold mb-2" for="noPaymentChapters">
+                                            Ningun capitulo
+                                        </label>
+                                    </div>
+
+                                    <div class="mt-4">
+                                        <label class="block text-gray-700 text-sm font-bold mb-2" for="numPaymentChapters">
+                                            Ultimos capitulos
+                                        </label>
+                                        <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline" 
+                                        name="numPaymentChapters"
+                                        id="numPaymentChapters"
+                                        type="number"
+                                        @if($payChapter->payment_chapters > 0) value="{{$payChapter->payment_chapters}}" @endif>
+                                    </div>
+                                    
+                                    <div class="mt-4">
+                                        <input class="shadow-lg border-none appearance-none rounded py-3 px-3 leading-tight focus:outline-none focus:shadow-outline" 
+                                        name="allPaymentChapters"
+                                        id="allPaymentChapters"
+                                        type="checkbox"
+                                        @if($payChapter->payment_chapters < 0) checked @endif>
+                                        <label class="text-gray-700 text-sm font-bold mb-2" for="allPaymentChapters">
+                                            Todos los capitulos
+                                        </label>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        @endif
 
                         <div class="flex items-center justify-between">
 

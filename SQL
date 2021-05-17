@@ -1,0 +1,108 @@
+USER
+    'id'
+    'username'
+    'name'
+    'surname'
+    'email'
+    'password'
+    'profile_img'
+    'country'
+    'gender'
+    'facebook'
+    'instagram'
+    'twitter'
+    'patreon'
+    'paypal'
+    'web'
+
+ROLE
+    'id'
+    'role_name'
+    'privilege_level'
+
+USER_ROLE
+    'user_id'
+    'role_id'
+
+PROFILE
+    'user_id'
+    'public'
+    'bg_img'
+    'recomended_authors'
+    'show_ra'
+    'show_g'
+    'show_c'
+    'show_f'
+    'show_i'
+    'show_p'
+    'show_t'
+    'show_w'
+    'show_s'
+    
+FOLLOWER
+    'id'
+    'follower_id'
+    'user_id'
+
+SUBSCRIPTION
+    'id'
+    'subscriber_id'
+    'user_id'
+    'subscription_price'
+    'caducate_at_'
+
+TRANSACTION
+    'id'
+    'user_id'
+    'payment_id'
+    'payer_id'
+    'token'
+    'amount'
+    'state'
+
+VERIFICATION
+    'id'
+    'user_id'
+    'id_num'
+    'request_state'
+
+NOVEL
+    'id'
+    'name'
+    'sinopsis'
+    'cover_img'
+    'public'
+    'adult_content'
+    'visual_novel'
+    'payment_chapters'
+    'novel_type'
+
+GENRE
+    'id'
+    'genre_name'
+
+NOVEL_GENRE
+    'novel_id'
+    'genre_id'
+
+CHAPTER
+    'id'
+    'novel_id'
+    'title'
+    'chapter_n'
+    'views'
+    'public'
+
+MARK
+    'novel_id'
+    'user_id'
+    'mark_state'
+
+STATE
+    'id'
+    'state_name'
+
+USER_NOVEL_STATE
+    'novel_id'
+    'user_id'
+    'state_id'

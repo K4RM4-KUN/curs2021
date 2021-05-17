@@ -40,7 +40,7 @@
                             <p class="text-red-500 text-base">Tu ultima solicitud a sido denegada.</p> 
                     </div>
                 @endif
-                <div class="pl-5 mb-4 w-2/6">
+                <div class="pl-5 mb-4">
                     <label class="block text-white text-sm font-bold mb-2" for="names">
                         Nombre y apellidos
                     </label> 
@@ -50,7 +50,7 @@
                     name="names" 
                     value="{{ucfirst(Auth::user()->name)}} {{ucfirst(Auth::user()->surname)}}">
                 </div>
-                <div class="pl-5 mb-4 w-2/6">
+                <div class="pl-5 mb-4 ">
                     <label class="block text-white text-sm font-bold mb-2" for="birth_date">
                         Fecha de nacimiento
                     </label> 
@@ -60,7 +60,7 @@
                     name="birth_date" 
                     value="{{Auth::user()->birth_date}}">
                 </div>
-                <div class="pl-5 mb-4 w-3/6"> 
+                <div class="pl-5 mb-4"> 
                     <label class="block text-white text-sm font-bold mb-2" for="idPhoto">
                         Selfie tuya mostrando tu DNI/NIE o documento Identificativo:
                     </label>
@@ -71,7 +71,7 @@
                         accept="image/jpg,image/jpeg,image/png">
                     </div>
                 </div>
-                <div class="pl-5 mb-4 w-2/6">
+                <div class="pl-5 mb-4">
                     <label class="block text-white text-sm font-bold mb-2" for="numId">
                         Numero de DNI/NIE o documento Identificativo:
                     </label> 
@@ -81,7 +81,7 @@
                     name="numId"
                     placeholder="39423223K">
                 </div>
-                <div class="pl-5 mb-4 w-3/6"> 
+                <div class="pl-5 mb-4"> 
                     <label class="block text-white text-sm font-bold mb-2" for="content">
                         Documentos de propiedad intelectual:
                     </label>
@@ -94,7 +94,7 @@
                         >
                     </div>
                 </div>
-                <div class="pl-5 mb-4 w-3/6">
+                <div class="pl-5 mb-4 ">
                     <p class="text-white text-sm">Esta solicitud sera enviada a un moderador de la página, 
                     este revisara cada una de tus novelas para comprobar que no infringen ningúna norma, si alguna de tus novelas
                     la infringiera recibirias información sobre el motivo y cual de tus novelas infringe la norma. Si dispones de 
@@ -135,7 +135,7 @@
             
             </div>
             @else
-                <p class="text-white text-base">Debes estar verificado para utilizar esta función</p>
+                <p class="text-white text-sm sm:text-base">Debes estar verificado para utilizar esta función</p>
             @endif
         </div>
         <div class="mt-5 mb-2 | border-b-2 border-whtie">
@@ -171,7 +171,7 @@
 
             </div>
             @else
-                <p class="text-white text-base">Debes estar verificado para utilizar esta función</p>
+                <p class="text-white  text-sm sm:text-base">Debes estar verificado para utilizar esta función</p>
             @endif
         </div>
     </form>

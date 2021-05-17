@@ -2,53 +2,43 @@
     <div class="mt-5 mb-2 | border-b-2 border-whtie">
         <p class="text-lg text-white | pl-2">Tus seguidores</p>
     </div>
-    <div class=" flex | pl-5 mb-4">
-        <p class="text-white text-base">Historico:&nbsp</p> 
-        <p class="text-green-600 font-bold text-base">{{$follows}} seguidores</p> 
-    </div>
-    <div class="flex | pl-5 mb-4">
-        <p class="text-white text-base">Esta semana:&nbsp</p>
-        <p class="text-green-600 font-bold text-base">{{$follows}} seguidores</p> 
-    </div>
+    <div class="flex justify-around | pl-1 sm:pl-5 mb-4">
+        <div class="flex flex-col sm:flex-row | pl-1 sm:pl-5 mb-4">
+            <p class="text-center sm:text-left text-white text-base">Este més:&nbsp</p>
+            <p class="text-center sm:text-left text-green-600 font-bold text-sm sm:text-base">{{$followsThisMonth}} seguidores</p> 
+        </div>
+        <div class="flex flex-col sm:flex-row | pl-1 sm:pl-5 mb-4">
+            <p class="text-center sm:text-left text-white text-base">Historico:&nbsp</p> 
+            <p class="text-center sm:text-left text-green-600 font-bold text-sm sm:text-base">{{$follows}} seguidores</p> 
+        </div>
+    </div> 
     <div class="mt-5 mb-2 | border-b-2 border-whtie">
         <p class="text-lg text-white | pl-2">Tus subscriptores actuales</p>
     </div>
-    <div class="flex | pl-5 mb-4">
-        @foreach($subscriptionsThisWeek as $subscription)
-            <div class="mx-2">
-                <p class="text-white">{{$subscription->username}}</p>
+    @if($role->role_id != 1) 
+        <div class="flex | pl-5 mb-4">
+            @foreach($activeSubscribers as $subscription)
+                <div class="mx-2">
+                    <p class="text-white">{{$subscription->username}}</p>
+                </div>
+            @endforeach
+        </div>
+        <div class="flex justify-around | pl-1 sm:pl-5 mb-4">
+            <div class="flex flex-col sm:flex-row">
+                <p class="text-white text-base">Activos:&nbsp</p>
+                <p class="text-center sm:text-left text-green-600 font-bold text-sm sm:text-base">{{count($activeSubscribers)}} subs</p> 
             </div>
-        @endforeach
-    </div>
-    <div class="flex justify-around | pl-5 mb-4">
-        <div class="flex">
-            <p class="text-white text-base">Historico:&nbsp</p> 
-            <p class="text-green-600 font-bold text-base">{{count($subscriptions)}} subscriptores</p> 
-        </div>
-        <div class="flex">
-        <p class="text-white text-base">Esta semana:&nbsp</p>
-        <p class="text-green-600 font-bold text-base">{{count($subscriptionsThisWeek)}} subscriptores</p> 
-        </div>
-    </div>
-    <div class="mt-5 mb-2 | border-b-2 border-whtie">
-        <p class="text-lg text-white | pl-2">Tus donaciones</p>
-    </div>
-    <div class="flex flex-col | pl-5 mb-4">
-        @foreach($donationsThisWeek as $donations)
-            <div class="mx-2">
-                <p class="text-white">{{$donations->username}}</p>
+            <div class="flex flex-col sm:flex-row">
+                <p class="text-white text-base">Historico:&nbsp</p> 
+                <p class="text-center sm:text-left text-green-600 font-bold text-sm sm:text-base">{{count($subscriptions)}} subs</p> 
             </div>
-        @endforeach
-    </div>
-    <div class="flex justify-around | pl-5 mb-4">
-        <div class="flex">
-        <p class="text-white text-base">Historico:&nbsp</p> 
-        <p class="text-green-600 font-bold text-base">{{count($donations)}} donaciones</p> 
-        </div>
-        <div class="flex">
-        <p class="text-white text-base">Esta semana:&nbsp</p>
-        <p class="text-green-600 font-bold text-base">{{(count($donationsThisWeek))}} donaciones</p> 
-        </div>
-    </div>
+        </div> 
+    @else
+        <div class="flex justify-around | pl-1 sm:pl-5 mb-4">
+            <div class="flex sm:flex-row">
+                <p class="text-white  text-sm sm:text-base">Debes estar verificado para utilizar esta función</p>
+            </div>
+        </div> 
+    @endif
 
 </div>

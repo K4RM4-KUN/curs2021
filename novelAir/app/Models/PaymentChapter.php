@@ -5,11 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Tag_Novel extends Model
+class PaymentChapter extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['novel_id','tag_id'];
-
-    protected $table = "tags_novels";
+    protected $table = "payment_chapters";
 }

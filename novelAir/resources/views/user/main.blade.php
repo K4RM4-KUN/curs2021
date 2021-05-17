@@ -66,22 +66,20 @@
                                         @if($followUser)Siguiendo @else Seguir @endif {{$followersNum}}</a>
                                     @endif
                                 </div>
-
-                                @if($authorUser && !($rolUser->role->rol_name == 'user')  && !($profile->private))
+                                @if($authorUser && !($rolUser->role->rol_name == 'user')  && !($profile->private) && !$you)
                                     @if($author->subscriptions)
                                         <div class="my-3">
+                                            @if(!$subscription)
+                                            <a class="my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
+                                            href="{{url('subscribe/'.$user->id)}}">
+                                            Subscribirse 2,50€ </a> 
+                                            @else
                                             <a class="my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
                                             href="">
-                                            Suscribir</a>
+                                            Estas subscrito!</a> 
+                                            @endif
                                         </div>
-                                    @endif
-                                    @if($author->donations)
-                                    <div class="my-3">
-                                        <a class="my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
-                                        href="">
-                                        Donar</a>
-                                    </div>
-                                    @endif
+                                    @endif 
                                 @endif
                             </div>
                         </div>
@@ -104,6 +102,8 @@
                                     <p class="text-xs sm:text-base text-white font-bold">Mis proyectos</p>
                                     <hr class="w-1/1 mx-auto">
                                 </div>
+
+
                                 @foreach($novels as $result)
                                     <a class="w-1/2 sm:w-4/12 lg:w-3/12 xl:w-2/12" href="{{url('novel/'.$result->id)}}">
                                             
@@ -127,7 +127,9 @@
                                         
                                             <div class="w-full">
                                                 
-                                                <p class="bg-black bg-opacity-60 | py-2 px-2 | w-1/1 | text-center text-xs text-white font-bold | truncate">{{strtoupper($result->genre)}}</p>
+                                            <p class="bg-black bg-opacity-60 | py-2 px-2 | w-1/1 | text-center text-xs text-white font-bold | truncate">
+                                                @foreach($genres as $genre) @if($genre->id == $result->genre) {{strtoupper($genre->name)}} @endif @endforeach
+                                            </p>
 
                                             </div>
                                         </div>
@@ -214,98 +216,100 @@
                                     </div>
                                 </div>
                             @endif
-                            <div>
-                                <div class="flex flex-col | w-full | p-2 mt-5 sm:mt-0">
-                                    <div class="bg-white bg-opacity-30">
-                                        <div class="pl-2">
-                                            <p class="text-lg text-white | p-2">Autores Recomendados</p>
-                                            <hr class="w-1/1 mx-auto">
-                                        </div>
-                                        <div class="flex flex-wrap | justify-center | text-white">
-                                            @if(isset($authors1))
-                                                <div class="m-2">
-                                                    <a href="{{url('perfil/'.$authors1->id.'/'.$authors1->username)}}">
-                                                        <button type="button" class="transform hover:scale-110 bg-cover bg-no-repeat bg-center rounded-full" 
-                                                        @if(file_exists(public_path() ."/users/". $authors1->id ."/profile/usericon". $authors1->imgtype))
-                                                            style="background-image:url('{{asset("/users/". $authors1->id ."/profile/usericon". $authors1->imgtype)}}')"
-                                                        @else
-                                                            style="background-image:url('{{asset("/images/noimage.png")}}')"
-                                                        @endif
-                                                        >
-                                                            <div class="flex flex-wrap | justify-center content-center | h-10 w-10 | rounded">
-                                                            </div>
-                                                        </button>
-                                                    </a>
-                                                </div>
-                                            @endif
-                                            @if(isset($authors2))
-                                                <div class="m-2">
-                                                    <a href="{{url('perfil/'.$authors2->id.'/'.$authors2->username)}}">
-                                                        <button type="button" class="transform hover:scale-110 bg-cover bg-no-repeat bg-center rounded-full" 
-                                                        @if(file_exists(public_path() ."/users/". $authors2->id ."/profile/usericon". $authors2->imgtype))
-                                                            style="background-image:url('{{asset("/users/". $authors2->id ."/profile/usericon". $authors2->imgtype)}}')"
-                                                        @else
-                                                            style="background-image:url('{{asset("/images/noimage.png")}}')"
-                                                        @endif
-                                                        >
-                                                            <div class="flex flex-wrap | justify-center content-center | h-10 w-10 | rounded">
-                                                            </div>
-                                                        </button>
-                                                    </a>
-                                                </div>
-                                            @endif
-                                            @if(isset($authors3))
-                                                <div class="m-2">
-                                                    <a href="{{url('perfil/'.$authors3->id.'/'.$authors3->username)}}">
-                                                        <button type="button" class="transform hover:scale-110 bg-cover bg-no-repeat bg-center rounded-full" 
-                                                        @if(file_exists(public_path() ."/users/". $authors3->id ."/profile/usericon". $authors3->imgtype))
-                                                            style="background-image:url('{{asset("/users/". $authors3->id ."/profile/usericon". $authors3->imgtype)}}')"
-                                                        @else
-                                                            style="background-image:url('{{asset("/images/noimage.png")}}')"
-                                                        @endif
-                                                        >
-                                                            <div class="flex flex-wrap | justify-center content-center | h-10 w-10 | rounded">
-                                                            </div>
-                                                        </button>
-                                                    </a>
-                                                </div>
-                                            @endif
-                                            @if(isset($authors4))
-                                                <div class="m-2">
-                                                    <a href="{{url('perfil/'.$authors4->id.'/'.$authors4->username)}}">
-                                                        <button type="button" class="transform hover:scale-110 bg-cover bg-no-repeat bg-center rounded-full" 
-                                                        @if(file_exists(public_path() ."/users/". $authors4->id ."/profile/usericon". $authors4->imgtype))
-                                                            style="background-image:url('{{asset("/users/". $authors4->id ."/profile/usericon". $authors4->imgtype)}}')"
-                                                        @else
-                                                            style="background-image:url('{{asset("/images/noimage.png")}}')"
-                                                        @endif
-                                                        >
-                                                            <div class="flex flex-wrap | justify-center content-center | h-10 w-10 | rounded">
-                                                            </div>
-                                                        </button>
-                                                    </a>
-                                                </div>
-                                            @endif
-                                            @if(isset($authors5))
-                                                <div class="m-2">
-                                                    <a href="{{url('perfil/'.$authors5->id.'/'.$authors5->username)}}">
-                                                        <button type="button" class="transform hover:scale-110 bg-cover bg-no-repeat bg-center rounded-full" 
-                                                        @if(file_exists(public_path() ."/users/". $authors5->id ."/profile/usericon". $authors5->imgtype))
-                                                            style="background-image:url('{{asset("/users/". $authors5->id ."/profile/usericon". $authors5->imgtype)}}')"
-                                                        @else
-                                                            style="background-image:url('{{asset("/images/noimage.png")}}')"
-                                                        @endif
-                                                        >
-                                                            <div class="flex flex-wrap | justify-center content-center | h-10 w-10 | rounded">
-                                                            </div>
-                                                        </button>
-                                                    </a>
-                                                </div>
-                                            @endif
+                            @if(isset($authors1))
+                                <div>
+                                    <div class="flex flex-col | w-full | p-2 mt-5 sm:mt-0">
+                                        <div class="bg-white bg-opacity-30">
+                                            <div class="pl-2">
+                                                <p class="text-lg text-white | p-2">Autores Recomendados</p>
+                                                <hr class="w-1/1 mx-auto">
+                                            </div>
+                                            <div class="flex flex-wrap | justify-center | text-white">
+                                                @if(isset($authors1))
+                                                    <div class="m-2">
+                                                        <a href="{{url('perfil/'.$authors1->id.'/'.$authors1->username)}}">
+                                                            <button type="button" class="transform hover:scale-110 bg-cover bg-no-repeat bg-center rounded-full" 
+                                                            @if(file_exists(public_path() ."/users/". $authors1->id ."/profile/usericon". $authors1->imgtype))
+                                                                style="background-image:url('{{asset("/users/". $authors1->id ."/profile/usericon". $authors1->imgtype)}}')"
+                                                            @else
+                                                                style="background-image:url('{{asset("/images/noimage.png")}}')"
+                                                            @endif
+                                                            >
+                                                                <div class="flex flex-wrap | justify-center content-center | h-10 w-10 | rounded">
+                                                                </div>
+                                                            </button>
+                                                        </a>
+                                                    </div>
+                                                @endif
+                                                @if(isset($authors2))
+                                                    <div class="m-2">
+                                                        <a href="{{url('perfil/'.$authors2->id.'/'.$authors2->username)}}">
+                                                            <button type="button" class="transform hover:scale-110 bg-cover bg-no-repeat bg-center rounded-full" 
+                                                            @if(file_exists(public_path() ."/users/". $authors2->id ."/profile/usericon". $authors2->imgtype))
+                                                                style="background-image:url('{{asset("/users/". $authors2->id ."/profile/usericon". $authors2->imgtype)}}')"
+                                                            @else
+                                                                style="background-image:url('{{asset("/images/noimage.png")}}')"
+                                                            @endif
+                                                            >
+                                                                <div class="flex flex-wrap | justify-center content-center | h-10 w-10 | rounded">
+                                                                </div>
+                                                            </button>
+                                                        </a>
+                                                    </div>
+                                                @endif
+                                                @if(isset($authors3))
+                                                    <div class="m-2">
+                                                        <a href="{{url('perfil/'.$authors3->id.'/'.$authors3->username)}}">
+                                                            <button type="button" class="transform hover:scale-110 bg-cover bg-no-repeat bg-center rounded-full" 
+                                                            @if(file_exists(public_path() ."/users/". $authors3->id ."/profile/usericon". $authors3->imgtype))
+                                                                style="background-image:url('{{asset("/users/". $authors3->id ."/profile/usericon". $authors3->imgtype)}}')"
+                                                            @else
+                                                                style="background-image:url('{{asset("/images/noimage.png")}}')"
+                                                            @endif
+                                                            >
+                                                                <div class="flex flex-wrap | justify-center content-center | h-10 w-10 | rounded">
+                                                                </div>
+                                                            </button>
+                                                        </a>
+                                                    </div>
+                                                @endif
+                                                @if(isset($authors4))
+                                                    <div class="m-2">
+                                                        <a href="{{url('perfil/'.$authors4->id.'/'.$authors4->username)}}">
+                                                            <button type="button" class="transform hover:scale-110 bg-cover bg-no-repeat bg-center rounded-full" 
+                                                            @if(file_exists(public_path() ."/users/". $authors4->id ."/profile/usericon". $authors4->imgtype))
+                                                                style="background-image:url('{{asset("/users/". $authors4->id ."/profile/usericon". $authors4->imgtype)}}')"
+                                                            @else
+                                                                style="background-image:url('{{asset("/images/noimage.png")}}')"
+                                                            @endif
+                                                            >
+                                                                <div class="flex flex-wrap | justify-center content-center | h-10 w-10 | rounded">
+                                                                </div>
+                                                            </button>
+                                                        </a>
+                                                    </div>
+                                                @endif
+                                                @if(isset($authors5))
+                                                    <div class="m-2">
+                                                        <a href="{{url('perfil/'.$authors5->id.'/'.$authors5->username)}}">
+                                                            <button type="button" class="transform hover:scale-110 bg-cover bg-no-repeat bg-center rounded-full" 
+                                                            @if(file_exists(public_path() ."/users/". $authors5->id ."/profile/usericon". $authors5->imgtype))
+                                                                style="background-image:url('{{asset("/users/". $authors5->id ."/profile/usericon". $authors5->imgtype)}}')"
+                                                            @else
+                                                                style="background-image:url('{{asset("/images/noimage.png")}}')"
+                                                            @endif
+                                                            >
+                                                                <div class="flex flex-wrap | justify-center content-center | h-10 w-10 | rounded">
+                                                                </div>
+                                                            </button>
+                                                        </a>
+                                                    </div>
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
                         </div>
                     @endif
 
@@ -353,7 +357,7 @@
 
                                                     <div class="w-1/1 | flex justify-between | |">
                                                         
-                                                        <p class="bg-{{$result->novel_type}} | px-1 m-0.5 | rounded | text-xs text-white font-bold">{{strtoupper($result->novel_type)}}</p>
+                                                        <p class="bg-{{$result->novel_type}} bg-purple-700 | px-1 m-0.5 | rounded | text-xs text-white font-bold">{{strtoupper($result->novel_type)}}</p>
 
                                                     </div>
                                                     
@@ -361,7 +365,9 @@
                                             
                                                 <div class="w-full">
                                                     
-                                                    <p class="bg-black bg-opacity-60 | py-2 px-2 | w-1/1 | text-center text-xs text-white font-bold | truncate">{{strtoupper($result->genre)}}</p>
+                                                <p class="bg-black bg-opacity-60 | py-2 px-2 | w-1/1 | text-center text-xs text-white font-bold | truncate">
+                                                    @foreach($genres as $genre) @if($genre->id == $result->genre) {{strtoupper($genre->name)}} @endif @endforeach
+                                                </p>
 
                                                 </div>
                                             </div>

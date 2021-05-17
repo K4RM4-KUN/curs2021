@@ -10,8 +10,8 @@ use App\Models\Mark;
 use App\Models\Chapter;
 use App\Models\UNS;
 use App\Models\States;
-use App\Models\Tag;
-use App\Models\Tag_Novel;
+//use App\Models\Tag;
+//use App\Models\Tag_Novel;
 use App\Models\User_LastView;
 use App\Models\Genre;
 use Illuminate\Http\Request;
@@ -21,24 +21,27 @@ class Library extends Controller
 
     //test
     public function index($type = "visual_novels"){
+
+        $data["genres"] = Genre::all();
                 
         if($type == "novelas" || $type == "visual_novels"){
+            //Cosas de tags
+            //$data["tags"] = Tag::orderby('tag_name')->get();
 
-            $data["tags"] = Tag::orderby('tag_name')->get();
             $filters = array(
                 "text" => "",
                 "more" => 0,
                 "adult_content" => 0,
                 "finished"  => 0,
                 "order" => 0,
-                "tag" => 0,
+                "genre" => 'null',
+                //Cambiar por genero o algo
+                //"tag" => 0,
                 "type"  => array(
                     "all" => 0,
                     "typeVN" => "",
                 ),
             );
-
-            $data["genres"] = Genre::all();
 
             $data["filters"] = $filters;
 
@@ -55,6 +58,7 @@ class Library extends Controller
             $data["novels"] = Novel::
             withCount("chapters")->where([['visual_novel',$value],['public',1]])->
             orderbydesc('created_at')->
+            take(6)->
             get();
             $data["followersStats"] = 0;
             foreach($data["novels"] as $novel){      
@@ -87,7 +91,9 @@ class Library extends Controller
 
     public function resultSercher(Request $request){
         $type = $request->type;
-        $data["tags"] = Tag::orderby('tag_name')->get();
+
+        //Cosas de tags
+        //$data["tags"] = Tag::orderby('tag_name')->get();
 
         if($type == 0 || $type == 1){
             
@@ -95,6 +101,7 @@ class Library extends Controller
             $data["novels"] = Novel::
             withCount("chapters")->where([['visual_novel',$type],['public',1]])->
             orderbydesc('created_at')->
+            take(6)->
             get();
             $data["followersStats"] = 0;
             foreach($data["novels"] as $novel){      
@@ -128,6 +135,7 @@ class Library extends Controller
             "finished"  => 0,
             "order" => 0,
             "tag" => 0,
+            "genre" => 'null',
             "type"  => array(
                 "all" => 0,
                 "typeVN" => "",
@@ -213,11 +221,18 @@ class Library extends Controller
                 $tmp = $tmp->orderby('name');
                 $filters["order"] = 4;
             }
+
+            if($request->genre != 'null'){
+                $tmp = $tmp->where("genre",$request->genre);
+                $filters["genre"] = $request->genre;
+            }
         }
 
         //dd($filters);
         $data["results"] = $tmp->get();
 
+
+        $data["genres"] = Genre::all();
 
 
         foreach($data["results"] as $novel){

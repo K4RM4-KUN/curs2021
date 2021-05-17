@@ -127,7 +127,7 @@
 
                 <div class="flex items-center justify-center">
 
-                    <img class="preview w-1/2 mt-5 mb-2 mx-5" src="{{ asset($preview) }}" alt="Preview">
+                    <img class="preview w-1/3 mt-5 mb-2 mx-5" src="{{ asset($preview) }}" alt="Preview">
 
                 </div>
 

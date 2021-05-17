@@ -122,7 +122,7 @@
 
                                     <div class="w-1/1 | flex justify-between | |">
                                         
-                                        <p class="bg-{{$novel->novel_type}} | px-1 m-0.5 | rounded | text-xs text-white font-bold">{{strtoupper($novel->novel_type)}}</p>
+                                        <p class="bg-{{$novel->novel_type}} bg-purple-700 | px-1 m-0.5 | rounded | text-xs text-white font-bold">{{strtoupper($novel->novel_type)}}</p>
                                         <p class="hidden sm:block bg-black bg-opacity-60 | px-1 py-0.5 | text-xs text-white font-bold">{{$novel->mark}}/10</p>
 
                                     </div>

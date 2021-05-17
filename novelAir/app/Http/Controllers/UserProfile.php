@@ -7,19 +7,21 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use App\Models\Author;
 use App\Models\Profile;
 use App\Models\Novel;
-use App\Models\Author;
 use App\Models\Donation;
 use App\Models\User_Role;
 use App\Models\Role;
 use App\Models\Mark;
 use App\Models\Subscription;
+use App\Models\TransactionModel;
 use App\Models\Chapter;
 use App\Models\Verification;
 use App\Models\UNS;
 use App\Models\States;
 use App\Models\Follow;
+use App\Models\Genre;
 use File;
 
 class UserProfile extends Controller
@@ -27,7 +29,8 @@ class UserProfile extends Controller
     //
     public function profileIndex($id = null,$username = null){
         if($id != null && $username != null){
-            if($id == Auth::user()->id){
+            
+            if(Auth::check() && $id == Auth::user()->id){
                 $data['myProfile'] = true;
             } else {
                 $data['myProfile'] = false;
@@ -54,11 +57,18 @@ class UserProfile extends Controller
                     $novel->SetAttribute('mark',0);
                 }
             }
+            if(Auth::check()){
+                $data['you'] = ($id == (User::where('id',Auth::user()->id)->first())->id);
+                $data['subscription'] = Subscription::where([['subscriber_id',Auth::user()->id],['user_id',$id],['caducate_at',">",(date("Y-m-d H:i:s"))]])->exists(); 
+            } else {
+                $data['subscription'] = false;
+                $data['you'] = false;
+            }
 
             $data["profile"] = Profile:: where([["user_id",$id]])->first();
             $num = Follow::where([['user_id',$id]])->get();
             $data["followersNum"] = count($num);
-            if(Follow::where([['follower_id',Auth::user()->id],['user_id',$id]])->exists()){
+            if(Auth::check() && Follow::where([['follower_id',Auth::user()->id],['user_id',$id]])->exists()){
                 $data["followUser"] = true;
             }else{
                 $data["followUser"] = false;
@@ -68,9 +78,10 @@ class UserProfile extends Controller
             $x['user'] = $id;
             $data["novelsList"] = Novel::whereHas('uns', function ($query) use ($x){
                 return $query->where('user_id',$x['user'])->where('state_id',(States::where('id', $x["list"])->first())->id);
-            })->get();
+            })->where('public',1)->get();
 
-            $data['rolUser'] = User_Role::with('role')->where('user_id',Auth::user()->id)->first();
+            /* Rol user */
+            $data['rolUser'] = User_Role::with('role')->where('user_id',$id)->first();
 
 
             if(Author::where('user_id',$id)->exists()){
@@ -111,6 +122,8 @@ class UserProfile extends Controller
         } else {
             return redirect("/dashboard");
         }
+        $data["genres"] = Genre::all();
+
 
         return view('user.main',$data);
     }
@@ -191,9 +204,13 @@ class UserProfile extends Controller
             //dd($authors);
             $data["authorsUsername"] = $authors;
 
-            $data['config'] = 'perfil'; }
-        elseif($config == 'subscripciones'){
-            $data['subscriptions'] = Subscription::join('users','users.id',"=",'subscriptions.user_id')->where('subscriber_id',Auth::user()->id)->get();
+            $data['config'] = 'perfil'; 
+        }elseif($config == 'subscripciones'){
+            $data['subscriptions'] = Subscription::join('users','users.id',"=",'subscriptions.user_id')->
+            where('subscriber_id',Auth::user()->id)->
+            where('caducate_at',">",date("Y-m-d H:i:s"))->
+            get();
+            $data['payments'] = TransactionModel::where('user_id',Auth::user()->id)->get();
             $data['config'] = 'subscripciones';
         }elseif($config == 'author'){
             $data['request_state'] = null;
@@ -213,14 +230,13 @@ class UserProfile extends Controller
             $data['config'] = 'ayuda';
         }elseif($config == 'estadisticas'){
             $data['subscriptions'] =  Subscription::where('user_id',Auth::user()->id)->get();
-            $thing =  Subscription::where([['user_id',Auth::user()->id],['created_at',">",date("Y-m-d H:i:s", strtotime('monday this week'))]])->get();
+            $thing =  Subscription::where([['user_id',Auth::user()->id],['caducate_at',">",date("Y-m-d H:i:s")]])->get();
             foreach($thing as $i){
                 $i->SetAttribute('username',(User::where('id',$i->subscriber_id)->first())->username);
             } 
-            $data['subscriptionsThisWeek'] = $thing;
+            $data['activeSubscribers'] = $thing;
             $data['follows'] = count(Follow::where('user_id',Auth::user()->id)->get());
-            $data['donations'] = Donation::where('user_id',Auth::user()->id)->get();
-            $data['donationsThisWeek'] =  Donation::where([['user_id',Auth::user()->id],['created_at',">",date("Y-m-d H:i:s", strtotime('monday this week'))]])->get();
+            $data['followsThisMonth'] = count(Follow::where([['user_id',Auth::user()->id],['created_at','>=',date("Y-m-d H:i:s",strtotime('first day of this month'))]])->get());
             $data['config'] = 'estadisticas';
         }elseif($config == 'contraseña'){
             $data['config'] = 'contraseña';
@@ -294,11 +310,11 @@ class UserProfile extends Controller
             'bgImage' => 'mimes:jpeg,jpg,png|max:2048|dimensions:ratio=16/9,max_width=1920',
         ]);
         $save = Profile::where('user_id',Auth::user()->id)->first();
-        if(Profile::where('user_id',Auth::user()->id)->exists()){
+        /*if(Profile::where('user_id',Auth::user()->id)->exists()){
             Profile::where('user_id',Auth::user()->id)->delete();
-        }
+        }*/
 
-        $newProfile = new Profile;
+        $newProfile = Profile::where('user_id',Auth::user()->id)->first();
         $newProfile->SetAttribute('user_id',Auth::user()->id);
         if(isset($request->private)){
             $newProfile->SetAttribute('private',1);

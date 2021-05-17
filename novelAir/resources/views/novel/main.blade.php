@@ -37,13 +37,13 @@
 
                         <div class="flex flex-col | | w-1/2 | mx-auto | mx-auto | w-48 sm:w-64">
 
-                            <p class="text-white text-center text-base font-bold | my-1 mt-5 | rounded | bg-{{$novel[0]->novel_type}}">
+                            <p class="text-white text-center text-base font-bold | my-1 mt-5 | rounded | bg-{{$novel[0]->novel_type}} bg-purple-700">
                                 {{strtoupper($novel[0]->novel_type)}}
                             </p>
 
                             <img class="w-1/1" src="{{asset($novel[0]->novel_dir.'/cover'.$novel[0]->imgtype)}}" alt="{{$novel[0]->name}}">
 
-                            <p class="text-white text-center text-2xl font-bold | mt-2 | rounded-t | bg-{{$novel[0]->novel_type}}">
+                            <p class="text-white text-center text-2xl font-bold | mt-2 | rounded-t | bg-{{$novel[0]->novel_type}} bg-purple-700">
                                 {{$mark}}/10
                             </p>
 
@@ -87,13 +87,12 @@
                                     @endif
                                 </div>
                             </div>
-
                             <div class="flex sm:hidden | w-1/1 | my-5">
                                 <a class="flex" href="{{url('perfil/'.$author[0]->id.'/'.$author[0]->username)}}">
                                     <p class="text-base font-bold text-white | mt-4 | rounded">
                                         Author: {{$author[0]->username}}
                                     </p>
-                                    <img class="w-16 h-16 | rounded-full | ml-2" src="{{asset('users/'.$author[0]->id.'/profile/usericon'.$author[0]->imgtype)}}?date={{$author[0]->created_at}}" alt="">
+                                    <img class="w-16 h-16 | rounded-full | ml-2" src="{{asset($image)}}" alt="">
                                 </a>
                             </div>
 
@@ -115,17 +114,13 @@
                                 <p class="text-base font-bold text-gray-300 | pl-2">{{$novel[0]->sinopsis}}</p>
                             </div>
 
-                            <div class="sm:hidden lg:flex | w-1/1">
-                                <p class="text-base font-bold text-white | mt-5">Géneros</p>
-                            </div>
-
                             <div class="flex | w-1/1">
-                                <p class="text-sm font-bold text-white | pl-2 mt-1">
-                                    @foreach($tags as $tag)
-                                        {{$tag->tag_name}}@if(!$loop->last),@endif &nbsp
-                                    @endforeach
+                                <p class="text-base font-bold text-white | mt-5">Género:&nbsp</p>
+                                <p class="text-base font-bold text-white | mt-5">
+                                    {{ucfirst($genre)}}
                                 </p>
                             </div>
+
 
                             <div class="mr-2.5">
                                 <div class="flex | w-1/1">
@@ -152,8 +147,14 @@
                                     <p class="text-base font-bold text-white | mt-4 | rounded">
                                         Author: {{$author[0]->username}}
                                     </p>
-                                    <img class="w-16 h-16 | rounded-full | ml-2" src="{{asset('users/'.$author[0]->id.'/profile/usericon'.$author[0]->imgtype)}}?date={{$author[0]->created_at}}" alt="">
+                                    <img class="w-16 h-16 | rounded-full | ml-2" src="{{asset($image)}}" alt="">
                                 </a>
+                            </div>
+
+                            <div class="flex | w-1/1 | mt-8">
+                                <p class="text-base text-white">
+                                    <b>Nota del autor:</b> {{$novel[0]->author_comment}}
+                                </p>
                             </div>
                             
 
@@ -238,8 +239,8 @@
                             </a>
                         </div>
                         <div class="pb-16">
-                            @foreach($chapters as $chapter)
-                                <a href="{{url('leer/'.$novel[0]->id.'/'.$chapter->chapter_n)}}">
+                            @foreach($chapters as $chapter) 
+                                <a @if($subscribed) href="{{url('leer/'.$novel[0]->id.'/'.$chapter->chapter_n)}}" @else  class="notSubscribed" @endif >
 
                                     <div class="flex | pl-2.5 sm:pl-7 p-2.5 mx-5 sm:mx-32 | bg-black bg-opacity-70 | border-b-2 border-ourBlue @if($loop->first)border-t-4 border-ourBlue @endif ">
 
@@ -250,10 +251,19 @@
                                                 text-red-500">nuevo
                                             @elseif($chapter->chapter_n <= $actualChapter)
                                                 text-green-500">visto
+
                                             @else
                                                 text-red-500">nuevo
                                             @endif
                                         </p>
+                                        <!--Parece que va :/ idk-->
+                                        @if($payment < 0)
+                                            <p  class="pl-5 text-xs sm:text-base text-yellow-600" >Solo para subscriptores!</p>
+                                        @elseif($chaptersOrder == 'desc' && $loop->index+1 <= $payment)
+                                            <p  class="pl-5 text-xs sm:text-base text-yellow-600" >Solo para subscriptores!</p>
+                                        @elseif($chaptersOrder == 'asc' && count($chapters)-$loop->index <= $payment)
+                                            <p  class="pl-5 text-xs sm:text-base text-yellow-600" >Solo para subscriptores!</p>
+                                        @endif
                                     </div>
                                     
                                 </a>
@@ -270,6 +280,13 @@
             </div>-->
 
         </div>
+        <script>
+            $(document).ready(()=>{
+                $('.notSubscribed').click(function(){
+                    console.log('thingy');
+                })
+            }); 
+        </script>
 
     </body>
 

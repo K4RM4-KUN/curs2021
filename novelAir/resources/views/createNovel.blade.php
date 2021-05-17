@@ -87,7 +87,7 @@
                         <textarea class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         name="sinopsis"></textarea>
                     </div>
-
+                    <!--Tags
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                             Tags
@@ -97,7 +97,7 @@
                         name="tags" 
                         type="text" 
                         placeholder="accion,aventura,romance...">
-                    </div>
+                    </div>-->
 
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="title">

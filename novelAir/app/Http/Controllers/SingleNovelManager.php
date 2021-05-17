@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Novel;
 use App\Models\Chapter;
-use App\Models\Tag;
+//use App\Models\Tag;
+//use App\Models\Tag_Novel;
 use App\Models\UNS;
 use App\Models\States;
-use App\Models\Tag_Novel;
 use App\Models\Genre;
+use App\Models\User_Role;
+use App\Models\Role;
+use App\Models\PaymentChapter;
 use App\Http\Requests\ImageUploadRequest;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -28,9 +31,13 @@ class SingleNovelManager extends Controller
 
     public function novelIndex($id){
         $data["novels"] = Novel:: where("id",$id)->get();
-        $data["tags"] = DB::table("tags_novels")->join('tags',"tags_novels.tag_id","=","tags.id")->where("novel_id",$id)->get();
+        //Cosas de tags
+        //$data["tags"] = DB::table("tags_novels")->join('tags',"tags_novels.tag_id","=","tags.id")->where("novel_id",$id)->get();
         $data["chapters"] = Chapter:: where("novel_id",$id)->orderby("chapter_n")->get();
         $data["genres"] = Genre::all();
+        $data['rolUser'] = User_Role::with('role')->where('user_id',Auth::user()->id)->first();
+        $data['payChapter'] = PaymentChapter::where('novel_id',$id)->first();
+
         
         return view("viewNovel",$data);
     }
@@ -40,7 +47,7 @@ class SingleNovelManager extends Controller
         $data["chapter"] = Chapter::where("id",$chapter)->get();
         $files = File::files(public_path("/".$data["chapter"][0]->route));
         if(count($files) == 0){
-            $data["preview"] = 'images/noimage.png';
+            $data["preview"] = 'images/coverdefault.png';
         } else {
             $data["preview"] = $data["chapter"][0]->route."/".$files[0]->getFilename();
         }
@@ -133,7 +140,8 @@ class SingleNovelManager extends Controller
         $novel->novel_dir = "users/".Auth::user()->id."/novels/".$novel->id;
         $novel->save();
 
-        if ($request->tags != null){
+        //Cosas de tags
+        /**if ($request->tags != null){
            $newTags = explode(",", $request->tags);
         
             foreach ($newTags as $newTag) {
@@ -156,9 +164,14 @@ class SingleNovelManager extends Controller
                     $tagNovel->save();
                 }
             } 
-        }
+        }*/
         File::makeDirectory(public_path()."/".$novel->novel_dir , $mode = 0775, true);
-        $image->move(public_path()."/".$novel->novel_dir,"cover.".explode(".", $image->getClientOriginalName())[1]);  
+        $image->move(public_path()."/".$novel->novel_dir,"cover.".explode(".", $image->getClientOriginalName())[1]);
+
+        $pay = new PaymentChapter;
+            $pay->SetAttribute('novel_id',$novel->id);
+            $pay->SetAttribute('payment_chapters',0);
+        $pay->save();
 
         return redirect('novel_manager');
     }
@@ -306,15 +319,22 @@ class SingleNovelManager extends Controller
         	$novel->ended = 0;
         }
         
+        //Comentario del autor
+        $novel->author_comment = $request->authorComment;
+        
         $novel->save();
         
         if (isset($request->cover)){
             $image = $request->file('cover');
             $image->move(public_path()."/".$novel->novel_dir."/","cover.".explode(".", $image->getClientOriginalName())[1]); 
         }
-        
-        Tag_Novel:: where('novel_id',$request->id)->delete();
 
+
+
+        //Cosas de tags
+        
+        /*
+        Tag_Novel:: where('novel_id',$request->id)->delete();
         if ($request->tags != null){
             $newTags = explode(",", $request->tags);
         
@@ -339,7 +359,35 @@ class SingleNovelManager extends Controller
                     $tagNovel->save();
                 }
             } 
+        }*/
+
+        if(PaymentChapter::where('novel_id',$request->id)->exists()){
+            $pay = PaymentChapter::where('novel_id',$request->id)->first();
+
+            if(!(isset($request->noPaymentChapters)) && $request->numPaymentChapters != ""){
+                $pay->payment_chapters = $request->numPaymentChapters;
+            }elseif(!(isset($request->noPaymentChapters)) && isset($request->allPaymentChapters)){
+                $pay->payment_chapters = (-1);
+            }else{
+                $pay->payment_chapters = 0;
+            }
+            $pay->save();
+
+        }else{
+            $pay = new PaymentChapter;
+            $pay->SetAttribute('novel_id',$request->id);
+
+            if(!(isset($request->noPaymentChapters)) && $request->numPaymentChapters != ""){
+                $pay->SetAttribute('payment_chapters',$request->numPaymentChapters);
+            }elseif(!(isset($request->noPaymentChapters)) && isset($request->allPaymentChapters)){
+                $pay->SetAttribute('payment_chapters',-1);
+            }else{
+                $pay->SetAttribute('payment_chapters',0);
+            }
+            $pay->save();
         }
+
+        
 
         return redirect('novel_manager/'.$request->id);
     }

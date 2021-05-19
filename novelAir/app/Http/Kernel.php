@@ -67,6 +67,7 @@ class Kernel extends HttpKernel
         'publicnovelsecurity' => \App\Http\Middleware\PublicNovelSecurity::class,
         'publicchaptersecurity' => \App\Http\Middleware\PublicChapterSecurity::class,
         'subscribesecurity' => \App\Http\Middleware\SubscribeSecurity::class,
-
+        'userblocked' => \App\Http\Middleware\UserBlocked::class,
+        'adminsecurity' => \App\Http\Middleware\AdminSecurity::class,
     ];
 }

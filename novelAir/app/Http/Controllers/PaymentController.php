@@ -72,7 +72,7 @@ class PaymentController extends Controller
 
         if(!$paymentId || !$payerID || !$token){
             $status = "ERROR";
-            return redirect('/dashboard')->with(compact('status')); //return to error blade
+            return redirect('/')->with(compact('status')); //return to error blade
         }
 
         $payment = Payment::get($paymentId,$this->apiContext);
@@ -91,8 +91,9 @@ class PaymentController extends Controller
         $newTransaction->SetAttribute('state',$result->getState());
         $newTransaction->save();
 
+        $user = User::where('id',$request->id)->first();
         if($result->getState() === 'approved'){
-            $status = 'El pago se ha realizado correctamente';
+            $status = 'El pago se ha realizado correctamente!';
             //DB aquí $request->id
             //Hacer middleware pre esto
             $newSubscription = new Subscription;
@@ -101,16 +102,24 @@ class PaymentController extends Controller
             $newSubscription->SetAttribute('subscription_price',2.50);
             $newSubscription->SetAttribute('caducate_at',date("Y-m-d H:i:s", strtotime("+30 days")));
             $newSubscription->save();
-            return redirect('results')->with(compact('status'));
+            return redirect('results/'.$newSubscription->id.'/'.$newTransaction->id)->with(compact('status'));
         } 
-        $status = 'El pago no se ha realizado correctamente';
-        return redirect('results')->with(compact('status')); //result blade
+        $status = 'El pago no se ha realizado correctamente, intentalo de nuevo!';
+        return redirect('results')->with(compact('status',)); //result blade
     }
 
-    public function  paymentResult(){
-        if(session('status')){
-            //dd(session('status'));
+    public function  paymentResult($id = null,$transaction = null){
+        if($id != null && $transaction != null ){
+            $data['subscription'] = Subscription::where('id',$id)->first();
+            $data['transaction'] = TransactionModel::where('id',$transaction)->first();
+            $data['user'] = User::where('id',$data['subscription']->user_id)->first();
+            if($data['subscription']->subscriber_id == Auth::user()->id){
+                return view('payment.result',$data);
+            } else{ 
+                return redirect('usuario/ajustes/subscripciones');
+            }
+        } else {
+            return redirect('usuario/ajustes/subscripciones');
         }
-        return view('payment.result');
     }
 }

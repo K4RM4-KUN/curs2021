@@ -12,6 +12,7 @@ use App\Http\Controllers\MailController;
 use App\Http\Controllers\Lista;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AboutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,21 +28,31 @@ use App\Http\Controllers\HomeController;
 Route::get('/',[HomeController::class,'index']);
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    //return view('dashboard');
+    return redirect('/');
 })->name('dashboard');
 
 //Test ->middleware(['auth'])
 
+//About us
+Route::get('nosotros/{type?}',[AboutController::class,'indexHome'])->name('aboutUs');
+Route::get('terminos/{type?}',[AboutController::class,'index'])->name('aboutTerms');
+
 //Subscribe
 Route::get('subscribe/{id?}',[PaymentController::class,'payWithPayPal'])->name('goPay')->middleware(['auth','subscribesecurity']);
 Route::get('payment/status/{id?}',[PaymentController::class,'payPalStatus'])->middleware(['auth','subscribesecurity']);
-Route::get('results',[PaymentController::class,'paymentResult'])->middleware(['auth']);
+Route::get('results/{id?}/{transaction?}',[PaymentController::class,'paymentResult'])->middleware(['auth']);
 
 //Admin
-Route::get('admin',[AdminController::class,'adminIndex'])->name('goAdmin')->middleware(['auth']);
-Route::get('admin/user/{id?}',[AdminController::class,'adminUser'])->middleware(['auth']);
-Route::get('admin/novel/{id?}',[AdminController::class,'adminNovel'])->middleware(['auth']);
-Route::post('admin/search',[AdminController::class,'adminSearch'])->name('adminSearch')->middleware(['auth']);
+Route::get('admin',[AdminController::class,'adminIndex'])->name('goAdmin')->middleware(['auth','adminsecurity']);
+Route::get('admin/user/{id?}',[AdminController::class,'adminUser'])->middleware(['auth','adminsecurity']);
+Route::get('admin/novel/{id?}',[AdminController::class,'adminNovel'])->middleware(['auth','adminsecurity']);
+Route::post('admin/search',[AdminController::class,'adminSearch'])->name('adminSearch')->middleware(['auth','adminsecurity']);
+Route::post('admin/edit/user',[AdminController::class,'adminEditUser'])->name('adminEditUser')->middleware(['auth','adminsecurity']);
+Route::get('admin/blockUser/{id?}',[AdminController::class,'adminBlockUser'])->middleware(['auth','adminsecurity']);
+Route::get('admin/removeUser/{id?}',[AdminController::class,'adminRemoveUser'])->middleware(['auth','adminsecurity']);
+Route::get('admin/blockNovel/{id?}',[AdminController::class,'adminBlockNovel'])->middleware(['auth','adminsecurity']);
+Route::get('admin/removeNovel/{id?}',[AdminController::class,'adminRemoveNovel'])->middleware(['auth','adminsecurity']);
 
 //User
 Route::get('perfil/{id}/{username?}',[UserProfile::class,'profileIndex']);
@@ -73,21 +84,21 @@ Route::get('vote/{id}/{vote}', [NovelMain::class, 'voteNovel'])->name("voteNovel
 Route::get('leer/{id}/{id_chapter}', [NovelMain::class, 'readIndex'])->middleware(['publicnovelsecurity','publicchaptersecurity']);
 
 //NovelManager
-Route::get('novel_manager', [NovelManager::class, 'index'])->name("goNM")->middleware(['auth']);
-Route::get('novel_manager/create', [SingleNovelManager::class, 'index'])->name("createNovel")->middleware(['auth']);
-Route::post('novel_manager/adding', [SingleNovelManager::class, 'createChapter'])->name("createChapters")->middleware(['auth']);
-Route::post('novel_manager/addingImages', [SingleNovelManager::class, 'addImages'])->name("addImages")->middleware(['auth']);
-Route::post('novel_manager/created', [SingleNovelManager::class, 'create'])->name("insertNovel")->middleware(['auth']);
-Route::post('novel_manager/edit', [SingleNovelManager::class, 'editNovel'])->name("editNovel")->middleware(['auth']);
-Route::post('novel_manager/editChapter', [SingleNovelManager::class, 'editChapter'])->name("editChapter")->middleware(['auth']);
-Route::get('novel_manager/{id?}', [SingleNovelManager::class, 'novelIndex'])->middleware(['auth','novelsecurity']);
-Route::get('novel_manager/{id?}/add_chapter', [SingleNovelManager::class, 'chapterCreationIndex'])->middleware(['auth','novelsecurity']);
-Route::get('novel_manager/delNovel/{id?}', [SingleNovelManager::class, 'delNovel'])->middleware(['auth','novelsecurity']);
-Route::get('novel_manager/delChapter/{id?}', [SingleNovelManager::class, 'delChapter'])->middleware(['auth','chaptersecurity']);
-Route::get('novel_manager/viewChapter/{id?}/{id_chapter}', [SingleNovelManager::class, 'viewChapterIndex'])->middleware(['auth','novelsecurity']);
-Route::get('novel_manager/chapterImages/{id?}/{id_chapter}', [SingleNovelManager::class, 'imageChapterIndex'])->name('goIM')->middleware(['auth','novelsecurity']);
-Route::post('novel_manager/editImages', [SingleNovelManager::class,'editChapterImages'])->middleware(["auth"]);
-Route::get('novel_manager/{id}/{chapter}', [SingleNovelManager::class, 'chapterIndex'])->name("goVC")->middleware(['auth','novelsecurity']);
+Route::get('novel_manager', [NovelManager::class, 'index'])->name("goNM")->middleware(['auth','userblocked']);
+Route::get('novel_manager/create', [SingleNovelManager::class, 'index'])->name("createNovel")->middleware(['auth','userblocked']);
+Route::post('novel_manager/adding', [SingleNovelManager::class, 'createChapter'])->name("createChapters")->middleware(['auth','userblocked']);
+Route::post('novel_manager/addingImages', [SingleNovelManager::class, 'addImages'])->name("addImages")->middleware(['auth','userblocked']);
+Route::post('novel_manager/created', [SingleNovelManager::class, 'create'])->name("insertNovel")->middleware(['auth','userblocked']);
+Route::post('novel_manager/edit', [SingleNovelManager::class, 'editNovel'])->name("editNovel")->middleware(['auth','userblocked']);
+Route::post('novel_manager/editChapter', [SingleNovelManager::class, 'editChapter'])->name("editChapter")->middleware(['auth','userblocked']);
+Route::get('novel_manager/{id?}', [SingleNovelManager::class, 'novelIndex'])->middleware(['auth','novelsecurity','userblocked']);
+Route::get('novel_manager/{id?}/add_chapter', [SingleNovelManager::class, 'chapterCreationIndex'])->middleware(['auth','novelsecurity','userblocked']);
+Route::get('novel_manager/delNovel/{id?}', [SingleNovelManager::class, 'delNovel'])->middleware(['auth','novelsecurity','userblocked']);
+Route::get('novel_manager/delChapter/{id?}', [SingleNovelManager::class, 'delChapter'])->middleware(['auth','chaptersecurity','userblocked']);
+Route::get('novel_manager/viewChapter/{id?}/{id_chapter}', [SingleNovelManager::class, 'viewChapterIndex'])->middleware(['auth','novelsecurity','userblocked']);
+Route::get('novel_manager/chapterImages/{id?}/{id_chapter}', [SingleNovelManager::class, 'imageChapterIndex'])->name('goIM')->middleware(['auth','novelsecurity','userblocked']);
+Route::post('novel_manager/editImages', [SingleNovelManager::class,'editChapterImages'])->middleware(["auth",'userblocked']);
+Route::get('novel_manager/{id}/{chapter}', [SingleNovelManager::class, 'chapterIndex'])->name("goVC")->middleware(['auth','novelsecurity','userblocked']);
 
 
 //Route::view("test","layouts.navigationNew");

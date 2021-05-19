@@ -6,9 +6,10 @@ use Closure;
 use App\Models\Novel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Models\Chapter;
+use App\Models\User_Role;
+use App\Models\Role;
 
-class ChapterSecurity
+class UserBlocked
 {
     /**
      * Handle an incoming request.
@@ -19,15 +20,12 @@ class ChapterSecurity
      */
     public function handle(Request $request, Closure $next)
     {
-        $chapter = Chapter::where("id",$request->id)->get();
-        //dd($chapter);
-        $userNovels = Novel::where("user_id",Auth::user()->id)->where("id",$chapter[0]->novel_id)->get();
-        //dd($userNovels,Auth::user()->id);
-        if(count($userNovels) != 0){
-            //dd($userNovels,Auth::user()->id,"hello");
+        //$userNovels = Novel::where("user_id",Auth::user()->id)->where("id",$request->id)->get();
+        $rolUser = User_Role::with('role')->where('user_id',Auth::user()->id)->first();
+        if($rolUser->role->rol_name != 'bloqueado'){
             return $next($request);
         } else {
-            //return redirect('/');
+            return redirect('/');
         }
     }
 }

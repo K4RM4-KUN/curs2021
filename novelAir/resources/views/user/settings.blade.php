@@ -24,7 +24,7 @@
     <body class="bg-gradient-to-br from-gray-700 to-gray-900 min-h-screen">
 
         <!--@@include('layouts.navigationNew')-->
-
+        @include('layouts.navigationNew')
         <div class="flex justify-center | w-full">
 
             <div class="w-11/12 | bg-black bg-opacity-30">
@@ -108,6 +108,7 @@
             </div>
 
         </div>
+        @include('layouts.footer')
         <script>
         $(document).ready(()=>{
             $('.display-button').click(function(){

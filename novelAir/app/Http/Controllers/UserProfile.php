@@ -120,7 +120,7 @@ class UserProfile extends Controller
         
 
         } else {
-            return redirect("/dashboard");
+            return redirect("/");
         }
         $data["genres"] = Genre::all();
 
@@ -439,7 +439,7 @@ class UserProfile extends Controller
                 $newProfile->save();
             }
         }else{
-            return redirect("/dashboard");
+            return redirect("/");
         }
 
         return redirect("perfil/".$id."/user");

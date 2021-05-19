@@ -24,7 +24,7 @@ class CreateNovelsTable extends Migration
             $table->boolean('public');
             $table->boolean('ended');
             $table->boolean('adult_content');
-            $table->boolean('blocked');
+            $table->boolean('block');
             $table->boolean('visual_novel');
             $table->string('novel_type',255);
             $table->string('novel_dir',400)->nullable();

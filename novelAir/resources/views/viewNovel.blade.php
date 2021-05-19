@@ -15,8 +15,8 @@
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
-    <body class="bg-gradient-to-br from-gray-700 to-gray-900 container mx-auto min-h-screen">
-        
+    <body class="bg-gradient-to-br from-gray-700 to-gray-800 min-h-screen">
+        @include('layouts.navigationNew')
         <!-- Pequeño page history: Solo habra un boton de "BACK" -->
         <div class="container mt-5">
             <!-- Boton back -->

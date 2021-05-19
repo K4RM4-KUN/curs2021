@@ -22,7 +22,7 @@ class NovelSecurity
         if(count($userNovels) != 0){
             return $next($request);
         } else {
-            return redirect('/dashboard');
+            return redirect('/');
         }
     }
 }

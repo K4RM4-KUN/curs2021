@@ -27,121 +27,127 @@
 
         @include('layouts.navigationNew')
 
-        <div class="flex flex-wrap justify-center | w-full">
-            <!-- Usuarios -->
-            <div class="w-full sm:w-5/12 | my-10 w-full mr-0 sm:mr-10 | bg-white | rounded">
-                <div class="w-full bg-red-600">
-                    <p class="p-3 text-xl text-white text-center mb-3">Usuarios</p>
-                </div>
-                <div class="mx-7">
-                    <!-- Formulario -->
-                    <div class="border-b-2">
-                        <p class="text-base text-black mb-3">Buscar</p>
-                        <form action="{{route('adminSearch')}}" method="post" enctype="multipart/form-data">
-                        @csrf
-                            <div>
-                                <select class="mi-selector shadow-lg border-none appearance-none rounded w-3/6 py-2 px-3 text-white leading-tight"
-                                name="user">
-                                    <option value='null'>---</option>
-                                    @foreach($users as $user)
-                                        <option value='{{$user->id}}'>{{$user->username}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="my-5">
-                                <input class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
-                                type="submit"
-                                value="Buscar">
-                            </div>
-                        </form>
-                    </div>
+        <div class="flex flex-col justify-center | w-full">
+            <!-- Back -->
+            <div class="w-full sm:w-10/12 mx-auto my-3">
+                <a class="text-l text-black font-bold bg-white p-2 py-1 rounded" href="{{url('/')}}">BACK</a>
+            </div>
 
-                    <!-- Lista Autores -->
-                    <div class="my-7">
-                        <p class="text-base text-black mb-3">Usuarios</p>
-                        <div class="flex flex-wrap">
-                        @foreach($users as $result)
-                            <div class="w-1/2 sm:w-4/12 lg:w-3/12 xl:w-2/12">
-                                <div class="m-2">
-                                    <a href="{{url('admin/user/'.$result->id)}}">   
-                                        <div class="bg-cover bg-no-repeat bg-center" style="background-image:url('{{asset('users/'.$result->id.'/profile/bgImage'.$result->imgtype)}}');">
-                                            <div class="w-full | h-full | bg-black bg-opacity-60">
-                                                <div class="mx-auto py-3 | justify-items-center">
-                                                    <img class="mx-auto | rounded-full" width="50%" 
-                                                    @if(file_exists(public_path() ."/users/". $result->id ."/profile/usericon". $result->imgtype))
-                                                        src="{{asset("/users/". $result->id ."/profile/usericon". $result->imgtype)}}"
-                                                    @else
-                                                        src="{{asset("/images/noimage.png")}}"
-                                                    @endif
-                                                    alt="">
-                                                </div>
-                                                <div class="w-full">
-                                                    <p class="bg-black bg-opacity-60 | py-0.5 px-2 | w-1/1 | text-center text-xs md:text-sm lg:text-xs text-white font-bold | truncate">{{$result->username}}</p>
+            <div class="flex flex-wrap justify-center | w-full">
+                <!-- Usuarios -->
+                <div class="w-full sm:w-5/12 | my-10 w-full mr-0 sm:mr-10 | bg-white | rounded">
+                    <div class="w-full bg-red-600">
+                        <p class="p-3 text-xl text-white text-center mb-3">Usuarios</p>
+                    </div>
+                    <div class="mx-7">
+                        <!-- Formulario -->
+                        <div class="border-b-2">
+                            <p class="text-base text-black mb-3">Buscar</p>
+                            <form action="{{route('adminSearch')}}" method="post" enctype="multipart/form-data">
+                            @csrf
+                                <div>
+                                    <select class="mi-selector shadow-lg border-none appearance-none rounded w-3/6 py-2 px-3 text-white leading-tight"
+                                    name="user">
+                                        @foreach($users as $user)
+                                            <option value='{{$user->id}}'>{{$user->username}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="my-5">
+                                    <input class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
+                                    type="submit"
+                                    value="Buscar">
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Lista Autores -->
+                        <div class="my-7">
+                            <p class="text-base text-black mb-3">Usuarios</p>
+                            <div class="flex flex-wrap">
+                            @foreach($users as $result)
+                                <div class="w-1/2 sm:w-4/12 lg:w-3/12 xl:w-2/12">
+                                    <div class="m-2">
+                                        <a href="{{url('admin/user/'.$result->id)}}">   
+                                            <div class="bg-cover bg-no-repeat bg-center" style="background-image:url('{{asset('users/'.$result->id.'/profile/bgImage'.$result->imgtype)}}');">
+                                                <div class="w-full | h-full | bg-black bg-opacity-60">
+                                                    <div class="mx-auto py-3 | justify-items-center">
+                                                        <img class="mx-auto | rounded-full" width="50%" 
+                                                        @if(file_exists(public_path() ."/users/". $result->id ."/profile/usericon". $result->imgtype))
+                                                            src="{{asset("/users/". $result->id ."/profile/usericon". $result->imgtype)}}"
+                                                        @else
+                                                            src="{{asset("/images/noimage.png")}}"
+                                                        @endif
+                                                        alt="">
+                                                    </div>
+                                                    <div class="w-full">
+                                                        <p class="bg-black bg-opacity-60 | py-0.5 px-2 | w-1/1 | text-center text-xs md:text-sm lg:text-xs text-white font-bold | truncate">{{$result->username}}</p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </a>
+                                        </a>
+                                    </div>
                                 </div>
+                            @endforeach
                             </div>
-                        @endforeach
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Novelas -->
-            <div class="w-full sm:w-5/12 | my-0 sm:my-10 | bg-white | rounded | h-full">
-                <div class="w-full bg-red-600">
-                    <p class="p-3 text-xl text-white text-center mb-3">Novelas</p>
-                </div>
-                <div class="mx-7">
-                    <!-- Formulario -->
-                    <div class="border-b-2">
-                        <p class="text-base text-black mb-3">Buscar</p>
-                        <form action="{{route('adminSearch')}}" method="post" enctype="multipart/form-data">
-                        @csrf
-                            <div>
-                                <select class="mi-selector shadow-lg border-none appearance-none rounded w-3/6 py-2 px-3 text-white leading-tight"
-                                name="novel">
-                                    <option value='null'>---</option>
-                                    @foreach($novels as $novel)
-                                        <option value='{{$novel->id}}'>{{$novel->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="my-5">
-                                <input class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
-                                type="submit"
-                                value="Buscar">
-                            </div>
-                        </form>
+                <!-- Novelas -->
+                <div class="w-full sm:w-5/12 | my-0 sm:my-10 | bg-white | rounded | h-full">
+                    <div class="w-full bg-red-600">
+                        <p class="p-3 text-xl text-white text-center mb-3">Novelas</p>
                     </div>
+                    <div class="mx-7">
+                        <!-- Formulario -->
+                        <div class="border-b-2">
+                            <p class="text-base text-black mb-3">Buscar</p>
+                            <form action="{{route('adminSearch')}}" method="post" enctype="multipart/form-data">
+                            @csrf
+                                <div>
+                                    <select class="mi-selector shadow-lg border-none appearance-none rounded w-3/6 py-2 px-3 text-white leading-tight"
+                                    name="novel">
+                                        @foreach($novels as $novel)
+                                            <option value='{{$novel->id}}'>{{$novel->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="my-5">
+                                    <input class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
+                                    type="submit"
+                                    value="Buscar">
+                                </div>
+                            </form>
+                        </div>
 
-                    <!-- Lista Novelas -->
-                    <div class="my-7">
-                        <p class="text-base text-black mb-3">Novelas</p>
-                        <div class="flex flex-wrap">
-                        @foreach($novels as $result)
-                            <div class="w-1/2 sm:w-4/12 lg:w-3/12 xl:w-2/12">
-                                <div class="m-2">
-                                    <a href="{{url('admin/novel/'.$result->id)}}">   
-                                        <div class="bg-cover bg-no-repeat bg-center" style="background-image:url('{{asset($result->novel_dir.'/cover'.$result->imgtype)}}');">
-                                            <div class="w-full | h-32 | flex flex-wrap content-end">
-                                                <div class="w-full">
-                                                    <p class="bg-black bg-opacity-60 | py-0.5 px-2 | w-1/1 | text-center text-xs md:text-sm lg:text-xs text-white font-bold | truncate">{{$result->name}}</p>
+                        <!-- Lista Novelas -->
+                        <div class="my-7">
+                            <p class="text-base text-black mb-3">Novelas</p>
+                            <div class="flex flex-wrap">
+                            @foreach($novels as $result)
+                                <div class="w-1/2 sm:w-4/12 lg:w-3/12 xl:w-2/12">
+                                    <div class="m-2">
+                                        <a href="{{url('admin/novel/'.$result->id)}}">   
+                                            <div class="bg-cover bg-no-repeat bg-center" style="background-image:url('{{asset($result->novel_dir.'/cover'.$result->imgtype)}}');">
+                                                <div class="w-full | h-32 | flex flex-wrap content-end">
+                                                    <div class="w-full">
+                                                        <p class="bg-black bg-opacity-60 | py-0.5 px-2 | w-1/1 | text-center text-xs md:text-sm lg:text-xs text-white font-bold | truncate">{{$result->name}}</p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </a>
+                                        </a>
+                                    </div>
                                 </div>
+                            @endforeach
                             </div>
-                        @endforeach
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        @include('layouts.footer')
 
         <script id="functions" src="{{ asset('js/recomendedAuthorsJS.js') }}" defer></script>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>

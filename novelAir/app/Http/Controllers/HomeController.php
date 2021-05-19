@@ -13,11 +13,17 @@ use App\Models\States;
 use App\Models\User_LastView;
 use App\Models\Genre;
 use Illuminate\Http\Request;
+use File;
 
 class HomeController extends Controller
 {
     //
     public function index(){
+        $route = public_path("/images/homeShow");
+        $files = File::files($route);
+        $data['covers'] = count($files);
+        $data['imgData'] = $files;
+        //dd($data['imgData']);
         $data["genres"] = Genre::all();
 
         $data['best'] = Novel::where('public',1)->get(); 

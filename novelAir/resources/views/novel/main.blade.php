@@ -35,7 +35,7 @@
                     <!--Image and image frame -->
                     <div class="w-1/1 sm:w-2/6">
 
-                        <div class="flex flex-col | | w-1/2 | mx-auto | mx-auto | w-48 sm:w-64">
+                        <div class="flex flex-col |  w-5/6 | mx-auto | mx-auto | w-48 sm:w-64">
 
                             <p class="text-white text-center text-base font-bold | my-1 mt-5 | rounded | bg-{{$novel[0]->novel_type}} bg-purple-700">
                                 {{strtoupper($novel[0]->novel_type)}}

@@ -74,7 +74,7 @@ class Library extends Controller
             $data["type"] = $value;
             return view('library.searcher',$data);
         }else {
-            return redirect('/dashboard');
+            return redirect('/');
         }
     }
 

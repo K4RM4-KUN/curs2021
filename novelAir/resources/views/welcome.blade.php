@@ -11,6 +11,11 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <style>
+        body{
+            user-select:none;
+        }
+        </style>
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
@@ -20,239 +25,188 @@
 
 
     </head>
-    <body class="bg-gradient-to-br from-gray-700 to-gray-900 min-h-screen""> 
-            <!--@@include('layouts.navigationNew')-->
-        <div class="flex justify-center | w-full">
+    <body class="bg-gradient-to-br from-gray-700 to-gray-900 min-h-screen"> 
+        @include('layouts.navigationNew')
 
-            <!--Main novel-->
-            <div class="w-1/1 sm:w-11/12 | bg-black bg-opacity-30">
+        <div class="flex flex-col justify-center items-center | bg-black bg-opacity-0">
 
-                <div class="flex | w-full">
-                    <p class="text-white text-lg">CARROUSEL O ALGO</p>
-                </div>
+            <!--Carrousel Container-->
+            <div class="flex | w-full | bg-fixed" style="background-image:url({{asset('images/bg-show.jpg')}});">
 
-                <div class="flex flex-col | w-full">
-                    <div class="w-1/1">
-                        <p class="text-white font-bold">LAS NOVELAS MÁS VISTAS ESTA SEMANA</p>
+                <div class="flex justify-center items-center | w-11/12 | my-5 mx-auto">
+                    <div id="left" class="flex justify-center items-center | rounded-l-xl | bg-gray-200 bg-opacity-60 hover:bg-opacity-80 shadow-xl | px-2 sm:px-4 m mx-2 | w-1/8 h-full">
+                        <p class="text-3xl text-gray-600"><</p>
                     </div>
-                    <div class="flex justify-around| w-full">  
-                        <div class="w-1/2 | show-visual | bg-ourBlue | border-2">
-                            <p class="text-white text-center font-bold">VISUAL NOVELS</p>
-                        </div> 
-                        <div class="w-1/2 | show-novel | bg-ourBlue | border-2">
-                            <p class="text-white text-center font-bold">NOVELAS</p>
-                        </div>
+                    <div>
+                        <img id="cover" class="4/8" src="{{asset('images/homeShow/1.png')}}" alt="">
                     </div>
-                    <!--Populares VisualNovels-->
-                    <div class="visual flex flex-col | w-full">
-                        <div class="flex flex-wrap">
-                            @foreach($visual_novels as $novel)
-                                <a class="w-4/12 sm:w-2/12 " href="{{url('novel/'.$novel->id)}}">
-                                        
-                                    <div class="flex flex-col | h-44 lg:h-52 xl:h-80 | m-2 | bg-cover bg-no-repeat bg-center" style="background-image:url('{{asset($novel->novel_dir.'/cover'.$novel->imgtype)}}');">
-                                        <div class=" w-full | h-full">
-
-                                            <div class="w-full">
-                                                
-                                                <p class="bg-black bg-opacity-60 | py-0.5 px-2 | w-1/1 | text-center text-xs md:text-sm lg:text-xs text-white font-bold | truncate">{{$novel->name}}</p>
-
-                                            </div>
-
-                                            <div class="w-1/1 | flex justify-between | |">
-                                                
-                                                <p class="bg-{{$novel->novel_type}} bg-purple-700 | px-1 m-0.5 | rounded | text-xs text-white font-bold | truncate">{{strtoupper($novel->novel_type)}}</p>
-                                                <p class="hidden sm:block bg-black bg-opacity-60 | px-1 py-0.5 | text-xs text-white font-bold">{{$novel->mark}}/10</p>
-
-                                            </div>
-                                            
-                                        </div>
-                                    
-                                        <div class="w-full">
-                                            
-                                            <p class="bg-black bg-opacity-60 | py-2 px-2 | w-1/1 | text-center text-xs text-white font-bold | truncate">
-                                                @foreach($genres as $genre) @if($genre->id == $novel->genre) {{strtoupper($genre->name)}} @endif @endforeach
-                                            </p>
-
-                                        </div>
-                                    </div>
-
-                                </a>
-                            @endforeach
-                        </div>
-                    </div>
-
-                    <!--Populares Novels-->
-                    <div class="novel hidden flex flex-col | w-full">
-                        <div class="flex flex-wrap">
-                            @foreach($novels as $novel)
-                                <a class="w-4/12 sm:w-2/12" href="{{url('novel/'.$novel->id)}}">
-                                        
-                                    <div class="flex flex-col | h-44 lg:h-52 xl:h-80 | m-2 | bg-cover bg-no-repeat bg-center" style="background-image:url('{{asset($novel->novel_dir.'/cover'.$novel->imgtype)}}');">
-                                        <div class=" w-full | h-full">
-
-                                            <div class="w-full">
-                                                
-                                                <p class="bg-black bg-opacity-60 | py-0.5 px-2 | w-1/1 | text-center text-xs md:text-sm lg:text-xs text-white font-bold | truncate">{{$novel->name}}</p>
-
-                                            </div>
-
-                                            <div class="w-1/1 | flex justify-between | |">
-                                                
-                                                <p class="bg-{{$novel->novel_type}} bg-purple-700 | px-1 m-0.5 | rounded | text-xs text-white font-bold | truncate">{{strtoupper($novel->novel_type)}}</p>
-                                                <p class="hidden sm:block bg-black bg-opacity-60 | px-1 py-0.5 | text-xs text-white font-bold">{{$novel->mark}}/10</p>
-
-                                            </div>
-                                            
-                                        </div>
-                                    
-                                        <div class="w-full">
-                                            
-                                            <p class="bg-black bg-opacity-60 | py-2 px-2 | w-1/1 | text-center text-xs text-white font-bold | truncate">
-                                                @foreach($genres as $genre) @if($genre->id == $novel->genre) {{strtoupper($genre->name)}} @endif @endforeach
-                                            </p>
-
-                                        </div>
-                                    </div>
-
-                                </a>
-                            @endforeach
-                        </div>
+                    <div id="right" class="flex justify-center items-center | rounded-r-xl | bg-gray-200 bg-opacity-60 hover:bg-opacity-80 shadow-xl | px-2 sm:px-4 mx-2 | w-1/8 h-full">
+                        <p class="text-3xl text-gray-600">></p>
                     </div>
                 </div>
-
-                <!--Populares Users-->
-                <div class="flex flex-col | w-full">
-                    <div class="w-1/1">
-                        <p class="text-white font-bold">LOS USUARIOS MÁS POPULARES DE ESTA SEMANA</p>
-                    </div>
-                    <div class="flex flex-wrap | w-1/1">
-                        @foreach($users as $user)
-                            <div class="w-4/12 sm:w-2/12">
-                                <div class="m-2">
-                                    <a href="{{url('perfil/'.$user->id.'/'.$user->username)}}">   
-                                        <div class="bg-cover bg-no-repeat bg-center" style="background-image:url('{{asset('users/'.$user->id.'/profile/bgImage'.$user->imgtype)}}');">
-                                            <div class="w-full | h-full | bg-black bg-opacity-60">
-                                                <div class="mx-auto py-3 | justify-items-center">
-                                                    <img class="mx-auto | rounded-full" width="50%" 
-                                                    @if(file_exists(public_path() ."/users/". $user->id ."/profile/usericon". $user->imgtype))
-                                                        src="{{asset("/users/". $user->id ."/profile/usericon". $user->imgtype)}}"
-                                                    @else
-                                                        src="{{asset("/images/noimage.png")}}"
-                                                    @endif
-                                                    alt="">
-                                                </div>
-                                                <div class="w-full">
-                                                    <p class="bg-black bg-opacity-60 | py-0.5 px-2 | w-1/1 | text-center text-xs md:text-sm lg:text-xs text-white font-bold | truncate">{{$user->username}}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-
-
-                <!--Ultimas Novels-->
-                <div class="flex flex-col | w-full">
-                    <div class="w-1/1">
-                        <p class="text-white font-bold">ULTIMAS NOVELAS PUBLICADAS</p>
-                    </div>
-                    <div class="flex flex-wrap">
-                        @foreach($last_novels as $novel)
-                            <a class="w-4/12 sm:w-2/12" href="{{url('novel/'.$novel->id)}}">
-                                    
-                                <div class="flex flex-col | h-44 lg:h-52 xl:h-80 | m-2 | bg-cover bg-no-repeat bg-center" style="background-image:url('{{asset($novel->novel_dir.'/cover'.$novel->imgtype)}}');">
-                                    <div class=" w-full | h-full">
-
-                                        <div class="w-full">
-                                            
-                                            <p class="bg-black bg-opacity-60 | py-0.5 px-2 | w-1/1 | text-center text-xs md:text-sm lg:text-xs text-white font-bold | truncate">{{$novel->name}}</p>
-
-                                        </div>
-
-                                        <div class="w-1/1 | flex justify-between | |">
-                                            
-                                            <p class="bg-{{$novel->novel_type}} bg-purple-700 | px-1 m-0.5 | rounded | text-xs text-white font-bold | truncate">{{strtoupper($novel->novel_type)}}</p>
-                                            <p class="hidden sm:block bg-black bg-opacity-60 | px-1 py-0.5 | text-xs text-white font-bold">{{$novel->mark}}/10</p>
-
-                                        </div>
-                                        
-                                    </div>
-                                
-                                    <div class="w-full">
-                                        
-                                        <p class="bg-black bg-opacity-60 | py-2 px-2 | w-1/1 | text-center text-xs text-white font-bold | truncate">
-                                            @foreach($genres as $genre) @if($genre->id == $novel->genre) {{strtoupper($genre->name)}} @endif @endforeach
-                                        </p>
-
-                                    </div>
-                                </div>
-
-                            </a>
-                        @endforeach
-                    </div>
-                </div>
-                <!--Mejores Novels-->
-                <div class="flex flex-col | w-full">
-                    <div class="w-1/1">
-                        <p class="text-white font-bold">LO MEJOR DE NOVEL AIR</p>
-                    </div>
-                    <div class="flex flex-wrap">
-                        @foreach($best as $novel)
-                            <a class="w-4/12 sm:w-2/12" href="{{url('novel/'.$novel->id)}}">
-                                    
-                                <div class="flex flex-col | h-44 lg:h-52 xl:h-80 | m-2 | bg-cover bg-no-repeat bg-center" style="background-image:url('{{asset($novel->novel_dir.'/cover'.$novel->imgtype)}}');">
-                                    <div class=" w-full | h-full">
-
-                                        <div class="w-full">
-                                            
-                                            <p class="bg-black bg-opacity-60 | py-0.5 px-2 | w-1/1 | text-center text-xs md:text-sm lg:text-xs text-white font-bold | truncate">{{$novel->name}}</p>
-
-                                        </div>
-
-                                        <div class="w-1/1 | flex justify-between | |">
-                                            
-                                            <p class="bg-{{$novel->novel_type}} bg-purple-700 | px-1 m-0.5 | rounded | text-xs text-white font-bold | truncate">{{strtoupper($novel->novel_type)}}</p>
-                                            <p class="hidden sm:block bg-black bg-opacity-60 | px-1 py-0.5 | text-xs text-white font-bold">{{$novel->mark}}/10</p>
-
-                                        </div>
-                                        
-                                    </div>
-                                
-                                    <div class="w-full">
-                                        
-                                        <p class="bg-black bg-opacity-60 | py-2 px-2 | w-1/1 | text-center text-xs text-white font-bold | truncate">
-                                            @foreach($genres as $genre) @if($genre->id == $novel->genre) {{strtoupper($genre->name)}} @endif @endforeach
-                                        </p>
-
-                                    </div>
-                                </div>
-
-                            </a>
-                        @endforeach
-                    </div>
-                </div>
-
-
-                
+            </div> 
+            <div class="flex | w-full h-2 | bg-white bg-opacity-80">
             </div>
-            <script>
-                $(document).ready(()=>{ 
-                    $('.show-novel').click(function(){
-                        $('.novel').show();
-                        $(this).removeClass('bg-ourBlue').addClass('bg-blue-800');
-                        $('.visual').hide(); 
-                        $('.show-visual').removeClass('bg-blue-800').addClass('bg-ourBlue');
-                    });
-                    $('.show-visual').click(function(){
-                        $('.novel').hide();
-                        $('.show-novel').removeClass('bg-blue-800').addClass('bg-ourBlue');
-                        $('.visual').show(); 
-                        $(this).removeClass('bg-ourBlue').addClass('bg-blue-800');
-                    });
-                })
-            </script>
+
+            <!--Popular VisualNovels/Novels-->
+            <div class="flex | w-11/12 | bg-black bg-opacity-70">
+                <p class="text-2xl font-bold text-ourBlue | px-5 py-3">Popular</p>
+            </div> 
+            <div class="hidden | w-11/12 | bg-black bg-opacity-70">
+                <p class="text-2xl font-bold text-ourBlue | px-5 py-3">Popular</p>
+            </div>
+
+            <!--Popular buttons-->
+            <div class="flex justify-around | w-11/12 | bg-black bg-opacity-70 | mx-4">  
+                <div class="w-1/2 | show-visual | bg-blue-700 | border-l-2 border-t-2 border-b-2">
+                    <p class="text-white text-sm sm:text-base text-center font-bold">VISUAL NOVELS</p>
+                </div> 
+                <div class="w-1/2 | show-novel | bg-ourBlue | border-r-2 border-t-2 border-b-2 ">
+                    <p class="text-white text-sm sm:text-base text-center font-bold">NOVELAS</p>
+                </div>
+            </div>
+
+            <div class="visual flex | w-11/12 | py-1 | bg-black bg-opacity-50">
+                @foreach($visual_novels as $novel)
+                    <a class="w-1/6 " href="{{url('novel/'.$novel->id)}}">
+                        <div class="flex flex-col justify-between | h-28 sm:h-40 md:h-52 lg:h-64 xl:h-72 | m-1 | bg-cover bg-no-repeat bg-center" style="background-image:url('{{asset($novel->novel_dir.'/cover'.$novel->imgtype)}}');">
+                            <div class="flex justify-between | bg-black bg-opacity-0">
+                                <p class="bg-{{$novel->novel_type}} bg-purple-700 | px-1 m-0.5 | rounded | text-xs text-white font-bold | truncate">{{strtoupper($novel->novel_type)}}</p>
+                                <p class="hidden sm:block bg-black bg-opacity-70 | px-1 py-0.5 | text-xs text-white font-bold">{{$novel->mark}}/10</p>
+                            </div>
+                            <div class="flex | bg-black bg-opacity-70">
+                                <p class="text-white text-base font-bold | px-2 py-1 | truncate">{{ucfirst($novel->name)}}</p>
+                            </div>
+                        </div>
+                    </a>
+                @endforeach
+            </div> 
+            <div class="novel hidden | w-11/12 | py-1 | bg-black bg-opacity-50">
+                @foreach($novels as $novel)
+                    <a class="w-1/6 " href="{{url('novel/'.$novel->id)}}">
+                        <div class="flex flex-col justify-between | h-28 sm:h-40 md:h-52 lg:h-64 xl:h-72 | m-1 | bg-cover bg-no-repeat bg-center" style="background-image:url('{{asset($novel->novel_dir.'/cover'.$novel->imgtype)}}');">
+                            <div class="flex justify-between | bg-black bg-opacity-0">
+                                <p class="bg-{{$novel->novel_type}} bg-purple-700 | px-1 m-0.5 | rounded | text-xs text-white font-bold | truncate">{{strtoupper($novel->novel_type)}}</p>
+                                <p class="hidden sm:block bg-black bg-opacity-70 | px-1 py-0.5 | text-xs text-white font-bold">{{$novel->mark}}/10</p>
+                            </div>
+                            <div class="flex | bg-black bg-opacity-70">
+                                <p class="text-white text-base font-bold | px-2 py-1 | truncate">{{ucfirst($novel->name)}}</p>
+                            </div>
+                        </div>
+                    </a>
+                @endforeach
+            </div>
+            
+            <!--Popular Users-->
+            <div class="hidden md:flex | w-11/12 | bg-black bg-opacity-70">
+                <p class="text-2xl font-bold text-ourBlue | px-5 py-3">Usuarios populares</p>
+            </div> 
+            <div class="hidden md:flex flex-row | w-11/12 | py-1 | bg-black bg-opacity-50">
+                @foreach($users as $user)
+                    <a class="m-2 | w-4/12 sm:w-2/12 | bg-black bg-opacity-70 | rounded-full" href="{{url('perfil/'.$user->id.'/'.$user->username)}}">   
+                        <div class="flex flex-col justify-between | rounded-full | w-1/1 h-28 lg:h-48 xl:h-64 | m-1 | bg-cover bg-no-repeat bg-center" style="background-image:url( 
+                            @if(file_exists(public_path() ."/users/". $user->id ."/profile/usericon". $user->imgtype))
+                                '{{asset("/users/". $user->id ."/profile/usericon". $user->imgtype)}}'
+                            @else
+                                '{{asset("/images/noimage.png")}}'
+                            @endif
+                            );">
+                            <div class="flex | bg-black bg-opacity-70">
+                            </div>
+                            <div class="flex | bg-black bg-opacity-70">
+                                <p class="text-white text-center text-sm font-bold | px-2 py-1 | truncate">{{$user->username}}</p>
+                            </div>
+                        </div>
+                    </a>
+                @endforeach
+            </div> 
+
+            <!--Mejores Novelas-->
+            <div class="flex | w-11/12 | bg-black bg-opacity-70">
+                <p class="text-2xl font-bold text-ourBlue | px-5 py-3">Mejores</p>
+            </div> 
+            <div class="flex | w-11/12 | py-1 | bg-black bg-opacity-50">
+                @foreach($best as $novel)
+                    <a class="w-1/6 " href="{{url('novel/'.$novel->id)}}">
+                        <div class="flex flex-col justify-between | h-28 sm:h-40 md:h-52 lg:h-64 xl:h-72 | m-1 | bg-cover bg-no-repeat bg-center" style="background-image:url('{{asset($novel->novel_dir.'/cover'.$novel->imgtype)}}');">
+                            <div class="flex justify-between | bg-black bg-opacity-0">
+                                <p class="bg-{{$novel->novel_type}} bg-purple-700 | px-1 m-0.5 | rounded | text-xs text-white font-bold | truncate">{{strtoupper($novel->novel_type)}}</p>
+                                <p class="hidden sm:block bg-black bg-opacity-70 | px-1 py-0.5 | text-xs text-white font-bold">{{$novel->mark}}/10</p>
+                            </div>
+                            <div class="flex | bg-black bg-opacity-70">
+                                <p class="text-white text-base font-bold | px-2 py-1 | truncate">{{ucfirst($novel->name)}}</p>
+                            </div>
+                        </div>
+                    </a>
+                @endforeach
+            </div> 
+
+            <!--Ultimas Novelas-->
+            <div class="flex | w-11/12 | bg-black bg-opacity-70">
+                <p class="text-2xl font-bold text-ourBlue | px-5 py-3">Ultimas</p>
+            </div> 
+            <div class="flex | w-11/12 | py-1 | bg-black bg-opacity-50">
+                @foreach($last_novels as $novel)
+                    <a class="w-1/6 " href="{{url('novel/'.$novel->id)}}">
+                        <div class="flex flex-col justify-between | h-28 sm:h-40 md:h-52 lg:h-64 xl:h-72 | m-1 | bg-cover bg-no-repeat bg-center" style="background-image:url('{{asset($novel->novel_dir.'/cover'.$novel->imgtype)}}');">
+                            <div class="flex justify-between | bg-black bg-opacity-0">
+                                <p class="bg-{{$novel->novel_type}} bg-purple-700 | px-1 m-0.5 | rounded | text-xs text-white font-bold | truncate">{{strtoupper($novel->novel_type)}}</p>
+                                <p class="hidden sm:block bg-black bg-opacity-70 | px-1 py-0.5 | text-xs text-white font-bold">{{$novel->mark}}/10</p>
+                            </div>
+                            <div class="flex | bg-black bg-opacity-70">
+                                <p class="text-white text-xs md:text-base font-bold | px-2 py-1 | truncate">{{ucfirst($novel->name)}}</p>
+                            </div>
+                        </div>
+                    </a>
+                @endforeach
+            </div> 
+            
+        </div>
+
+        @include('layouts.footer')
+
+        <script>
+            $(document).ready(()=>{ 
+                let coverImages = parseInt("{{$covers}}");
+                let actual = 1;
+                let imageInfo = [
+                    @foreach($imgData as $img)
+                        '{{asset("images/homeShow/".$img->getFilename())}}'@if(!$loop->last),@endif
+                    @endforeach
+
+                ];
+
+                if(coverImages > 1){
+                    $('#right').removeClass('bg-white').removeClass('text-gray-700').addClass('bg-black').addClass('text-white');
+                } 
+
+                $('.show-novel').click(function(){
+                    $('.novel').show();
+                    $(this).removeClass('bg-ourBlue').addClass('bg-blue-700');
+                    $('.visual').hide(); 
+                    $('.show-visual').removeClass('bg-blue-700').addClass('bg-ourBlue');
+                });
+                $('.show-visual').click(function(){
+                    $('.novel').hide();
+                    $('.show-novel').removeClass('bg-blue-700').addClass('bg-ourBlue');
+                    $('.visual').show(); 
+                    $(this).removeClass('bg-ourBlue').addClass('bg-blue-700');
+                });;
+
+                $('#left').click(function(){
+                    if(actual-1 >= 1){
+                        actual-=1;
+                        $("#cover").attr("src",imageInfo[actual-1]);
+                    }
+                });
+                $('#right').click(function(){
+                    if(actual+1 <= coverImages){
+                        actual+=1;
+                        $("#cover").attr("src",imageInfo[actual-1]);
+                    }
+                });
+            })
+        </script>
+
     </body>
 </html>

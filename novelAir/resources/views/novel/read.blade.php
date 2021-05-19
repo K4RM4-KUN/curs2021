@@ -36,7 +36,7 @@
                 <!-- Boton back -->
                 <div class="flex">
                     <div class="flex-1 text-center">
-                        <a class="text-l text-black font-bold bg-white p-2 py-1 rounded" href="{{route('dashboard')}}">MENU</a>
+                        <a class="text-l text-black font-bold bg-white p-2 py-1 rounded" href="{{url('/')}}">MENU</a>
                     </div>
 
                     <div class="flex-1 text-center">
@@ -126,7 +126,7 @@
                 </div>
                 <div class="flex mb-4 mt-8 sm:mt-4">
                     <div class="flex-1 text-center">
-                        <a class="text-l text-black font-bold bg-white p-2 py-1 rounded" href="{{route('dashboard')}}">MENU</a>
+                        <a class="text-l text-black font-bold bg-white p-2 py-1 rounded" href="{{url('/')}}">MENU</a>
                     </div>
 
                     <div class="flex-1 text-center">

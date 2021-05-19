@@ -100,16 +100,14 @@
                                                 href="{{url('admin/removeUser/'.$user->id)}}">Eliminar</a>
                                         </div>
                                     </div>
-                                </div>
-
-
+                                </div> 
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Novelas -->
-                <div class="w-full sm:w-5/12 | my-5 | bg-white | rounded | h-full">
+                <div class="w-full sm:w-5/12 | my-5 w-full mr-0 sm:mr-10 | bg-white | rounded">
                     <div class="w-full bg-red-600">
                         <p class="p-3 text-xl text-white text-center mb-3">Sus novelas</p>
                     </div>
@@ -160,28 +158,74 @@
                 </div>
 
                 <!-- Contacto -->
-                <div class="w-full sm:w-5/12 | my-5 | bg-white | rounded | h-full">
+                <div class="w-full sm:w-5/12 | my-5 w-full mr-0 sm:mr-10 | bg-white | rounded">
                     <div class="w-full bg-red-600">
-                        <p class="p-3 text-xl text-white text-center mb-3">Sus novelas</p>
+                        <p class="p-3 text-xl text-white text-center mb-3">Enviar Mensaje</p>
                     </div>
                     <div class="mx-7">
                         <!-- Formulario -->
-                        <form action="" method="post" class="w-full lg:w-1/2 mx-auto text-black">
+                        <form action="{{url('contactar/'.$user->id)}}" method="post" class="w-full lg:w-9/12 mx-auto text-black">
                             @csrf
                             <!-- Email Address -->
                             <div class="my-4">
                                 <label for="email" class="text-2xl">Email</label>
                                 <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-                                id="email" type="email" name="email" value="{{Auth::user()->email}}" required />
+                                id="email" type="email" name="email" value="{{$user->email}}" required />
+                            </div> 
+                            <div class="my-4">
+                                <label for="subject" class="text-2xl">Asunto</label>
+                                <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                                id="subject" type="text" name="subject" value="" placeholder="Resolución de verificación..." required />
                             </div>
-
                             <!-- Text Area -->
                             <div class="my-4">
                                 <label for="email" class="text-2xl">Mensaje</label>
                                 <textarea class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
                                 id="email" name="message" required></textarea>
                             </div>
+
+                            <input class="my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
+                            type="submit"
+                            value="Enviar">
                         </form>
+                    </div>
+                </div>
+
+                <!-- Verificaciones -->
+                <div class="w-full sm:w-5/12 | my-5 w-full mr-0 sm:mr-10 | bg-white | rounded">
+                    <div class="w-full bg-red-600">
+                        <p class="p-3 text-xl text-white text-center mb-3">Verificaciones</p>
+                    </div>
+                    <div class="mx-7">
+                        <!-- Tabla -->
+                        <table class="w-full text-black">
+                            <tr class="border-b-2">
+                                <th class="border-r-2 border-l-2">
+                                    <p class="text-left text-sm sm:text-base | pl-2">DNI/NIE</p>
+                                </th>
+                                <th class="border-r-2 border-l-2">
+                                    <p class="text-left text-sm sm:text-base | pl-2">Estado</p>
+                                </th>
+                                <th class="border-r-2 border-l-2">
+                                    <p class="text-left text-sm sm:text-base | pl-2">Fecha de creacion</p>
+                                </th>
+                            </tr>
+                            @foreach($verifications as $transaction) 
+                                <tr class="border-b-2">
+                                    <td class="border-r-2 border-l-2">
+                                        <p class="text-sm sm:text-base | pl-2">{{$transaction->num_id}}</p>
+                                    </td>
+                                    <td class="border-r-2 border-l-2">
+                                        <p class="text-sm sm:text-base | pl-2">{{$transaction->request_state}}</p>
+                                    </td>
+                                    <td class="border-r-2 border-l-2">
+                                        <p class="text-sm sm:text-base | pl-2">{{$transaction->created_at}}</p>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </table>
+                    </div>
+                </div>
 
                 <!-- Transacciones -->
                 <div class="w-full sm:w-10/12 | my-5 | bg-white | rounded | h-full">

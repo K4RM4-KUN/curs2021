@@ -16,6 +16,7 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\Profile;
 use App\Models\TransactionModel;
+use App\Models\Verification;
 use File;
 
 class AdminController extends Controller
@@ -50,6 +51,7 @@ class AdminController extends Controller
             $data['rolUserSearch'] = User_Role::with('role')->where('user_id',$id)->first();
             $data["roles"] = Role::all();
             $data["transactions"] = TransactionModel::where("user_id",$id)->get();
+            $data["verifications"] = Verification::where("user_id",$id)->get();
 
             return view('admin.user',$data);
         }else{

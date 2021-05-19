@@ -25,7 +25,7 @@
 
 
     </head>
-    <body class="bg-gradient-to-br from-gray-700 to-gray-800 min-h-screen""> 
+    <body class="bg-gradient-to-br from-gray-700 to-gray-800 min-h-screen"> 
             <!--@@include('layouts.navigationNew')-->
             @include('layouts.navigationNew')
         <div class="flex flex-col justify-center items-center | w-full">
@@ -87,7 +87,8 @@
                     hecho algo inadecuado o roto alguna regla de la comunidad...</p>
                     <!-- Formulario -->
                     @if(isset(Auth::user()->email))
-                        <form action="" method="post" class="w-full lg:w-1/2 mx-auto text-black">
+                        <p class="text-ourBlue text-center text-xl font-bold mt-5 p-2">Envianos un mail:</p>
+                        <form action="{{route('contact')}}" method="post" class="w-full lg:w-1/2 mx-auto text-black">
                             @csrf
                             <!-- Email Address -->
                             <div class="my-4">
@@ -95,6 +96,12 @@
                                 <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
                                 id="email" type="email" name="email" value="{{Auth::user()->email}}" required />
                             </div>
+                            <div class="my-4">
+                                <label for="subject" class="text-2xl">Asunto</label>
+                                <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                                id="subject" type="text" name="subject" value="" placeholder="Ayuda..." required />
+                            </div>
+
 
                             <!-- Text Area -->
                             <div class="my-4">
@@ -102,6 +109,10 @@
                                 <textarea class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
                                 id="email" name="message" required></textarea>
                             </div>
+
+                            <input class="my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
+                            type="submit"
+                            value="Enviar">
                         </form>
                     @else
                         <p class="text-ourBlue text-2xl font-bold text-left p-2 text-center">Registrate para ponerte en contacto</p>

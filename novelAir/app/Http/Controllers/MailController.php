@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Mail\VerificationTest;
+use App\Mail\CreateMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -30,5 +31,20 @@ class MailController extends Controller
         Mail::to('javierfuenteabalo@gmail.com')->send($mail);
 
         return redirect('usuario/ajustes/author');
+    }
+    public function contactRequest(Request $request,$from = null){ 
+        $request->validate([ 
+            'email' => 'required|max:255',
+            'subject' => 'required|max:200|min:5', 
+            'message' => 'required|max:600|min:70', 
+        ]);
+        $user = User::where('id',Auth::user()->id)->first(); 
+        $mail = new CreateMail($request->all(),$user);
+        if($from != null){
+            Mail::to($request->email,'javierfuenteabalo@gmail.com')->send($mail);
+            return redirect('admin/user/'.$from);
+        }
+        Mail::to('javierfuenteabalo@gmail.com')->send($mail);
+        return redirect('nosotros/contactanos');
     }
 }

@@ -137,6 +137,7 @@
 
         </div>
 
+        @include('layouts.footer')
     <script>
         $(document).ready(()=>{
             $(".amount").text("Image amount: "+$(".contentImg").length)

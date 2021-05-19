@@ -26,52 +26,6 @@
             }
         ?>
     </head>
-<!-- <body class="bg-gradient-to-br from-gray-700 to-gray-900 min-h-screen container mx-auto min-h-screen">
-        <div class="container mt-5">
-            <a class="text-l text-black font-bold bg-white p-2 py-1 rounded" href="{{url('novel_manager')}}/{{$novel[0]->id}}">BACK</a>
-        </div>
-        
-        {{$chapter[0]->title}}
-        <a class="text-l text-white font-bold bg-blue-500 hover:bg-blue-700 p-2 py-1 rounded" 
-        href="{{route('goVC',['id'=>$novel[0]->id,'chapter'=>$chapter[0]->id])}}">
-            Editar
-        </a>
-        <br><br>
-
-        @foreach ($content as $c)
-            <img src="{{url($chapter[0]->route)}}{{'/'.$c->getFilename()}}"><br>
-        @endforeach
-
-        <br><br>
-
-        
-        <div class="text-center">
-            <a
-                @if ($chapter[0]->chapter_n != $chapters[count($chapters)-1]->chapter_n)
-                    @if ($chapter[0]->chapter_n-1 <= $chapters[$chapterIndex+1]->chapter_n)
-                        href="{{url('novel_manager/viewChapter')}}/{{$novel[0]->id}}/{{$chapters[$chapterIndex+1]->chapter_n}}"
-                    @else <?$y=0?>
-                    @endif
-                @else <?$y=0?>
-                @endif
-            ><button type="button" class="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md @if(isset($y)) bg-yellow-300 @else bg-gradient-to-r from-yellow-400 to-yellow-600 transform hover:scale-110 @endif">
-                <div class="hidden sm:block">Cap. Anterior</div>
-            </button></a>
-        </div>
-
-        <div class="text-center">
-            <a @if (($chapter[0]->chapter_n != $chapters[0]->chapter_n)) 
-                @if ($chapter[0]->chapter_n+1 >= $chapters[$chapterIndex-1]->chapter_n)
-                    href="{{url('novel_manager/viewChapter')}}/{{$novel[0]->id}}/{{$chapters[$chapterIndex-1]->chapter_n}}"
-                @else <?$z=0?>
-                @endif
-            @else <?$z=0?>
-            @endif
-            ><button type="button" class="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md @if(isset($z)) bg-yellow-300 @else bg-gradient-to-r from-yellow-400 to-yellow-600 transform hover:scale-110 @endif">
-                <div class="hidden sm:block">Cap. Siguiente</div>
-            </button></a>
-        </div>
-</body> -->
 
 
 

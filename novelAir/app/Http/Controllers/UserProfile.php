@@ -146,7 +146,7 @@ class UserProfile extends Controller
             if(file_exists($path."/profile/bgImage". $data["profile"]->imgtype)){ 
                 $data['image'] = "users/".Auth::user()->id."/profile/bgImage". $data["profile"]->imgtype;
             } else {
-                $data['image'] = 'images/noimage.png';
+                $data['image'] = 'images/nobg.png';
             }
             foreach($data['lists']  as $list){
                 switch($list->state_name){
@@ -255,7 +255,7 @@ class UserProfile extends Controller
             'surname' => 'string|max:255',
             'birth_date' => 'date',
             'email' => 'string|email|max:255|unique:users',
-            'profileImage' => 'mimes:jpeg,jpg,png|max:1024|dimensions:ratio=1/1,max_width=1500',
+            'profileImage' => 'mimes:jpeg,jpg,png|max:1024|dimensions:ratio=1/1,min_width=100,max_width=1500',
         ]);
 
         $user = User::find(Auth::user()->id);
@@ -301,7 +301,7 @@ class UserProfile extends Controller
 
     public function profileUpdate(Request $request){
         $request->validate([
-            'presentation' => 'string|max:500',
+            'presentation' => 'max:500',
             'twitter' => 'max:255',
             'facebook' => 'max:255',
             'instagram' => 'max:255',

@@ -37,6 +37,7 @@ Route::get('/dashboard', function () {
 //About us
 Route::get('nosotros/{type?}',[AboutController::class,'indexHome'])->name('aboutUs');
 Route::get('terminos/{type?}',[AboutController::class,'index'])->name('aboutTerms');
+Route::post('contactar/{from?}',[MailController::class,'contactRequest'])->name('contact');
 
 //Subscribe
 Route::get('subscribe/{id?}',[PaymentController::class,'payWithPayPal'])->name('goPay')->middleware(['auth','subscribesecurity']);

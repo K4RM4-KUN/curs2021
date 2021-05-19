@@ -110,8 +110,52 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Contacto -->
+                <div class="w-full sm:w-5/12 | my-5 w-full mr-0 sm:mr-10 | bg-white | rounded">
+                    <div class="w-full bg-red-600">
+                        <p class="p-3 text-xl text-white text-center mb-3">Enviar Mensaje</p>
+                    </div>
+                    <div class="mx-7">
+                        <!-- Formulario -->
+                        <form action="" method="post" class="w-full lg:w-9/12 mx-auto text-black">
+                            @csrf
+                            <!-- Email Address -->
+                            <div class="my-4">
+                                <label for="email" class="text-2xl">Email</label>
+                                <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                                id="email" type="email" name="email" value="{{$user->email}}" required />
+                            </div>
+
+                            <!-- Text Area -->
+                            <div class="my-4">
+                                <label for="email" class="text-2xl">Mensaje</label>
+                                <textarea class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                                id="email" name="message" required></textarea>
+                            </div>
+
+                            <input class="my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
+                            type="submit"
+                            value="Enviar">
+                        </form>
+                    </div>
+                </div>
+
+                <!-- NO SE QUE PONER -->
+                <div class="w-full sm:w-5/12 | my-5 w-full mr-0 sm:mr-10 | bg-white | rounded">
+                    <div class="w-full bg-red-600">
+                        <p class="p-3 text-xl text-white text-center mb-3">COMING SOON</p>
+                    </div>
+                    <div class="mx-7">
+                        
+                    </div>
+                </div>
+
+
             </div>
 
         </div>
+
+        @include('layouts.footer')
     </body>
 </html>

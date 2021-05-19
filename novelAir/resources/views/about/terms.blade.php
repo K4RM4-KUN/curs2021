@@ -129,7 +129,7 @@
                             pertenecen a los terceros titulares de las mismas.
                         </li>
                     </ol>
-                    <h2>Propiedad Intelectual de los Archivos de Usuarios</h2>
+                    <h2 class="text-ourBlue text-lg font-bold text-left p-2">Propiedad Intelectual de los Archivos de Usuarios</h2>
                     <ol class="px-4 space-y-2">
                         <li>Usted puede enviar imágenes y texto (“Comentarios de usuarios”) al Sitio Web. Las
                             fotos, comentarios o cualquier otra obra o material que incorporen los usuarios se
@@ -385,9 +385,9 @@
                 <!--AboutUs Politica de privacidad-->
                 <div class="@if($type != 'cookies') hidden @endif px-10 pt-3 pb-10 | text-sm">
                     <p class="text-ourBlue text-2xl font-bold text-left p-2">Política de cookies</p>  
-                    <p class="text-gray-700 text-xs px-5 py-2 text-justify">Nakamas Web SL informa acerca del uso de las cookies en sus páginas webs</p>
+                    <p class="text-gray-700 text-xs px-5 py-2 text-justify">NovelAir SL informa acerca del uso de las cookies en sus páginas webs</p>
 
-                    <h2>¿Qué son las cookies?</h2>
+                    <h2 class="text-ourBlue text-lg font-bold text-left p-2">¿Qué son las cookies?</h2>
 
                     <p class="text-gray-700 text-xs px-5 py-2 text-justify">Las cookies son archivos que se pueden descargar en su equipo a través de las páginas web. Son
                         herramientas que tienen un papel esencial para la prestación de numerosos servicios de la
@@ -398,16 +398,16 @@
                         obtenida, se
                         pueden utilizar para reconocer al usuario y mejorar el servicio ofrecido.</p>
 
-                    <h2>Tipos de cookies</h2>
+                    <h2 class="text-ourBlue text-lg font-bold text-left p-2">Tipos de cookies</h2>
                     <p class="text-gray-700 text-xs px-5 py-2 text-justify">Según quien sea la entidad que gestione el dominio desde donde se envían las cookies y trate los
                         datos que se obtengan se pueden distinguir dos tipos:</p>
-                    <ul>
-                        <li> Cookies propias: aquéllas que se envían al equipo terminal del usuario desde un equipo o
+                    <ul class="px-4 space-y-2">
+                        <li>· Cookies propias: aquéllas que se envían al equipo terminal del usuario desde un equipo o
                             dominio
                             gestionado por el propio editor y desde el que se presta el servicio solicitado por el
                             usuario.
                         </li>
-                        <li> Cookies de terceros: aquéllas que se envían al equipo terminal del usuario desde un equipo
+                        <li>· Cookies de terceros: aquéllas que se envían al equipo terminal del usuario desde un equipo
                             o
                             dominio
                             que no es gestionado por el editor, sino por otra entidad que trata los datos obtenidos
@@ -416,17 +416,17 @@
                             las cookies.
                         </li>
                     </ul>
-                    <p>
+                    <p class="text-gray-700 text-xs px-5 py-2 text-justify">
                         En el caso de que las cookies sean instaladas desde un equipo o dominio gestionado por el propio
                         editor pero la información que se recoja mediante éstas sea gestionada por un tercero, no pueden
                         ser
                         consideradas como cookies propias.</p>
-                    <p>
+                    <p class="text-gray-700 text-xs px-5 py-2 text-justify">
                         Existe también una segunda clasificación según el plazo de tiempo que permanecen almacenadas en
                         el
                         navegador del cliente, pudiendo tratarse de:</p>
-                    <ul>
-                        <li>Cookies de sesión: diseñadas para recabar y almacenar datos mientras el usuario accede a una
+                    <ul class="px-4 space-y-2">
+                        <li>· Cookies de sesión: diseñadas para recabar y almacenar datos mientras el usuario accede a una
                             página
                             web. Se suelen emplear para almacenar información que solo interesa conservar para la
                             prestación
@@ -434,7 +434,7 @@
                             servicio solicitado por el usuario en una sola ocasión (p.e. una lista de productos
                             adquiridos).
                         </li>
-                        <li>Cookies persistentes: los datos siguen almacenados en el terminal y pueden ser accedidos y
+                        <li>· Cookies persistentes: los datos siguen almacenados en el terminal y pueden ser accedidos y
                             tratados
                             durante un periodo definido por el responsable de la cookie, y que puede ir de unos minutos
                             a
@@ -442,13 +442,13 @@
                             años.
                         </li>
                     </ul>
-                    <p>
+                    <p class="text-gray-700 text-xs px-5 py-2 text-justify">
                         Por último, existe otra clasificación con cinco tipos de cookies según la finalidad para la que
                         se
                         traten los datos obtenidos:</p>
-                    <ul>
+                    <ul class="px-4 space-y-2">
                         <li>
-                            Cookies técnicas: aquellas que permiten al usuario la navegación a través de una página web,
+                            · Cookies técnicas: aquellas que permiten al usuario la navegación a través de una página web,
                             plataforma o aplicación y la utilización de las diferentes opciones o servicios que en ella
                             existan
                             como, por ejemplo, controlar el tráfico y la comunicación de datos, identificar la sesión,
@@ -462,7 +462,7 @@
                             vídeos o
                             sonido o compartir contenidos a través de redes sociales.
                         </li>
-                        <li>Cookies de personalización: permiten al usuario acceder al servicio con algunas
+                        <li>· Cookies de personalización: permiten al usuario acceder al servicio con algunas
                             características
                             de
                             carácter general predefinidas en función de una serie de criterios en el terminal del
@@ -471,7 +471,7 @@
                             por ejemplo serian el idioma, el tipo de navegador a través del cual accede al servicio, la
                             configuración regional desde donde accede al servicio, etc.
                         </li>
-                        <li>Cookies de análisis: permiten al responsable de las mismas, el seguimiento y análisis del
+                        <li>· Cookies de análisis: permiten al responsable de las mismas, el seguimiento y análisis del
                             comportamiento de los usuarios de los sitios web a los que están vinculadas. La información
                             recogida
                             mediante este tipo de cookies se utiliza en la medición de la actividad de los sitios web,
@@ -481,15 +481,15 @@
                             de
                             los
                             datos de uso que hacen los usuarios del servicio.
-                        </li><li>Cookies publicitarias: permiten la gestión, de la forma más eficaz posible, de los espacios
+                        </li><li>· Cookies publicitarias: permiten la gestión, de la forma más eficaz posible, de los espacios
                             publicitarios.
                         </li>
-                        <li>Cookies de publicidad comportamental: almacenan información del comportamiento de los
+                        <li>· Cookies de publicidad comportamental: almacenan información del comportamiento de los
                             usuarios
                             obtenida a través de la observación continuada de sus hábitos de navegación, lo que permite
                             desarrollar un perfil específico para mostrar publicidad en función del mismo.
                         </li>
-                        <li>Cookies de redes sociales externas: se utilizan para que los visitantes puedan interactuar
+                        <li>· Cookies de redes sociales externas: se utilizan para que los visitantes puedan interactuar
                             con
                             el
                             contenido de diferentes plataformas sociales (facebook, youtube, twitter, linkedIn, etc..) y
@@ -502,62 +502,59 @@
                             social correspondiente.
                         </li>
                     </ul>
-                    <h2>Desactivación y eliminación de cookies</h2>
-                    <p>Tienes la opción de permitir, bloquear o eliminar las cookies instaladas en tu equipo mediante la
+                    <h2 class="text-ourBlue text-lg font-bold text-left p-2">Desactivación y eliminación de cookies</h2>
+                    <p class="text-gray-700 text-xs px-5 py-2 text-justify">Tienes la opción de permitir, bloquear o eliminar las cookies instaladas en tu equipo mediante la
                         configuración de las opciones del navegador instalado en su equipo. Al desactivar cookies,
                         algunos
                         de los servicios disponibles podrían dejar de estar operativos.</p>
 
-                    <p>La forma de deshabilitar las cookies es diferente para cada navegador, pero normalmente puede
+                    <p class="text-gray-700 text-xs px-5 py-2 text-justify">La forma de deshabilitar las cookies es diferente para cada navegador, pero normalmente puede
                         hacerse desde el menú Herramientas u Opciones. También puede consultarse el menú de Ayuda del
                         navegador dónde puedes encontrar instrucciones. El usuario podrá en cualquier momento elegir qué
                         cookies quiere que funcionen en este sitio web.</p>
-                    <p>
+                    <p class="text-gray-700 text-xs px-5 py-2 text-justify">
                         Puede usted permitir, bloquear o eliminar las cookies instaladas en su equipo mediante la
                         configuración de las opciones del navegador instalado en su ordenador:</p>
-                    <ul>
-                        <li> Microsoft Internet Explorer o Microsoft Edge:</li>
+                    <ul class="px-4 space-y-2">
+                        <li>· Microsoft Internet Explorer o Microsoft Edge:</li>
                         http://windows.microsoft.com/es-es/windows-vista/Block-or-allow-cookies
-                        <li>Mozilla Firefox:
+                        <li>· Mozilla Firefox:
                             http://support.mozilla.org/es/kb/impedir-que-los-sitios-web-guarden-sus-preferencia
                         </li>
-                        <li>Chrome: https://support.google.com/accounts/answer/61416?hl=es</li>
-                        <li>Safari: http://safari.helpmax.net/es/privacidad-y-seguridad/como-gestionar-las-cookies/</li>
-                        <li>Opera: http://help.opera.com/Linux/10.60/es-ES/cookies.html Además, también puede gestionar
+                        <li>· Chrome: https://support.google.com/accounts/answer/61416?hl=es</li>
+                        <li>· Safari: http://safari.helpmax.net/es/privacidad-y-seguridad/como-gestionar-las-cookies/</li>
+                        <li>· Opera: http://help.opera.com/Linux/10.60/es-ES/cookies.html Además, también puede gestionar
                             el
                             almacén de cookies en su navegador a través de herramientas como las siguientes
                         </li>
-                        <li type="circle">Ghostery: www.ghostery.com/</li>
-                        <li type="circle"> Your online choices: www.youronlinechoices.com/es/</li>
                     </ul>
-                    <h2> Cookies utilizadas</h2>
-                    <p>A continuación se identifican las cookies que están siendo utilizadas en este portal así como su
+                    <h2 class="text-ourBlue text-lg font-bold text-left p-2"> Cookies utilizadas</h2>
+                    <p class="text-gray-700 text-xs px-5 py-2 text-justify">A continuación se identifican las cookies que están siendo utilizadas en este portal así como su
                         tipología y función:</p>
-                    <ul>
-                        <li> Cookies de sesión</li>
-                        <li>Cookies técnicas</li>
-                        <li>Cookies de personalización</li>
-                        <li>Cookies publicitarias</li>
-                        <li>Cookies de redes sociales externas</li>
+                    <ul class="px-4 space-y-2">
+                        <li>· Cookies de sesión</li>
+                        <li>· Cookies técnicas</li>
+                        <li>· Cookies de personalización</li>
+                        <li>· Cookies publicitarias</li>
+                        <li>· Cookies de redes sociales externas</li>
                     </ul>
-                    <h2>Aceptación de la Política de cookies</h2>
-                    <p>
+                    <h2 class="text-ourBlue text-lg font-bold text-left p-2">Aceptación de la Política de cookies</h2>
+                    <p class="text-gray-700 text-xs px-5 py-2 text-justify">
                         La web asume que usted acepta el uso de cookies. No obstante, muestra información sobre su
                         Política
                         de cookies en la parte inferior o superior de cualquier página del portal con cada inicio de
                         sesión
                         con el objeto de que usted sea consciente.</p>
-                    <p>
+                    <p class="text-gray-700 text-xs px-5 py-2 text-justify">
                         Ante esta información es posible llevar a cabo las siguientes acciones:</p>
-                    <ul>
-                        <li>Aceptar cookies. No se volverá a visualizar este aviso al acceder a cualquier página del
+                    <ul class="px-4 space-y-2">
+                        <li>· Aceptar cookies. No se volverá a visualizar este aviso al acceder a cualquier página del
                             portal
                             durante la presente sesión.
                         </li>
-                        <li>Cerrar. Se oculta el aviso en la presente página.</li>
-                        <li>Modificar su configuración.</li>
+                        <li>· Cerrar. Se oculta el aviso en la presente página.</li>
+                        <li>· Modificar su configuración.</li>
                     </ul>
-                    <p><i>Última Actualización: 20/05/2018</i></p> 
                     <p class="mt-5"><i>Última Actualización: 18/5/2021</i></p>
                 </div>
             </div>

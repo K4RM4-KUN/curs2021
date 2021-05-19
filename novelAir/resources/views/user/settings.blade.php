@@ -121,6 +121,7 @@
             })
         })
         </script>
+        @include('layouts.footer')
 
     </body>
 

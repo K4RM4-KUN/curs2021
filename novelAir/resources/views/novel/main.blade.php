@@ -240,7 +240,7 @@
                         </div>
                         <div class="pb-16">
                             @foreach($chapters as $chapter) 
-                                <a @if($subscribed) href="{{url('leer/'.$novel[0]->id.'/'.$chapter->chapter_n)}}" @else  class="notSubscribed" @endif >
+                                <a  href="{{url('leer/'.$novel[0]->id.'/'.$chapter->chapter_n)}}">
 
                                     <div class="flex | pl-2.5 sm:pl-7 p-2.5 mx-5 sm:mx-32 | bg-black bg-opacity-70 | border-b-2 border-ourBlue @if($loop->first)border-t-4 border-ourBlue @endif ">
 
@@ -258,11 +258,11 @@
                                         </p>
                                         <!--Parece que va :/ idk-->
                                         @if($payment < 0)
-                                            <p  class="pl-5 text-xs sm:text-base text-yellow-600" >Solo para subscriptores!</p>
+                                            <p  class="pl-5 text-xs sm:text-base text-yellow-600" > @if(!$subscribed) Subscribete para leer este capítulo @else Subscrito @endif</p>
                                         @elseif($chaptersOrder == 'desc' && $loop->index+1 <= $payment)
-                                            <p  class="pl-5 text-xs sm:text-base text-yellow-600" >Solo para subscriptores!</p>
+                                            <p  class="pl-5 text-xs sm:text-base text-yellow-600" >@if(!$subscribed) Subscribete para leer este capítulo @else Subscrito @endif</p>
                                         @elseif($chaptersOrder == 'asc' && count($chapters)-$loop->index <= $payment)
-                                            <p  class="pl-5 text-xs sm:text-base text-yellow-600" >Solo para subscriptores!</p>
+                                            <p  class="pl-5 text-xs sm:text-base text-yellow-600" >@if(!$subscribed) Subscribete para leer este capítulo @else Subscrito @endif</p>
                                         @endif
                                     </div>
                                     
@@ -287,6 +287,8 @@
                 })
             }); 
         </script>
+
+        @include('layouts.footer')
 
     </body>
 

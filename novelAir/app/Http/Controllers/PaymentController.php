@@ -26,6 +26,7 @@ class PaymentController extends Controller
     public function __construct()
     {
         $payPalConfig = Config::get('paypal');
+
         $this->apiContext = new ApiContext(
             new OAuthTokenCredential(
                 $payPalConfig['client_id'],
@@ -59,9 +60,11 @@ class PaymentController extends Controller
         try{
             $payment->create($this->apiContext);
             return redirect()->away($payment->getApprovalLink());
+
         }
         catch(\PayPal\Exception\PayPalConnectionException $ex){
             echo $ex->getData();
+
         }
     }
 
@@ -73,14 +76,18 @@ class PaymentController extends Controller
         if(!$paymentId || !$payerID || !$token){
             $status = "ERROR";
             return redirect('/')->with(compact('status')); //return to error blade
+
         }
 
         $payment = Payment::get($paymentId,$this->apiContext);
+
         $execution = new PaymentExecution();
         $execution->setPayerId($payerID);
+
         $result = $payment->execute($execution,$this->apiContext); 
         
         $transaction = $payment->transactions; 
+
         $newTransaction = new TransactionModel;
         $newTransaction->SetAttribute('user_id',Auth::user()->id);
         $newTransaction->SetAttribute('payment_id',$paymentId);
@@ -92,8 +99,10 @@ class PaymentController extends Controller
         $newTransaction->save();
 
         $user = User::where('id',$request->id)->first();
+
         if($result->getState() === 'approved'){
             $status = 'El pago se ha realizado correctamente!';
+
             //DB aquí $request->id
             //Hacer middleware pre esto
             $newSubscription = new Subscription;
@@ -102,10 +111,15 @@ class PaymentController extends Controller
             $newSubscription->SetAttribute('subscription_price',2.50);
             $newSubscription->SetAttribute('caducate_at',date("Y-m-d H:i:s", strtotime("+30 days")));
             $newSubscription->save();
+
             return redirect('results/'.$newSubscription->id.'/'.$newTransaction->id)->with(compact('status'));
+
         } 
+
         $status = 'El pago no se ha realizado correctamente, intentalo de nuevo!';
+
         return redirect('results')->with(compact('status',)); //result blade
+
     }
 
     public function  paymentResult($id = null,$transaction = null){
@@ -113,13 +127,20 @@ class PaymentController extends Controller
             $data['subscription'] = Subscription::where('id',$id)->first();
             $data['transaction'] = TransactionModel::where('id',$transaction)->first();
             $data['user'] = User::where('id',$data['subscription']->user_id)->first();
+
             if($data['subscription']->subscriber_id == Auth::user()->id){
                 return view('payment.result',$data);
+
             } else{ 
                 return redirect('usuario/ajustes/subscripciones');
+
             }
+
         } else {
+
             return redirect('usuario/ajustes/subscripciones');
+
         }
+        
     }
 }

@@ -262,22 +262,27 @@ class UserProfile extends Controller
 
         if(isset($request->username)){
             $user->username = $request->username;
+
         } 
 
         if(isset($request->name)){
             $user->name = $request->name;
+
         } 
 
         if(isset($request->surname)){
             $user->surname = $request->surname;
+
         } 
 
         if(isset($request->birth_date)){
             $user->birth_date = $request->birth_date;
+
         } 
 
         if(isset($request->email)){
             $user->email = $request->email;
+
         }
 
         if(isset($request->profileImage)){
@@ -285,16 +290,19 @@ class UserProfile extends Controller
             $save = explode(".",$file->getClientOriginalName());
             $user->imgtype = ".".$save[count($save)-1];
             $path = public_path() ."/users/". Auth::user()->id; 
+
             if(file_exists(public_path($path."/profile" ))){ 
                 File::makeDirectory($path."/profile" , $mode = 0775, true);
+
             }
+
             $file->move($path."/profile","usericon".".".$save[count($save)-1]);
 
         }
+
         //dd($user);
         //File::deleteDirectory(public_path() ."/users/". Auth::user()->id."/profile/usericon".Auth::user()->imgtype);
         $user->save();
-
         
         return redirect('usuario/ajustes/personal');
     }
@@ -309,6 +317,7 @@ class UserProfile extends Controller
             'other' => 'max:255',
             'bgImage' => 'mimes:jpeg,jpg,png|max:2048|dimensions:ratio=16/9,max_width=1920',
         ]);
+
         $save = Profile::where('user_id',Auth::user()->id)->first();
         /*if(Profile::where('user_id',Auth::user()->id)->exists()){
             Profile::where('user_id',Auth::user()->id)->delete();
@@ -316,68 +325,106 @@ class UserProfile extends Controller
 
         $newProfile = Profile::where('user_id',Auth::user()->id)->first();
         $newProfile->SetAttribute('user_id',Auth::user()->id);
+
         if(isset($request->private)){
             $newProfile->SetAttribute('private',1);
+
         } else {
             $newProfile->SetAttribute('private',0);
+
         }
+
         if(isset($request->showInstagram)){
             $newProfile->SetAttribute('showInstagram',1);
+
         } else {
             $newProfile->SetAttribute('showInstagram',0);
+
         }
+
         if(isset($request->showPatreon)){
             $newProfile->SetAttribute('showPatreon',1);
+
         } else {
             $newProfile->SetAttribute('showPatreon',0);
+
         }
+
         if(isset($request->showTwitter)){
             $newProfile->SetAttribute('showTwitter',1);
+
         } else {
             $newProfile->SetAttribute('showTwitter',0);
+
         }
+
         if(isset($request->showFace)){
             $newProfile->SetAttribute('showFace',1);
+
         } else {
             $newProfile->SetAttribute('showFace',0);
+
         }
+
         if(isset($request->showOther)){
             $newProfile->SetAttribute('showOther',1);
+
         } else {
             $newProfile->SetAttribute('showOther',0);
+
         }
+
         if(isset($request->bgImage)){ 
             $file = $request->file('bgImage');
             $save = explode(".",$file->getClientOriginalName());
             $newProfile->SetAttribute('imgtype',".".$save[count($save)-1]); 
             $path = public_path() ."/users/". Auth::user()->id; 
+
             if(file_exists(public_path($path."/profile" ))){ 
                 File::makeDirectory($path."/profile" , $mode = 0775, true);
+
             }
+
             $file->move($path."/profile","bgImage".".".$save[count($save)-1]);
+
         } else{  
             $newProfile->SetAttribute('imgtype',$save->imgtype); 
+
         }
+
         if(isset($request->presentation)){
             $newProfile->SetAttribute('presentation',$request->presentation);
+
         } 
+
         if(isset($request->lista)){
             $newProfile->SetAttribute('state_id',$request->lista);
+
         } 
+
         if(isset($request->twitter)){
             $newProfile->SetAttribute('twitter',$request->twitter);
+
         } 
+
         if(isset($request->face)){
             $newProfile->SetAttribute('facebook',$request->face);
+
         } 
+
         if(isset($request->instagram)){
             $newProfile->SetAttribute('instagram',$request->instagram);
+
         } 
+
         if(isset($request->patreon)){
             $newProfile->SetAttribute('patreon',$request->patreon);
+
         } 
+
         if(isset($request->other)){
             $newProfile->SetAttribute('other',$request->other);
+
         }
 
         /* Authors Recomended */
@@ -389,38 +436,54 @@ class UserProfile extends Controller
                 if(User::where([['username',$request->autor1]])->exists()){
                     $user = User::where([['username',$request->autor1]])->first();
                     $str = $str .",". $user->id;
+
                 }
+
             }
+
             if(($request->autor2 != "") && (isset($request->checkAutor2))){
                 if(User::where([['username',$request->autor2]])->exists()){
                     $user = User::where([['username',$request->autor2]])->first();
                     $str = $str .",". $user->id;
+
                 }
+
             }
+
             if(($request->autor3 != "") && (isset($request->checkAutor3))){
                 if(User::where([['username',$request->autor3]])->exists()){
                     $user = User::where([['username',$request->autor3]])->first();
                     $str = $str .",". $user->id;
+
                 }
+
             }
+
             if(($request->autor4 != "") && (isset($request->checkAutor4))){
                 if(User::where([['username',$request->autor4]])->exists()){
                     $user = User::where([['username',$request->autor4]])->first();
                     $str = $str .",". $user->id;
+
                 }
+
             }
+
             if(($request->autor5 != "") && (isset($request->checkAutor5))){
                 if(User::where([['username',$request->autor5]])->exists()){
                     $user = User::where([['username',$request->autor5]])->first();
                     $str = $str .",". $user->id;
-                }
-            }
 
+                }
+
+            }
+            
             $newProfile->SetAttribute('idAuthorsRecomended',$str);
 
         }else{
             $newProfile->SetAttribute('authorsRecomended',0);
+
         }
+
         $newProfile->save();
 
         return redirect('usuario/ajustes/perfil');
@@ -430,6 +493,7 @@ class UserProfile extends Controller
         if ($id != null){
             if(Follow::where([['follower_id',Auth::user()->id],['user_id',$id]])->exists()){
                 Follow::where([['follower_id',Auth::user()->id],['user_id',$id]])->delete();
+
             }else{
                 $newProfile = new Follow;
 
@@ -437,9 +501,12 @@ class UserProfile extends Controller
                 $newProfile->SetAttribute('user_id',$id);
 
                 $newProfile->save();
+
             }
+
         }else{
             return redirect("/");
+
         }
 
         return redirect("perfil/".$id."/user");
@@ -454,10 +521,7 @@ class UserProfile extends Controller
 
     public function allUsersSearch(Request $request){
         $data["users"] = User::with('profile')->orderbydesc('created_at')->get();
-
         $data["usersSearch"] = User::with('profile')->where('username', 'like', '%' . $request->searcher . '%')->get();
-
-        
 
         return view('user.searchUser',$data);
     }
@@ -466,6 +530,7 @@ class UserProfile extends Controller
         $request->validate([
             'newPassword' => 'required|min:8|required_with:newPasswordRepeat|same:newPasswordRepeat',
         ]); 
+
         $user = User::where('id',Auth::user()->id)->first();
         $user->password = Hash::make($request->newPassword);
         $user->save();
@@ -477,40 +542,62 @@ class UserProfile extends Controller
         $request->validate([
             'paypal' => 'max:400'
         ]);
+
         if(Author::where('user_id',Auth::user()->id)->exists()){ 
             $update = Author::where('user_id',Auth::user()->id)->first();
+
             if(isset($request->subscriptions)){
                 $update->subscriptions = 1;
+
             } else {
                 $update->subscriptions = 0;
+
             }
+
             if(isset($request->donations)){
                 $update->donations = 1;
+
             } else {
                 $update->donations = 0;
+
             } 
+
             if(isset($request->paypal)){
                 $update->paypal = $request->paypal;
+
             } 
+
             $update->save();
+
         }else{
             $newAuthor = new Author;
             $newAuthor->SetAttribute('user_id',Auth::user()->id);
+
             if(isset($request->subscriptions)){
                 $newAuthor->SetAttribute('subscriptions',1);
+
             } else {
                 $newAuthor->SetAttribute('subscriptions',0);
+
             }
+
             if(isset($request->donations)){
                 $newAuthor->SetAttribute('donations',1);
+
             } else {
                 $newAuthor->SetAttribute('donations',0);
+
             } 
+
             if(isset($request->paypal)){
                 $newAuthor->SetAttribute('paypal',$request->paypal);
+
             } 
+
             $newAuthor->save(); 
+
         }
+        
         return redirect('usuario/ajustes/author');
     }
 

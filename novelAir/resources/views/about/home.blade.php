@@ -102,7 +102,6 @@
                                 id="subject" type="text" name="subject" value="" placeholder="Ayuda..." required />
                             </div>
 
-
                             <!-- Text Area -->
                             <div class="my-4">
                                 <label for="email" class="text-2xl">Mensaje</label>
@@ -110,6 +109,10 @@
                                 id="email" name="message" required></textarea>
                             </div>
 
+                            @if($sended == 'yes')
+                                <p class="text-green-500 text-center text-LG font-bold mt-5 p-2">Mail Enviado</p>
+                            @endif
+                            
                             <input class="my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
                             type="submit"
                             value="Enviar">

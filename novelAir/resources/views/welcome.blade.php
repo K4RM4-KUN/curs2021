@@ -26,7 +26,9 @@
 
     </head>
     <body class="bg-gradient-to-br from-gray-700 to-gray-900 min-h-screen"> 
-        @include('layouts.navigationNew')
+    
+        @include('layouts.navigationNew')<!--NavBar-->
+        <!-- @include('cookieConsent::index') --><!--Cookies-->
 
         <div class="flex flex-col justify-center items-center | bg-black bg-opacity-0">
 
@@ -48,7 +50,7 @@
             <div class="flex | w-full h-2 | bg-white bg-opacity-80">
             </div>
 
-            <!--Popular VisualNovels/Novels-->
+            <!--Popular VisualNovels/Novels Titles-->
             <div class="flex | w-11/12 | bg-black bg-opacity-70">
                 <p class="text-2xl font-bold text-ourBlue | px-5 py-3">Popular</p>
             </div> 
@@ -56,7 +58,7 @@
                 <p class="text-2xl font-bold text-ourBlue | px-5 py-3">Popular</p>
             </div>
 
-            <!--Popular buttons-->
+            <!--Popular VisualNovels/Novels buttons-->
             <div class="flex justify-around | w-11/12 | bg-black bg-opacity-70 | mx-4">  
                 <div class="w-1/2 | show-visual | bg-blue-700 | border-l-2 border-t-2 border-b-2">
                     <p class="text-white text-sm sm:text-base text-center font-bold">VISUAL NOVELS</p>
@@ -66,31 +68,32 @@
                 </div>
             </div>
 
-            <div class="visual flex | w-11/12 | py-1 | bg-black bg-opacity-50">
+            <!--Popular VisualNovels/Novels Content-->
+            <div class="visual flex flex-wrap | w-11/12 | py-1 | bg-black bg-opacity-50">
                 @foreach($visual_novels as $novel)
-                    <a class="w-1/6 " href="{{url('novel/'.$novel->id)}}">
-                        <div class="flex flex-col justify-between | h-28 sm:h-40 md:h-52 lg:h-64 xl:h-72 | m-1 | bg-cover bg-no-repeat bg-center" style="background-image:url('{{asset($novel->novel_dir.'/cover'.$novel->imgtype)}}');">
+                    <a class="w-2/6 sm:w-1/6 " href="{{url('novel/'.$novel->id)}}">
+                        <div class="flex flex-col justify-between | h-48 sm:h-40 md:h-52 lg:h-64 xl:h-72 | m-1 | bg-cover bg-no-repeat bg-center" style="background-image:url('{{asset($novel->novel_dir.'/cover'.$novel->imgtype)}}');">
                             <div class="flex justify-between | bg-black bg-opacity-0">
-                                <p class="bg-{{$novel->novel_type}} bg-purple-700 | px-1 m-0.5 | rounded | text-xs text-white font-bold | truncate">{{strtoupper($novel->novel_type)}}</p>
-                                <p class="hidden sm:block bg-black bg-opacity-70 | px-1 py-0.5 | text-xs text-white font-bold">{{$novel->mark}}/10</p>
+                                <p class="block | bg-{{$novel->novel_type}} bg-purple-700 | px-1 m-0.5 | rounded | text-xs text-white font-bold | truncate">{{strtoupper($novel->novel_type)}}</p>
+                                <p class="hidden md:block bg-black bg-opacity-70 | px-1 py-0.5 | text-xs text-white font-bold">{{$novel->mark}}/10</p>
                             </div>
                             <div class="flex | bg-black bg-opacity-70">
-                                <p class="text-white text-base font-bold | px-2 py-1 | truncate">{{ucfirst($novel->name)}}</p>
+                                <p class="text-white text-xs sm:text-base font-bold | px-2 py-1 | truncate">{{ucfirst($novel->name)}}</p>
                             </div>
                         </div>
                     </a>
                 @endforeach
             </div> 
-            <div class="novel hidden | w-11/12 | py-1 | bg-black bg-opacity-50">
+            <div class="novel flex flex-wrap | w-11/12 | py-1 | bg-black bg-opacity-50">
                 @foreach($novels as $novel)
-                    <a class="w-1/6 " href="{{url('novel/'.$novel->id)}}">
-                        <div class="flex flex-col justify-between | h-28 sm:h-40 md:h-52 lg:h-64 xl:h-72 | m-1 | bg-cover bg-no-repeat bg-center" style="background-image:url('{{asset($novel->novel_dir.'/cover'.$novel->imgtype)}}');">
+                    <a class="w-2/6 sm:w-1/6 " href="{{url('novel/'.$novel->id)}}">
+                        <div class="flex flex-col justify-between | h-48 sm:h-40 md:h-52 lg:h-64 xl:h-72 | m-1 | bg-cover bg-no-repeat bg-center" style="background-image:url('{{asset($novel->novel_dir.'/cover'.$novel->imgtype)}}');">
                             <div class="flex justify-between | bg-black bg-opacity-0">
-                                <p class="bg-{{$novel->novel_type}} bg-purple-700 | px-1 m-0.5 | rounded | text-xs text-white font-bold | truncate">{{strtoupper($novel->novel_type)}}</p>
-                                <p class="hidden sm:block bg-black bg-opacity-70 | px-1 py-0.5 | text-xs text-white font-bold">{{$novel->mark}}/10</p>
+                                <p class="block | bg-{{$novel->novel_type}} bg-purple-700 | px-1 m-0.5 | rounded | text-xs text-white font-bold | truncate">{{strtoupper($novel->novel_type)}}</p>
+                                <p class="hidden md:block bg-black bg-opacity-70 | px-1 py-0.5 | text-xs text-white font-bold">{{$novel->mark}}/10</p>
                             </div>
                             <div class="flex | bg-black bg-opacity-70">
-                                <p class="text-white text-base font-bold | px-2 py-1 | truncate">{{ucfirst($novel->name)}}</p>
+                                <p class="text-white text-xs sm:text-base font-bold | px-2 py-1 | truncate">{{ucfirst($novel->name)}}</p>
                             </div>
                         </div>
                     </a>
@@ -98,13 +101,13 @@
             </div>
             
             <!--Popular Users-->
-            <div class="hidden md:flex | w-11/12 | bg-black bg-opacity-70">
+            <div class="flex | w-11/12 | bg-black bg-opacity-70">
                 <p class="text-2xl font-bold text-ourBlue | px-5 py-3">Usuarios populares</p>
             </div> 
-            <div class="hidden md:flex flex-row | w-11/12 | py-1 | bg-black bg-opacity-50">
+            <div class="flex flex-row flex-wrap md:flex-nowrap justify-center items-center | w-11/12 | py-1 | bg-black bg-opacity-50">
                 @foreach($users as $user)
-                    <a class="m-2 | w-4/12 sm:w-2/12 | bg-black bg-opacity-70 | rounded-full" href="{{url('perfil/'.$user->id.'/'.$user->username)}}">   
-                        <div class="flex flex-col justify-between | rounded-full | w-1/1 h-28 lg:h-48 xl:h-64 | m-1 | bg-cover bg-no-repeat bg-center" style="background-image:url( 
+                    <a class="m-2 | w-2/6 md:w-1/6 | bg-black bg-opacity-70 " href="{{url('perfil/'.$user->id.'/'.$user->username)}}">   
+                        <div class="flex flex-col justify-between | | w-1/1 h-32 sm:h-40 md:h-48 lg:h-48 xl:h-64 | m-1 | bg-cover bg-no-repeat bg-center" style="background-image:url( 
                             @if(file_exists(public_path() ."/users/". $user->id ."/profile/usericon". $user->imgtype))
                                 '{{asset("/users/". $user->id ."/profile/usericon". $user->imgtype)}}'
                             @else
@@ -125,16 +128,16 @@
             <div class="flex | w-11/12 | bg-black bg-opacity-70">
                 <p class="text-2xl font-bold text-ourBlue | px-5 py-3">Mejores</p>
             </div> 
-            <div class="flex | w-11/12 | py-1 | bg-black bg-opacity-50">
+            <div class="flex flex-wrap | w-11/12 | py-1 | bg-black bg-opacity-50">
                 @foreach($best as $novel)
-                    <a class="w-1/6 " href="{{url('novel/'.$novel->id)}}">
-                        <div class="flex flex-col justify-between | h-28 sm:h-40 md:h-52 lg:h-64 xl:h-72 | m-1 | bg-cover bg-no-repeat bg-center" style="background-image:url('{{asset($novel->novel_dir.'/cover'.$novel->imgtype)}}');">
+                    <a class="w-2/6 sm:w-1/6 " href="{{url('novel/'.$novel->id)}}">
+                        <div class="flex flex-col justify-between | h-48 sm:h-40 md:h-52 lg:h-64 xl:h-72 | m-1 | bg-cover bg-no-repeat bg-center" style="background-image:url('{{asset($novel->novel_dir.'/cover'.$novel->imgtype)}}');">
                             <div class="flex justify-between | bg-black bg-opacity-0">
-                                <p class="bg-{{$novel->novel_type}} bg-purple-700 | px-1 m-0.5 | rounded | text-xs text-white font-bold | truncate">{{strtoupper($novel->novel_type)}}</p>
-                                <p class="hidden sm:block bg-black bg-opacity-70 | px-1 py-0.5 | text-xs text-white font-bold">{{$novel->mark}}/10</p>
+                                <p class="block | bg-{{$novel->novel_type}} bg-purple-700 | px-1 m-0.5 | rounded | text-xs text-white font-bold | truncate">{{strtoupper($novel->novel_type)}}</p>
+                                <p class="block bg-black bg-opacity-70 | px-1 py-0.5 | text-xs text-white font-bold">{{$novel->mark}}/10</p>
                             </div>
                             <div class="flex | bg-black bg-opacity-70">
-                                <p class="text-white text-base font-bold | px-2 py-1 | truncate">{{ucfirst($novel->name)}}</p>
+                                <p class="text-white text-xs sm:text-base font-bold | px-2 py-1 | truncate">{{ucfirst($novel->name)}}</p>
                             </div>
                         </div>
                     </a>
@@ -145,16 +148,16 @@
             <div class="flex | w-11/12 | bg-black bg-opacity-70">
                 <p class="text-2xl font-bold text-ourBlue | px-5 py-3">Ultimas</p>
             </div> 
-            <div class="flex | w-11/12 | py-1 | bg-black bg-opacity-50">
+            <div class="flex flex-wrap | w-11/12 | py-1 | bg-black bg-opacity-50">
                 @foreach($last_novels as $novel)
-                    <a class="w-1/6 " href="{{url('novel/'.$novel->id)}}">
-                        <div class="flex flex-col justify-between | h-28 sm:h-40 md:h-52 lg:h-64 xl:h-72 | m-1 | bg-cover bg-no-repeat bg-center" style="background-image:url('{{asset($novel->novel_dir.'/cover'.$novel->imgtype)}}');">
+                    <a class="w-2/6 sm:w-1/6 " href="{{url('novel/'.$novel->id)}}">
+                        <div class="flex flex-col justify-between | h-48 sm:h-40 md:h-52 lg:h-64 xl:h-72 | m-1 | bg-cover bg-no-repeat bg-center" style="background-image:url('{{asset($novel->novel_dir.'/cover'.$novel->imgtype)}}');">
                             <div class="flex justify-between | bg-black bg-opacity-0">
-                                <p class="bg-{{$novel->novel_type}} bg-purple-700 | px-1 m-0.5 | rounded | text-xs text-white font-bold | truncate">{{strtoupper($novel->novel_type)}}</p>
-                                <p class="hidden sm:block bg-black bg-opacity-70 | px-1 py-0.5 | text-xs text-white font-bold">{{$novel->mark}}/10</p>
+                                <p class="block | bg-{{$novel->novel_type}} bg-purple-700 | px-1 m-0.5 | rounded | text-xs text-white font-bold | truncate">{{strtoupper($novel->novel_type)}}</p>
+                                <p class="hidden md:block bg-black bg-opacity-70 | px-1 py-0.5 | text-xs text-white font-bold">{{$novel->mark}}/10</p>
                             </div>
                             <div class="flex | bg-black bg-opacity-70">
-                                <p class="text-white text-xs md:text-base font-bold | px-2 py-1 | truncate">{{ucfirst($novel->name)}}</p>
+                                <p class="text-white text-xs sm:text-base font-bold | px-2 py-1 | truncate">{{ucfirst($novel->name)}}</p>
                             </div>
                         </div>
                     </a>
@@ -163,7 +166,7 @@
             
         </div>
 
-        @include('layouts.footer')
+        @include('layouts.footer')<!--Footer-->
 
         <script>
             $(document).ready(()=>{ 

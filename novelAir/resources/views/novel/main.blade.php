@@ -24,6 +24,7 @@
     <body class="bg-gradient-to-br from-gray-700 to-gray-900 min-h-screen">
 
         @include('layouts.navigationNew')
+        @include('cookieConsent::index')
 
         <div class="flex w-full">
 
@@ -33,33 +34,35 @@
                 <div class="flex | w-1/1">
 
                     <!--Image and image frame -->
-                    <div class="w-1/1 sm:w-2/6">
-
-                        <div class="flex flex-col |  w-5/6 | mx-auto | mx-auto | w-48 sm:w-64">
-
-                            <p class="text-white text-center text-base font-bold | my-1 mt-5 | rounded | bg-{{$novel[0]->novel_type}} bg-purple-700">
-                                {{strtoupper($novel[0]->novel_type)}}
-                            </p>
-
-                            <img class="w-1/1" src="{{asset($novel[0]->novel_dir.'/cover'.$novel[0]->imgtype)}}" alt="{{$novel[0]->name}}">
-
-                            <p class="text-white text-center text-2xl font-bold | mt-2 | rounded-t | bg-{{$novel[0]->novel_type}} bg-purple-700">
-                                {{$mark}}/10
-                            </p>
-
-                            <div class="flex w-1/1">
-
-                                <a class="w-1/2" href="{{url('vote/'.$novel[0]->id.'/pos')}}">
-                                    <p class="text-green-400 text-center text-base sm:text-2xl font-bold | py-0.5 | border-b-4 border-green-500 | bg-green-800 bg-opacity-60">
-                                        LIKE
+                    <div class="w-full sm:w-2/6">
+                        <div class="flex flex-col | w-5/6 | mx-auto | mx-auto | w-48 sm:w-64">
+                            <div class="flex flex-wrap w-full justify-center">
+                                <div class="w-4/5 sm:w-full">
+                                    <p class="text-white text-center text-base font-bold | my-1 mt-5 | rounded | bg-{{$novel[0]->novel_type}} bg-purple-700">
+                                        {{strtoupper($novel[0]->novel_type)}}
                                     </p>
-                                </a>
 
-                                <a class="w-1/2" href="{{url('vote/'.$novel[0]->id.'/neg')}}">
-                                    <p class="text-red-400 text-center text-base sm:text-2xl font-bold | py-0.5 | border-b-4 border-red-500 | bg-red-800 bg-opacity-60">
-                                        DISLIKE
+                                    <img class="w-full" src="{{asset($novel[0]->novel_dir.'/cover'.$novel[0]->imgtype)}}" alt="{{$novel[0]->name}}">
+
+                                    <p class="text-white text-center text-2xl font-bold | mt-2 | rounded-t | bg-{{$novel[0]->novel_type}} bg-purple-700">
+                                        {{$mark}}/10
                                     </p>
-                                </a>
+
+                                    <div class="flex w-1/1">
+
+                                        <a class="w-1/2" href="{{url('vote/'.$novel[0]->id.'/pos')}}">
+                                            <p class="text-green-400 text-center text-base sm:text-2xl font-bold | py-0.5 | border-b-4 border-green-500 | bg-green-800 bg-opacity-60">
+                                                LIKE
+                                            </p>
+                                        </a>
+
+                                        <a class="w-1/2" href="{{url('vote/'.$novel[0]->id.'/neg')}}">
+                                            <p class="text-red-400 text-center text-base sm:text-2xl font-bold | py-0.5 | border-b-4 border-red-500 | bg-red-800 bg-opacity-60">
+                                                DISLIKE
+                                            </p>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="flex sm:hidden justify-left | w-1/1 | mt-5 mb-2">

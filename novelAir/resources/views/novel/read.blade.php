@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>{{$novel[0]->name}} - {{$chapter[0]->title}}</title>
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
@@ -29,6 +29,7 @@
     </head>
     <!-- Body: Tailwind el "bg" funciona raro, no llena toda la pantalla -->
     <body class="bg-gradient-to-br from-gray-700 to-gray-900 min-h-screen container mx-auto min-h-screen">
+        @include('cookieConsent::index')
 
         <div class="flex flex-col">
 

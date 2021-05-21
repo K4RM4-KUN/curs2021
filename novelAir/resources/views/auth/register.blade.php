@@ -21,9 +21,8 @@
     <body class="bg-gradient-to-br from-gray-700 to-gray-900 min-h-screen">
 
         @include('layouts.navigationNew')
-
-        <div class="flex w-full h-full justify-center">
-            <div class="flex | w-full md:w-7/12 xl:w-5/12 | rounded-md | my-20 | bg-cover " style="background-image: url({{asset('images/bg-nmanager.jpg')}})">
+        <div class="flex w-full justify-center">
+            <div class="flex | w-1/1 md:w-7/12 xl:w-5/12 | rounded-md | my-20 | bg-cover " style="background-image: url({{asset('images/bg-nmanager.jpg')}})">
                 <div class="bg-black bg-opacity-70 w-full px-5 sm:px-14 py-10 rounded-md">
                     <!-- Errores -->
                     @if ($errors->any())
@@ -42,35 +41,35 @@
                         <div class="my-4">
                             <label for="username" class="text-2xl">Username</label>
                             <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-                            id="username" type="username" name="username" required autofocus />
+                            id="username" type="username" name="username" value="{{old('username')}}" required autofocus />
                         </div>
 
                         <!-- Name -->
                         <div class="my-4">
                             <label for="name" class="text-2xl">Nombre<label>
                             <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-                            id="name" type="text" name="name" required autofocus />
+                            id="name" type="text" name="name" value="{{old('name')}}" required autofocus />
                         </div>
 
                         <!-- Surname -->
                         <div class="my-4">
                             <label for="surname" class="text-2xl">Apellidos</label>
                             <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-                            id="surname" type="text" name="surname" required autofocus />
+                            id="surname" type="text" name="surname" value="{{old('surname')}}" required autofocus />
                         </div>
 
                         <!-- Date -->
                         <div class="my-4">
                             <label for="birth_date" class="text-2xl">Fecha de nacimiento</label>
                             <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-                            id="birth_date" type="date" name="birth_date" required autofocus />
+                            id="birth_date" type="date" name="birth_date" value="{{old('birth_date')}}" required autofocus />
                         </div>
 
                         <!-- Email Address -->
                         <div class="my-4">
                             <label for="email" class="text-2xl">Email</label>
                             <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-                            id="email" type="email" name="email" required />
+                            id="email" type="email" name="email" value="{{old('email')}}" required />
                         </div>
 
                         <!-- Password -->
@@ -85,6 +84,11 @@
                             <label for="password_confirmation" class="text-2xl">Confirmar Contraseña</label>
                             <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
                             id="password_confirmation" type="password" name="password_confirmation" required />
+                        </div>
+                        <div class="flex items-center justify-center my-4">
+                            <label for="accept" class="text-sm mr-5">Aceptar la <a href="{{url('terminos/privacidad')}}">"<u>Política de Privacidad</u>"</a> y los <a href="{{url('terminos/uso')}}">"<u>Términos de Uso</u>"</a></label>
+                            <input class="shadow-lg text-blue-500 border-none appearance-none rounded w-10 h-10 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                            id="accept" type="checkbox" name="accept" required />
                         </div>
 
                         <div class="my-4">
@@ -101,7 +105,7 @@
                             </div>
                         </div>
                     </form>
-                <div>
+                </div>
             </div>
         </div>
     </body>

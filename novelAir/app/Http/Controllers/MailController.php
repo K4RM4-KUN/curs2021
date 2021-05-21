@@ -21,30 +21,41 @@ class MailController extends Controller
             'content' => '',
             'content.*' => 'max:4096'
         ]);
+
         //Hacer que se guarde en la base de datos
         $newVerify = new Verification;
         $newVerify->SetAttribute('user_id',Auth::user()->id);
         $newVerify->SetAttribute('num_id', $request->numId);
         $newVerify->save();
+
         $user = User::where('id',Auth::user()->id)->first();
+
         $mail = new VerificationTest($request->all(),$user);
+
         Mail::to('javierfuenteabalo@gmail.com')->send($mail);
 
         return redirect('usuario/ajustes/author');
     }
+
     public function contactRequest(Request $request,$from = null){ 
         $request->validate([ 
             'email' => 'required|max:255',
             'subject' => 'required|max:200|min:5', 
             'message' => 'required|max:600|min:70', 
         ]);
+
         $user = User::where('id',Auth::user()->id)->first(); 
+
         $mail = new CreateMail($request->all(),$user);
+
         if($from != null){
             Mail::to($request->email,'javierfuenteabalo@gmail.com')->send($mail);
             return redirect('admin/user/'.$from);
+
         }
+
         Mail::to('javierfuenteabalo@gmail.com')->send($mail);
-        return redirect('nosotros/contactanos');
+        
+        return redirect('nosotros/contactanos/enviado');
     }
 }

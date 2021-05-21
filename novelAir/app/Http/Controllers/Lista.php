@@ -41,6 +41,7 @@ class Lista extends Controller
                 
                     if($chapt->chapter_n <= $last[0]->chapter_n){
                         unset($data["novels"][$key]);
+
                     }
 
                 } else {
@@ -65,21 +66,30 @@ class Lista extends Controller
                         $novel->SetAttribute('lastview',$last[0]->chapter_n);
     
                     }
+
                     //Nota
                     $pos = Mark::where('novel_id',$novel->id)->where("like",1)->get();
                     $neg =  Mark::where('novel_id',$novel->id)->where("like",0)->get();
+
                     if(count($pos)+count($neg) != 0){
                         $novel->SetAttribute('mark',round(((count($pos)*100)/(count($pos)+count($neg)))/10,1));
+
                     } else {
                         $novel->SetAttribute('mark',0);
+
                     }
+
                 }
                 
             }
+
             $data['novels'] = $data['novels']->sortbydesc('lastnovels');
+
         } else {
             return redirect(url('listas/following'));
+
         }
+        
         //dd($data['novels']);
         return view('list.lists',$data);
     }

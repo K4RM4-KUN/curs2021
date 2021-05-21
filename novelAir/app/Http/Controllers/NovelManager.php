@@ -18,8 +18,7 @@ class NovelManager extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index(){
         //$data["followers"] = count((UNS::where('novel_id',1)->where("state_id",(States::where('state_name', "following")->first())->id)->get()));
         $data["novels"] = Novel::
         withCount([ 'uns','uns as uns_count' => function ($query) {
@@ -33,17 +32,24 @@ class NovelManager extends Controller
         paginate(5);
         $data["viewStats"] = 0;
         $data["followersStats"] = 0;
+
         foreach($data["novels"] as $novel){
             $data["viewStats"] += $novel->chapters_sum_views;        
             $data["followersStats"] += $novel->uns_count;
+
             $pos = Mark::where('novel_id',$novel->id)->where("like",1)->get();
             $neg =  Mark::where('novel_id',$novel->id)->where("like",0)->get();
+
             if(count($pos)+count($neg) != 0){
                 $novel->SetAttribute("Mark", round(((count($pos)*100)/(count($pos)+count($neg)))/10,1));
+
             } else {
                 $novel->SetAttribute("Mark",0);
+
             }
+
         }
+
         return view("novelManager",$data);
     }
 

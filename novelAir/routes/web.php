@@ -35,6 +35,7 @@ Route::get('/dashboard', function () {
 //Test ->middleware(['auth'])
 
 //About us
+Route::get('nosotros/{type?}/{end?}',[AboutController::class,'indexHome'])->name('aboutUs');
 Route::get('nosotros/{type?}',[AboutController::class,'indexHome'])->name('aboutUs');
 Route::get('terminos/{type?}',[AboutController::class,'index'])->name('aboutTerms');
 Route::post('contactar/{from?}',[MailController::class,'contactRequest'])->name('contact');
@@ -54,6 +55,8 @@ Route::get('admin/blockUser/{id?}',[AdminController::class,'adminBlockUser'])->m
 Route::get('admin/removeUser/{id?}',[AdminController::class,'adminRemoveUser'])->middleware(['auth','adminsecurity']);
 Route::get('admin/blockNovel/{id?}',[AdminController::class,'adminBlockNovel'])->middleware(['auth','adminsecurity']);
 Route::get('admin/removeNovel/{id?}',[AdminController::class,'adminRemoveNovel'])->middleware(['auth','adminsecurity']);
+Route::post('admin/addImg',[AdminController::class,'adminAddImg'])->middleware(['auth','adminsecurity']);
+Route::get('admin/rmImf/{name?}',[AdminController::class,'adminRmImg'])->middleware(['auth','adminsecurity']);
 
 //User
 Route::get('perfil/{id}/{username?}',[UserProfile::class,'profileIndex']);

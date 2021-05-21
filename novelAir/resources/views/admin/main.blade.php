@@ -144,6 +144,54 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Imagenes carrusel -->
+                <div class="w-full sm:w-10/12 | my-5 | bg-white | rounded | h-full">
+                    <div class="w-full bg-red-600">
+                        <p class="p-3 text-xl text-white text-center mb-3">Imagenes carrousel</p>
+                    </div>
+                    <div class="mx-7">
+                        <div>
+                            <form action="{{url('admin/addImg')}}" method="POST" enctype="multipart/form-data">
+                                @csrf
+
+                                <div class="flex items-center justify-center">
+                                    <div class="flex w-full justify-center bg-grey-lighter">
+                                            <input class=""
+                                            
+                                            multiple 
+                                            type="file" 
+                                            accept="image/jpg,image/jpeg,image/png" 
+                                            name="content[]" 
+                                            id="content">
+                                    </div>
+
+                                </div>
+
+                                <div class="flex items-center justify-center my-3">
+
+                                    <input class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline my-2"" 
+                                    type="submit"
+                                    value="Añadir imagenes">
+
+                                </div>
+
+                            </form>
+                        <div>
+                        <div class="flex flex-wrap justify-center">
+                            @foreach($content as $c) 
+                                <div class="flex flex-col p-5 w-1/2 sm:w-1/3">
+                                    <img src="images/homeShow/{{$c->getFilename()}}" class="w-full" alt="">
+                                    <a href="{{url('admin/rmImf/'.$c->getFilename())}}">
+                                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold w-full py-2 px-4 rounded focus:outline-none focus:shadow-outline my-2">
+                                            Eliminar
+                                        </button>
+                                    </a>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

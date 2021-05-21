@@ -25,6 +25,7 @@
 <body class="bg-gradient-to-br from-gray-700 to-gray-900 min-h-screen">
     
     @include('layouts.navigationNew')
+    @include('cookieConsent::index')
     
     <div class="flex flex-wrap w-11/12 sm:w-10/12 mx-auto bg-black bg-opacity-30">
         <div class="flex | w-full | bg-black bg-opacity-60">
@@ -66,7 +67,7 @@
                             <!-- Orden -->
                             <div class="my-4 ml-3">
                                 <label for="order">Order</label>
-                                <select name="order" class="text-black" id="order">
+                                <select name="order" class="text-black w-full" id="order">
                                     <option value="desc" @if ($filters["order"] == 0) selected @endif>Más nuevos</option>
                                     <option value="asc" @if ($filters["order"] == 1) selected @endif>Más viejos</option>
                                     <option value="more" @if ($filters["order"] == 2) selected @endif>Más capitulos</option>
@@ -129,11 +130,12 @@
 
                             <hr class="w-9/12 mx-auto justify-items-center">
 
+                            <!-- Genero -->
                             <div class="my-4 ml-3">
                                 <label for="genre">Genero</label>
-                                <select class="mi-selector shadow-lg border-none appearance-none rounded w-3/6 py-2 px-3 text-white leading-tight"
+                                <select class="mi-selector shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-white leading-tight"
                                     name="genre">
-                                        <option value='null'>-----------------------------------</option>
+                                        <option value='null'>Todos</option>
                                         @foreach($genres as $genre)
                                             <option value='{{$genre->id}}'  @if ($filters["genre"] == $genre->id) selected @endif>{{strtoupper($genre->name)}}</option>
                                         @endforeach

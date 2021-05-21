@@ -25,6 +25,7 @@
     <body class="bg-gradient-to-br from-gray-700 to-gray-900 min-h-screen">
 
         @include('layouts.navigationNew')
+        @include('cookieConsent::index')
 
         <div class="flex justify-center | w-full">
 
@@ -58,7 +59,7 @@
                             <div class="flex flex-col | content-end">
                                 <div class="my-3">
                                     @if ($myProfile)
-                                        <a class="my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
+                                        <a class="my-2 w-full h-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
                                         href="{{url('usuario/ajustes/perfil')}}">Editar Usuario</a>
                                     @else
                                         <a class="my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 

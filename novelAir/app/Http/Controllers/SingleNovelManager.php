@@ -30,14 +30,13 @@ class SingleNovelManager extends Controller
     }
 
     public function novelIndex($id){
-        $data["novels"] = Novel:: where("id",$id)->get();
         //Cosas de tags
         //$data["tags"] = DB::table("tags_novels")->join('tags',"tags_novels.tag_id","=","tags.id")->where("novel_id",$id)->get();
+        $data["novels"] = Novel:: where("id",$id)->get();
         $data["chapters"] = Chapter:: where("novel_id",$id)->orderby("chapter_n")->paginate(10);
         $data["genres"] = Genre::all();
         $data['rolUser'] = User_Role::with('role')->where('user_id',Auth::user()->id)->first();
         $data['payChapter'] = PaymentChapter::where('novel_id',$id)->first();
-
         
         return view("viewNovel",$data);
     }
@@ -45,11 +44,15 @@ class SingleNovelManager extends Controller
     public function chapterIndex($id,$chapter){
         $data["novels"] = Novel:: where("id",$id)->get();
         $data["chapter"] = Chapter::where("id",$chapter)->get();
+
         $files = File::files(public_path("/".$data["chapter"][0]->route));
+
         if(count($files) == 0){
             $data["preview"] = 'images/coverdefault.png';
+
         } else {
             $data["preview"] = $data["chapter"][0]->route."/".$files[0]->getFilename();
+
         }
         
         return view("viewChapter",$data);
@@ -68,11 +71,9 @@ class SingleNovelManager extends Controller
             ["novel_id", $id],
             ["chapter_n", $chapter]
         ])->get();
-
         $data["chapters"] = Chapter:: where([
             ["novel_id", $id],
         ])->orderbydesc('chapter_n')->get();
-
         $data["content"] = File::files(public_path()."/".$data["chapter"][0]->route);
         
         return view('chapter',$data);
@@ -81,12 +82,10 @@ class SingleNovelManager extends Controller
 
     public function imageChapterIndex($id,$chapter){
         $data["novel"] = Novel:: where("id",$id)->get();
-
         $data["chapter"] = Chapter:: where([
             ["novel_id", $id],
             ["id", $chapter]
         ])->get();
-
         $data["content"] = File::files(public_path()."/".$data["chapter"][0]->route);
 
         return view('chapterImages',$data);
@@ -99,7 +98,6 @@ class SingleNovelManager extends Controller
             'sinopsis' => 'required|string|max:400',
             'cover' => 'required|mimes:jpeg,jpg,png|max:1024|dimensions:max_width=900,max_height=1350,min_width=300,min_height=450',
         ]);
-            //dimensions:max_width=899,max_height=1349,min_width=299,min_height=449,ratio=9/16|max:1024
 
         $image = $request->file('cover');
 
@@ -109,31 +107,40 @@ class SingleNovelManager extends Controller
         $novel->setAttribute('genre', $request->genre);
         $novel->setAttribute('imgtype', ".".explode(".", $image->getClientOriginalName())[1]);
         $novel->setAttribute('sinopsis', $request->sinopsis);
-        //$novel->setAttribute('novel_dir', public_path()."/users/".Auth::user()->id."/novels/".$novel->id);
+
         if (isset($request->adultContent)){
         	$novel->setAttribute('adult_content', 1);
+
         }else{
         	$novel->setAttribute('adult_content', 0);
+
         }
         
         if (isset($request->visualNovel)){
         	$novel->setAttribute('visual_novel', 1);
+
         	if (isset($request->typeOther)){
         		$novel->setAttribute('novel_type', $request->typeOther);
+
         	}else {
         		$novel->setAttribute('novel_type', $request->gender);
+
         	}
+
         }else{
         	$novel->setAttribute('visual_novel', 0);
             $novel->setAttribute('novel_type', 'novela');
+
         }
         
         if (isset($request->public)){
         	$novel->setAttribute('public', 1);
+
         }else{
         	$novel->setAttribute('public', 0);
+
         }
-        //dd($novel);
+        
         $novel->save();
 
         $novel = Novel::find($novel->id);
@@ -165,12 +172,14 @@ class SingleNovelManager extends Controller
                 }
             } 
         }*/
+
         File::makeDirectory(public_path()."/".$novel->novel_dir , $mode = 0775, true);
+
         $image->move(public_path()."/".$novel->novel_dir,"cover.".explode(".", $image->getClientOriginalName())[1]);
 
         $pay = new PaymentChapter;
-            $pay->SetAttribute('novel_id',$novel->id);
-            $pay->SetAttribute('payment_chapters',0);
+        $pay->SetAttribute('novel_id',$novel->id);
+        $pay->SetAttribute('payment_chapters',0);
         $pay->save();
 
         return redirect('novel_manager');
@@ -185,34 +194,48 @@ class SingleNovelManager extends Controller
         ]);
 
         $chapter = new Chapter;
+
         if (!(Chapter::where('chapter_n', $request->chapter_n)->where('novel_id', $request->id))->exists()){
             $chapter->setAttribute('novel_id', $request->id);
             $chapter->setAttribute('title', $request->title);
             $chapter->setAttribute('chapter_n', $request->chapter_n);
             $chapter->setAttribute('route', $request->novel_dir."/".$request->chapter_n);
+
             if (isset($request->public)){
                 $chapter->setAttribute('public', 1);
+
             }else{
                 $chapter->setAttribute('public', 0);
+
             }
+
             $chapter->save();
+
         }else{
             $request->validate([
                 'chapter_n' => 'unique:chapters'
             ]);
+
         }
 
         File::makeDirectory(public_path()."/".$chapter->route, $mode = 0775, true);
+
         $counter = 1;
+
         foreach($request->file('content') as $image){
             if($counter < 10){
                 $image->move(public_path()."/".$chapter->route."/","00".$counter.".".explode(".", $image->getClientOriginalName())[1]);  
+
             } else if($counter < 100){
                 $image->move(public_path()."/".$chapter->route."/","0".$counter.".".explode(".", $image->getClientOriginalName())[1]); 
+
             } else {
                 $image->move(public_path()."/".$chapter->route."/",$counter.".".explode(".", $image->getClientOriginalName())[1]); 
+
             }
+
             $counter++;
+            
         }
 
         return redirect('novel_manager/chapterImages/'.$request->id."/".$chapter->id);
@@ -223,19 +246,27 @@ class SingleNovelManager extends Controller
             'content' => 'required',
             'content.*' => 'mimes:jpeg,jpg,png|max:1024'
         ]);
+
         $route = public_path("/".$request->route);
         $files = File::files($route);
         $counter = count($files)+1;
+
         foreach($request->file('content') as $image){
             if($counter < 10){
                 $image->move(public_path()."/".$request->route."/","00".$counter.".".explode(".", $image->getClientOriginalName())[1]);   
+
             } else if($counter < 100){ 
                 $image->move(public_path()."/".$request->route."/","0".$counter.".".explode(".", $image->getClientOriginalName())[1]); 
+
             } else {
                 $image->move(public_path()."/".$request->route."/",$counter.".".explode(".", $image->getClientOriginalName())[1]); 
+
             }
+
             $counter++;
+
         }
+
         return redirect('novel_manager/chapterImages/'.$request->novel_id."/".$request->id);
     }
 
@@ -258,6 +289,7 @@ class SingleNovelManager extends Controller
         File::deleteDirectory($chapter->route);
 
         Chapter::destroy($id);
+
         return redirect('novel_manager/'.$novel);
         //File::deleteDirectory("users/9");
     }
@@ -275,15 +307,19 @@ class SingleNovelManager extends Controller
             
             if (isset($request->public)){
                 $chapter->public = 1;
+
             }else{
                 $chapter->public = 0;
+
             }
             
             $chapter->save();
+
         }else{
             $request->validate([
                 'chapter_n' => 'unique:chapters'
             ]);
+
         }
 
         return redirect('novel_manager/'.$request->novel_id."/".$request->id);
@@ -304,19 +340,26 @@ class SingleNovelManager extends Controller
         
         if (isset($request->adultContent)){
         	$novel->adult_content = 1;
+
         }else{
         	$novel->adult_content = 0;
+
         }
         
         if (isset($request->public)){
         	$novel->public = 1;
+
         }else{
         	$novel->public = 0;
+
         }
+
         if (isset($request->end)){
         	$novel->ended = 1;
+
         }else{
         	$novel->ended = 0;
+
         }
         
         //Comentario del autor
@@ -327,9 +370,8 @@ class SingleNovelManager extends Controller
         if (isset($request->cover)){
             $image = $request->file('cover');
             $image->move(public_path()."/".$novel->novel_dir."/","cover.".explode(".", $image->getClientOriginalName())[1]); 
+
         }
-
-
 
         //Cosas de tags
         
@@ -366,11 +408,15 @@ class SingleNovelManager extends Controller
 
             if(!(isset($request->noPaymentChapters)) && $request->numPaymentChapters != ""){
                 $pay->payment_chapters = $request->numPaymentChapters;
+
             }elseif(!(isset($request->noPaymentChapters)) && isset($request->allPaymentChapters)){
                 $pay->payment_chapters = (-1);
+
             }else{
                 $pay->payment_chapters = 0;
+
             }
+
             $pay->save();
 
         }else{
@@ -379,49 +425,68 @@ class SingleNovelManager extends Controller
 
             if(!(isset($request->noPaymentChapters)) && $request->numPaymentChapters != ""){
                 $pay->SetAttribute('payment_chapters',$request->numPaymentChapters);
+
             }elseif(!(isset($request->noPaymentChapters)) && isset($request->allPaymentChapters)){
                 $pay->SetAttribute('payment_chapters',-1);
+
             }else{
                 $pay->SetAttribute('payment_chapters',0);
-            }
-            $pay->save();
-        }
 
-        
+            }
+
+            $pay->save();
+
+        }
 
         return redirect('novel_manager/'.$request->id);
     }
 
     public function editChapterImages(Request $request){
         foreach(explode(",",$request->toEliminate) as $delete){
-                if(File::exists(public_path("/".$request->route."/".$delete))){
-                    File::delete(public_path("/".$request->route."/".$delete));
-                }
+            if(File::exists(public_path("/".$request->route."/".$delete))){
+                File::delete(public_path("/".$request->route."/".$delete));
+
             }
+            
+        }
+
         $route = public_path("/".$request->route);
         $files = File::files($route);
         $update = explode(",",$request->toUpdateNum);
+
         for($i=0;$i<count($files);$i++){
             if($files[$i] != $update[$i]){
                 if($i+1 < 10){
                     File::move($route."/".$update[$i],$route."/"."00".($i+1)."-".$update[$i]);
+
                 } else if($i+1 < 100){
                     File::move($route."/".$update[$i],$route."/"."0".($i+1)."-".$update[$i]);
+
                 } else {
                     File::move($route."/".$update[$i],$route."/".($i+1)."-".$update[$i]);
+
                 }
+
             }
+
         }
+
         $files = File::files($route);
+
         for($i=0;$i<count($files);$i++){
             if($i+1 < 10){
                 File::move($route."/".$files[$i]->getFilename(),$route."/"."00".($i+1).".".$files[$i]->getExtension());
+
             } else if($i+1 < 100){
                 File::move($route."/".$files[$i]->getFilename(),$route."/"."0".($i+1).".".$files[$i]->getExtension());
+
             } else {
                 File::move($route."/".$files[$i]->getFilename(),$route."/".($i+1).".".$files[$i]->getExtension());
+
             }
+
         }
+
         //Cache::flush();
     }
 

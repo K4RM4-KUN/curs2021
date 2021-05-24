@@ -5,14 +5,14 @@
 
             <div class="flex w-full md:w-2/12 justify-center items-center">
                 <!--LOGO-->
-                <div class="w-1/2 md:w-40 flex justify-center"> 
+                <div class="w-1/1 md:w-1/1 flex justify-center"> 
                     <a class="" href="{{url('/')}}">
-                        <img class="h-20 w-40" src="{{asset('images/logo2.png')}}" alt="logo">
+                        <img class="h-20 w-1/1" src="{{asset('images/logo2.png')}}" alt="logo">
                     </a> 
                 </div> 
                 <div class="display-button | flex md:hidden items-center justify-center | w-1/2 |">
                     <p class="text-ourBlue font-bold text-base | py-2 pl-5">Menu</p>
-                    <p class="display-status text-ourBlue font-bold  text-base | py-2 px-5">\/</p>
+                    <p class="display-status text-ourBlue font-bold text-sm sm:text-base | py-2 px-2 sm:px-5">\/</p>
                 </div>
             </div>
             <!-- primary -->
@@ -64,7 +64,7 @@
                         <!--LOGGED-->
                         <div class="flex justify-center items-center w-full">
                             <div class="flex justify-center | w-1/1">
-                                <a href="{{url('perfil/'.Auth::user()->id.'/'.Auth::user()->username)}}">
+                                <a href="{{url('perfil/'.Auth::user()->id.'/'.Auth::user()->username.'personal')}}">
                                     <img class="w-20" 
                                     src="{{asset('users/'.Auth::user()->id.'/profile/usericon'.Auth::user()->imgtype)}}" 
                                     alt="">
@@ -72,7 +72,7 @@
                             </div>
                             <div class="flex flex-row md:flex-col md:ml-2 | w-3/3">
                                 <div class="flex justify-center h-1/3">
-                                    <a href="{{url('perfil/'.Auth::user()->id.'/'.Auth::user()->username)}}">
+                                    <a href="{{url('perfil/'.Auth::user()->id.'/'.Auth::user()->username.'personal')}}">
                                         <p class="px-3 font-bold text-ourBlue hover:bg-ourBlue hover:text-white text-lg">{{Auth::user()->username}}</p>
                                     </a>
                                 </div>

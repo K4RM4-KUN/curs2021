@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
         <!-- Styles -->
+        <link rel="icon" href="{{ URL::asset('favicon.ico') }}" type="image/x-icon"/>
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <style>
         body{
@@ -30,10 +31,10 @@
             @include('layouts.navigationNew')
         <div class="flex flex-col justify-center items-center | w-full">
             <!--AboutUs Nav-->
-            <div class="border-b-2 border-gray-600 | bg-white | font-bold text-center text-xs lg:text-sm xl:text-base text-gray-400 | space-x-4 flex flex-col sm:flex-row justify-center items-center | w-full"> 
+            <div class="border-b-2 border-gray-600 | bg-white | font-bold text-center text-xs lg:text-sm xl:text-base text-gray-400 | space-x-0 sm:space-x-4 flex flex-col sm:flex-row justify-center items-center | w-full"> 
                 <a 
                 href="{{url('nosotros')}}"
-                class="flex justify-center items-center | h-24 w-full sm:w-2/12 |  bg-white hover:bg-gray-100 hover:text-gray-600 ">
+                class="flex justify-center items-center | h-24 w-full sm:w-2/12 |  bg-white hover:bg-gray-100 hover:text-gray-600">
                     <p>GENERAL</p>
                 </a> 
                 <a 
@@ -58,9 +59,9 @@
                 </a> 
             </div>
             <!--AboutUs Content-->
-            <div class="w-1/1 sm:w-10/12 bg-white bg-opacity-70 shadow-xl">
+            <div class="w-full sm:w-10/12 bg-white bg-opacity-70 shadow-xl text-justify">
                 <!--AboutUs Terminos de uso-->
-                <div class="@if($type != 'uso') hidden @endif px-10 pt-3 pb-10 | text-sm">
+                <div class="@if($type != 'uso') hidden @endif w-full px-10 pt-3 pb-10 | text-sm">
                     <p class="text-ourBlue text-2xl font-bold text-left p-2">Términos de uso</p>
                     <h2 class="text-ourBlue text-lg font-bold text-left p-2">Aceptación de los Términos del Servicio y Normas de la Comunidad que a continuación se
                         detallan:</h2>
@@ -214,7 +215,7 @@
                     <p class=" mt-5"><i>Última Actualización: 18/5/2021</i></p>
                 </div>
                 <!--AboutUs Politica de privacidad-->
-                <div class="@if($type != 'privacidad') hidden @endif px-10 pt-3 pb-10 | text-sm">
+                <div class="@if($type != 'privacidad') hidden @endif w-full px-10 pt-3 pb-10 | text-sm">
                     <p class="text-ourBlue text-2xl font-bold text-left p-2">Política de privacidad</p>
                     <p class="text-gray-700 text-xs px-5 py-2 text-justify">En esta declaración de privacidad te explicamos qué datos personales recogemos de nuestros
                         usuarios y cómo los utilizamos. Te animamos a leer detenidamente estos términos antes de
@@ -323,7 +324,7 @@
                     <p class="mt-5"><i>Última Actualización: 18/5/2021</i></p>
                 </div>
                 <!--AboutUs Politica de comunidad-->
-                <div class="@if($type != 'comunidad') hidden @endif px-10 pt-3 pb-10 | text-sm">
+                <div class="@if($type != 'comunidad') hidden @endif w-full px-10 pt-3 pb-10 | text-sm">
                     <p class="text-ourBlue text-2xl font-bold text-left p-2">Política de comunidad</p>
                     <p></p>
                     <h2 class="text-ourBlue text-lg font-bold text-left p-2">Aceptación de los Términos del Servicio y Normas de la Comunidad que a continuación se
@@ -383,7 +384,7 @@
                     <p class="mt-5"><i>Última Actualización: 18/5/2021</i></p>
                 </div>
                 <!--AboutUs Politica de privacidad-->
-                <div class="@if($type != 'cookies') hidden @endif px-10 pt-3 pb-10 | text-sm">
+                <div class="@if($type != 'cookies') hidden @endif w-full px-10 pt-3 pb-10 | text-sm">
                     <p class="text-ourBlue text-2xl font-bold text-left p-2">Política de cookies</p>  
                     <p class="text-gray-700 text-xs px-5 py-2 text-justify">NovelAir SL informa acerca del uso de las cookies en sus páginas webs</p>
 

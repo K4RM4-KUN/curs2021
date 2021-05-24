@@ -3,13 +3,13 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>Laravel</title>
+        <title>NovelAir</title>
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
         <!-- Styles -->
+        <link rel="icon" href="{{ URL::asset('favicon.ico') }}" type="image/x-icon"/>
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <style>
         body{
@@ -30,7 +30,7 @@
         @include('layouts.navigationNew')<!--NavBar-->
         <!-- @include('cookieConsent::index') --><!--Cookies-->
 
-        <div class="flex flex-col justify-center items-center | bg-black bg-opacity-0">
+        <div class="flex flex-col justify-center items-center | w-full |">
 
             <!--Carrousel Container-->
             <div class="flex | w-full | bg-fixed" style="background-image:url({{asset('images/bg-show.jpg')}});">
@@ -52,19 +52,16 @@
 
             <!--Popular VisualNovels/Novels Titles-->
             <div class="flex | w-11/12 | bg-black bg-opacity-70">
-                <p class="text-2xl font-bold text-ourBlue | px-5 py-3">Popular</p>
+                <p class="text-xl sm:text-2xl font-bold text-ourBlue | px-5 py-3">Popular</p>
             </div> 
-            <div class="hidden | w-11/12 | bg-black bg-opacity-70">
-                <p class="text-2xl font-bold text-ourBlue | px-5 py-3">Popular</p>
-            </div>
 
             <!--Popular VisualNovels/Novels buttons-->
             <div class="flex justify-around | w-11/12 | bg-black bg-opacity-70 | mx-4">  
-                <div class="w-1/2 | show-visual | bg-blue-700 | border-l-2 border-t-2 border-b-2">
-                    <p class="text-white text-sm sm:text-base text-center font-bold">VISUAL NOVELS</p>
+                <div class="flex justify-center items-center | w-1/2 | show-visual | bg-blue-700 | border-l-2 border-t-2 border-b-2">
+                    <p class="text-white text-xs sm:text-base text-center font-bold">VISUAL NOVELS</p>
                 </div> 
-                <div class="w-1/2 | show-novel | bg-ourBlue | border-r-2 border-t-2 border-b-2 ">
-                    <p class="text-white text-sm sm:text-base text-center font-bold">NOVELAS</p>
+                <div class="flex justify-center items-center | w-1/2 | show-novel | bg-ourBlue | border-r-2 border-t-2 border-b-2 ">
+                    <p class="text-white text-xs sm:text-base text-center font-bold">NOVELAS</p>
                 </div>
             </div>
 
@@ -102,7 +99,7 @@
             
             <!--Popular Users-->
             <div class="flex | w-11/12 | bg-black bg-opacity-70">
-                <p class="text-2xl font-bold text-ourBlue | px-5 py-3">Usuarios populares</p>
+                <p class="text-xl sm:text-2xl font-bold text-ourBlue | px-5 py-3">Usuarios populares</p>
             </div> 
             <div class="flex flex-row flex-wrap md:flex-nowrap justify-center items-center | w-11/12 | py-1 | bg-black bg-opacity-50">
                 @foreach($users as $user)
@@ -126,7 +123,7 @@
 
             <!--Mejores Novelas-->
             <div class="flex | w-11/12 | bg-black bg-opacity-70">
-                <p class="text-2xl font-bold text-ourBlue | px-5 py-3">Mejores</p>
+                <p class="text-xl sm:text-2xl font-bold text-ourBlue | px-5 py-3">Mejores</p>
             </div> 
             <div class="flex flex-wrap | w-11/12 | py-1 | bg-black bg-opacity-50">
                 @foreach($best as $novel)
@@ -146,7 +143,7 @@
 
             <!--Ultimas Novelas-->
             <div class="flex | w-11/12 | bg-black bg-opacity-70">
-                <p class="text-2xl font-bold text-ourBlue | px-5 py-3">Ultimas</p>
+                <p class="text-xl sm:text-2xl font-bold text-ourBlue | px-5 py-3">Ultimas</p>
             </div> 
             <div class="flex flex-wrap | w-11/12 | py-1 | bg-black bg-opacity-50">
                 @foreach($last_novels as $novel)

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Profile;
 use App\Models\User_Role;
+use App\Models\Author;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -69,11 +70,15 @@ class RegisteredUserController extends Controller
         $newRole->SetAttribute('role_id',1);
         $newRole->save();
 
+        $newRole = new Author;
+        $newRole->SetAttribute('subscriptions',1);
+        $newRole->SetAttribute('donations',0); 
+        $newRole->save();
+
         $path = public_path() ."/users/". $user->id;
         File::makeDirectory($path , $mode = 0775, true);
         File::makeDirectory($path."/novels" , $mode = 0775, true);
         File::makeDirectory($path."/profile" , $mode = 0775, true);
-
         return redirect(RouteServiceProvider::HOME);
     }
 }

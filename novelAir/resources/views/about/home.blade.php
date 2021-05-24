@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
         <!-- Styles -->
+        <link rel="icon" href="{{ URL::asset('favicon.ico') }}" type="image/x-icon"/>
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <style>
         body{
@@ -30,7 +31,7 @@
             @include('layouts.navigationNew')
         <div class="flex flex-col justify-center items-center | w-full">
             <!--AboutUs Nav-->
-            <div class="border-b-2 border-gray-600 | bg-white | font-bold text-center text-xs lg:text-sm xl:text-base text-gray-400 | space-x-4 flex flex-col sm:flex-row justify-center items-center | w-full"> 
+            <div class="border-b-2 border-gray-600 | bg-white | font-bold text-center text-xs lg:text-sm xl:text-base text-gray-400 | space-x-0 sm:space-x-4 flex flex-col sm:flex-row justify-center items-center | w-full"> 
                 <a 
                 href="{{url('nosotros/info')}}"
                 class="flex justify-center items-center | h-24 w-full sm:w-2/12 | @if($type == 'info')bg-gray-100 text-gray-600 @else bg-white hover:bg-gray-100 hover:text-gray-600 @endif ">
@@ -48,9 +49,9 @@
                 </a>  
             </div>
             <!--AboutUs Content-->
-            <div class="w-1/1 sm:w-10/12 bg-white bg-opacity-70 shadow-xl">
+            <div class="text-justify w-full sm:w-10/12 bg-white bg-opacity-70 shadow-xl">
                 <!--AboutUs General-->
-                <div class="@if($type != 'info') hidden @endif px-10 pt-3 pb-10 | text-sm">
+                <div class="@if($type != 'info') hidden @endif w-full | px-10 pt-3 pb-10 | text-sm">
                     <p class="text-ourBlue text-2xl font-bold text-left p-2">Información general</p>
                     <h2 class="text-ourBlue text-lg font-bold text-left p-2">Qué es NovelAir?</h2> 
                     <p class="text-base px-4 py-2 text-justify">NovelAir es la web que como lector quedras utilizar para leer tus novelas 
@@ -80,7 +81,7 @@
                     </div>
                 </div>
                 <!--AboutUs Contacto-->
-                <div class="@if($type != 'contactanos') hidden @endif px-10 pt-3 pb-10 | text-sm">
+                <div class="@if($type != 'contactanos') hidden @endif w-full px-10 pt-3 pb-10 | text-sm">
                     <p class="text-ourBlue text-2xl font-bold text-left p-2">Contactanos!</p>
                     <p class="text-base px-4 py-2 text-left">Puedes utilizar este formulario para contactar cno nosotros para resolver
                     alguna duda o problema con nuestro servicio o contenido, también puedes reportarnos sobre algun usuario que haya

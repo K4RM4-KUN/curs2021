@@ -255,7 +255,7 @@ class UserProfile extends Controller
             'surname' => 'string|max:255',
             'birth_date' => 'date',
             'email' => 'string|email|max:255|unique:users',
-            'profileImage' => 'mimes:jpeg,jpg,png|max:1024|dimensions:ratio=1/1,min_width=100,max_width=1500',
+            'profileImage' => 'mimes:jpeg,jpg,png|max:1024|dimensions:ratio=1/1,min_width=50,max_width=1500',
         ]);
 
         $user = User::find(Auth::user()->id);

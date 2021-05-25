@@ -88,7 +88,7 @@
                         <input class="shadow-lg border-none appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         multiple 
                         type="file" 
-                        accept="image/jpg,image/jpeg,image/png" 
+                        accept="image/jpg,image/jpeg,image/png,image/svg,image/webp" 
                         name="content[]" 
                         id="content">
 

@@ -70,10 +70,11 @@ class RegisteredUserController extends Controller
         $newRole->SetAttribute('role_id',1);
         $newRole->save();
 
-        $newRole = new Author;
-        $newRole->SetAttribute('subscriptions',1);
-        $newRole->SetAttribute('donations',0); 
-        $newRole->save();
+        $newAuthor = new Author;
+        $newAuthor->SetAttribute('user_id',$user->id);
+        $newAuthor->SetAttribute('subscriptions',1);
+        $newAuthor->SetAttribute('donations',0); 
+        $newAuthor->save();
 
         $path = public_path() ."/users/". $user->id;
         File::makeDirectory($path , $mode = 0775, true);

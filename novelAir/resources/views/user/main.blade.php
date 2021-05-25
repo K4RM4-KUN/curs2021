@@ -61,7 +61,7 @@
                                 <div class="my-3">
                                     @if ($myProfile)
                                         <a class="my-2 w-full h-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
-                                        href="{{url('usuario/ajustes/perfil')}}">Editar Usuario</a>
+                                        href="{{url('usuario/ajustes/perfil')}}">Editar</a>
                                     @else
                                         <a class="my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
                                         href="{{url('seguir/'.$user->id)}}">
@@ -70,11 +70,11 @@
                                 </div>
                                 @if($authorUser && !($rolUser->role->rol_name == 'user')  && !($profile->private) && !$you)
                                     @if($author->subscriptions)
-                                        <div class="my-3">
+                                        <div class="my-3 h-1/1">
                                             @if(!$subscription)
-                                            <a class="my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
+                                            <a class="my-2 md:h-1/1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
                                             href="{{url('subscribe/'.$user->id)}}">
-                                            Subscribirse 2,50€ </a> 
+                                            Suscribirse 2,50€ </a> 
                                             @else
                                             <a class="my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
                                             href="">

@@ -41,7 +41,7 @@ class MailController extends Controller
         $request->validate([ 
             'email' => 'required|max:255',
             'subject' => 'required|max:200|min:5', 
-            'message' => 'required|max:600|min:70', 
+            'message' => 'required|max:600|min:50', 
         ]);
 
         $user = User::where('id',Auth::user()->id)->first(); 
@@ -49,7 +49,7 @@ class MailController extends Controller
         $mail = new CreateMail($request->all(),$user);
 
         if($from != null){
-            Mail::to($request->email,'javierfuenteabalo@gmail.com')->send($mail);
+            Mail::to($request->email,'javierfuentesabalo@gmail.com')->send($mail);
             return redirect('admin/user/'.$from);
 
         }

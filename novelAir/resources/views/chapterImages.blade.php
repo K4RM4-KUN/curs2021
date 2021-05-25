@@ -71,7 +71,7 @@
                                         
                                         multiple 
                                         type="file" 
-                                        accept="image/jpg,image/jpeg,image/png" 
+                                        accept="image/jpg,image/jpeg,image/png,image/webp,image/svg" 
                                         name="content[]" 
                                         id="content">
                                 </div>
@@ -87,6 +87,15 @@
                             </div>
 
                         </form>
+                        @if ($errors->any())
+                            <div class="mb-4 flex align-center justify-center">
+                                <table>
+                                @foreach ($errors->all() as $error)
+                                    <tr><td><a>{{ $error }}</a></td></tr>
+                                @endforeach
+                                </table>
+                            </div>
+                        @endif
 
                     </div>
 

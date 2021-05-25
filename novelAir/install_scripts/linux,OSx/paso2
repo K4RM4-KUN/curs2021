@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd novelair
+
+php artisan migrate

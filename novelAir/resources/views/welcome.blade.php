@@ -143,7 +143,7 @@
 
             <!--Ultimas Novelas-->
             <div class="flex | w-11/12 | bg-black bg-opacity-70">
-                <p class="text-xl sm:text-2xl font-bold text-ourBlue | px-5 py-3">Ultimas</p>
+                <p class="text-xl sm:text-2xl font-bold text-ourBlue | px-5 py-3">Últimas Añadidas</p>
             </div> 
             <div class="flex flex-wrap | w-11/12 | py-1 | bg-black bg-opacity-50">
                 @foreach($last_novels as $novel)

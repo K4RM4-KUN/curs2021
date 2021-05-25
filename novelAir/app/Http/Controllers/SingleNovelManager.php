@@ -190,7 +190,7 @@ class SingleNovelManager extends Controller
             'title' => 'required|string|max:255',
             'chapter_n' => 'required|string|max:255',
             'content' => 'required',
-            'content.*' => 'mimes:jpeg,jpg,png|max:1024'
+            'content.*' => 'mimes:jpeg,jpg,png,webp,svg|max:5000'
         ]);
 
         $chapter = new Chapter;
@@ -244,7 +244,7 @@ class SingleNovelManager extends Controller
     public function addImages(Request $request){
         $request->validate([
             'content' => 'required',
-            'content.*' => 'mimes:jpeg,jpg,png|max:1024'
+            'content.*' => 'mimes:jpeg,jpg,png,webp,svg|max:5000'
         ]);
 
         $route = public_path("/".$request->route);

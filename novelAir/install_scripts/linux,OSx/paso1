@@ -1,0 +1,7 @@
+#!/bin/bash
+
+git clone https://github.com/K4RM4-KUN/novelair.git
+
+cd novelair
+
+composer install

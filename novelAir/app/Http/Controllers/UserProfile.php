@@ -315,7 +315,7 @@ class UserProfile extends Controller
             'instagram' => 'max:255',
             'patreon' => 'max:255',
             'other' => 'max:255',
-            'bgImage' => 'mimes:jpeg,jpg,png|max:2048|dimensions:ratio=16/9,max_width=1920',
+            'bgImage' => 'mimes:jpeg,jpg,png|max:2048|dimensions:min_width:450,max_width=1920',
         ]);
 
         $save = Profile::where('user_id',Auth::user()->id)->first();
